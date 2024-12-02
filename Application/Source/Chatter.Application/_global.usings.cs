@@ -1,0 +1,9 @@
+﻿global using AutoMapper;
+global using Chatter.Application.Dtos;
+global using Chatter.Common;
+global using Chatter.Domain;
+global using FluentValidation;
+global using FluentValidation.Results;
+global using MediatR;
+global using Microsoft.Extensions.Logging;
+global using System.Linq.Expressions;

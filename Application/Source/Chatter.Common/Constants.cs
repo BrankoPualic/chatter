@@ -1,0 +1,19 @@
+﻿namespace Chatter.Common;
+
+public static class Constants
+{
+	public const string SOLUTION_NAME = "Chatter";
+
+	public const string SYSTEM_USER = "00000000-0000-0000-0000-000000000001";
+
+	public const string CLAIM_ID = "ID";
+	public const string CLAIM_USERNAME = "USERNAME";
+	public const string CLAIM_EMAIL = "EMAIL";
+	public const string CLAIM_ROLES = "ROLES";
+	public const int TOKEN_EXPIRATION_TIME = 7;
+
+	public const string ERROR_NOT_FOUND = "Not Found!";
+	public const string ERROR_INVALID_OPERATION = "Invalid operation!";
+	public const string ERROR_UNAUTHORIZED = "Unauthorized!";
+	public const string ERROR_INTERNAL_ERROR = "Internal server error!";
+}
