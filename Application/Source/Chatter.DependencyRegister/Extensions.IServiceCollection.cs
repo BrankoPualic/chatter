@@ -1,4 +1,6 @@
 ﻿using Chatter.Application.Behaviors;
+using Chatter.Application.Identity.Interfaces;
+using Chatter.Application.Identity.Services;
 using Chatter.Application.UseCases;
 using Chatter.Domain;
 using Chatter.Persistence;
@@ -38,6 +40,9 @@ public static class Extensions
 		services.AddAutoMapper(assembly);
 
 		ApplicationPipelineBehaviors(services);
+
+		services.AddScoped<ITokenService, TokenService>();
+		services.AddScoped<IUserManager, UserManager>();
 
 		return services;
 	}

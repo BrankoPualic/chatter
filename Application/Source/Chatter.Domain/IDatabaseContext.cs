@@ -11,4 +11,6 @@ public partial interface IDatabaseContext
 public partial interface IDatabaseContext : IDatabaseContextBase
 {
 	DbSet<User> Users { get; }
+
+	DbSet<UserLoginLog> Logins { get; }
 }

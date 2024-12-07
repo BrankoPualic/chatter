@@ -29,8 +29,11 @@ public class User : BaseIndexAuditedDomain<User>, IConfigurableEntity
 
 	public bool IsLocked { get; set; }
 
-	[InverseProperty(nameof(User))]
+	[InverseProperty(nameof(UserRole.User))]
 	public virtual ICollection<UserRole> Roles { get; set; } = [];
+
+	[InverseProperty(nameof(UserLoginLog.User))]
+	public virtual ICollection<UserLoginLog> Logins { get; set; } = [];
 
 	//
 	// Indexes

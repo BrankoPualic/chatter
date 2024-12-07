@@ -6,7 +6,7 @@ namespace Chatter.Domain.Models.Application.Users;
 [PrimaryKey(nameof(UserId), nameof(RoleId))]
 public class UserRole
 {
-	public long UserId { get; set; }
+	public Guid UserId { get; set; }
 
 	public eSystemRole RoleId { get; set; }
 

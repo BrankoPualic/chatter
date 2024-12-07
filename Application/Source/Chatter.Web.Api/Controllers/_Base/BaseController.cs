@@ -1,12 +1,15 @@
 ﻿using Chatter.Application;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Chatter.Web.Api.Controllers._Base;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
-public class BaseController : ControllerBase
+public class BaseController(IMediator mediator) : ControllerBase
 {
+	protected IMediator Mediator { get; } = mediator;
+
 	public IActionResult Result(ResponseWrapper response) => response.IsSuccess ? Ok() : BadRequest(response.Errors);
 
 	public IActionResult Result(ResponseWrapper response, string message) => response.IsSuccess ? Ok(message) : BadRequest(response.Errors);

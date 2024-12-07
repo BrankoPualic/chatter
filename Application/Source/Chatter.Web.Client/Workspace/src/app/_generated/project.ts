@@ -9,6 +9,27 @@ export namespace api.Controller {
 	{
 		constructor (protected httpClient: HttpClient, protected settingsService: SettingsService) { } 
 	}
+	@Injectable() export class AuthController extends api.Controller.BaseController
+	{
+		public Login(data: api.LoginDto) : Observable<api.TokenDto>
+		{
+			const body = <any>data;
+			return this.httpClient.post<api.TokenDto>(
+			this.settingsService.createApiUrl('Auth/Login'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
+		constructor (httpClient: HttpClient, settingsService: SettingsService)
+		{
+			super(httpClient, settingsService);
+		}
+	}
 }
 export namespace api {
 	export class EnumProvider
@@ -18,11 +39,20 @@ export namespace api {
 		Description: string;
 		BgColor: string;
 	}
+	export class LoginDto
+	{
+		Username: string;
+		Password: string;
+	}
 	export class LookupValueDto
 	{
 		Id: number;
 		Name: string;
 		Description: string;
+	}
+	export class TokenDto
+	{
+		Token: string;
 	}
 	@Injectable() export class Providers
 	{
