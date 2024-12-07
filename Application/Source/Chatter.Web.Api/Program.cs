@@ -1,6 +1,8 @@
 using Chatter.DependencyRegister;
+using Chatter.Domain;
 using Chatter.Persistence;
 using Chatter.Web.Api.Middlewares;
+using Chatter.Web.Api.Objects;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,8 @@ builder.Services.AddControllers()
 		options.JsonSerializerOptions.DictionaryKeyPolicy = null;
 	});
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IIdentityUser, IdentityUser>();
+builder.Services.AddDbContext<DatabaseContext>();
 
 builder.Services.AllAplicationServices();
 
