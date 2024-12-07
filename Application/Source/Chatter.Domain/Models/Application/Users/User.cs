@@ -23,8 +23,6 @@ public class User : BaseIndexAuditedDomain<User>, IConfigurableEntity
 
 	public string PublicId { get; set; }
 
-	public eGender GenderId { get; set; }
-
 	public bool IsPrivate { get; set; }
 
 	public bool IsActive { get; set; }

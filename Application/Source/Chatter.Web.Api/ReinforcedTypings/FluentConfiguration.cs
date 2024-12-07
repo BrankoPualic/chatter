@@ -58,12 +58,12 @@ public static class FluentConfiguration
 
 		// Dtos
 
-		var coreAssembly = Assembly.Load($"{Constants.SOLUTION_NAME}.Core");
+		var coreAssembly = Assembly.Load($"{Constants.SOLUTION_NAME}.Application");
 		var dtos = coreAssembly
 			.GetTypes()
 			.Where(t => t.IsClass
 				&& t.Namespace != null
-				&& (t.Namespace.Contains($"{Constants.SOLUTION_NAME}.Core.Dtos") || t.Namespace.Contains($"{Constants.SOLUTION_NAME}.Core.Search"))
+				&& (t.Namespace.Contains($"{Constants.SOLUTION_NAME}.Application.Dtos") || t.Namespace.Contains($"{Constants.SOLUTION_NAME}.Application.Search"))
 				&& !t.IsDefined(typeof(CompilerGeneratedAttribute), false)
 				&& !t.IsDefined(typeof(TsIgnoreAttribute), false)
 				&& !t.Name.Contains("Validator"));
@@ -88,7 +88,6 @@ public static class FluentConfiguration
 
 		Type[] enums = [
 			typeof(eSystemRole),
-			typeof(eGender),
 		];
 
 		builder.ExportAsEnums(enums,

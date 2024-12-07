@@ -1,0 +1,27 @@
+<p-dropdown
+    [(ngModel)]="value"
+    [options]="options()"
+    [optionLabel]="optionLabel()"
+    [virtualScroll]="true"
+    [virtualScrollItemSize]="38"
+    [filter]="filter()"
+    [filterBy]="filterBy()"
+    [disabled]="disabled()"
+    [styleClass]="'form-select ' + styleClass()"
+    (onChange)="change($event)"
+    (onClick)="click()">
+    @if(!!selectedItemTemplate){
+        <ng-template pTemplate="selectedItem">
+            <ng-container *ngTemplateOutlet="selectedItemTemplate; context: {$implicit: value()}"></ng-container>
+        </ng-template>
+    }
+    @if(!!itemTemplate){
+        <ng-template let-item pTemplate="item">
+            <ng-container *ngTemplateOutlet="itemTemplate; context: {$implicit: item}"></ng-container>
+        </ng-template>
+    }
+
+    <ng-template pTemplate="footer">
+        <app-loader [containerLoader]="loading()"></app-loader>
+      </ng-template>
+</p-dropdown>

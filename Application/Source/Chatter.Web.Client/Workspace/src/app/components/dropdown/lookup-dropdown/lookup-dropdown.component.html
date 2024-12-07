@@ -1,0 +1,15 @@
+<app-dropdown
+    [(value)]="value"
+    [options]="options"
+    optionLabel="description"
+    [disabled]="disabled()"
+    (onChange)="change()">
+    <ng-template #selectedItemTemplate let-item>
+        <div [ngClass]="{ 'transparent-text': item.Description === '' }">
+            {{ item?.Name }}
+        </div>
+    </ng-template>
+    <ng-template #itemTemplate let-item>
+        <div [ngClass]="{ 'transparent-text':item.Description === ''}">{{ item.Name }}</div>
+    </ng-template>
+</app-dropdown>

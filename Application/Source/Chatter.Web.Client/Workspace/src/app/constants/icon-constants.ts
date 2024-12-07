@@ -1,0 +1,30 @@
+export class IconConstants {
+  static SIGNOUT = 'pi pi-sign-out';
+  static USER_PLUS = 'pi pi-user-plus';
+  static INFO_CIRCLE = 'pi pi-info-circle';
+  static LOCK = 'pi pi-lock';
+  static LOCK_OPEN = 'pi pi-lock-open';
+  static COG = 'pi pi-cog';
+  static BOOKMARK = 'pi pi-bookmark';
+  static FOLDER = 'pi pi-folder';
+  static BAN = 'pi pi-ban';
+  static QUESTION_CIRCLE = 'pi pi-question-circle';
+  static GRID = 'pi pi-th-large';
+  static HASHTAG = 'pi pi-hashtag';
+  static HOME = 'pi pi-home';
+  static SEARCH = 'pi pi-search';
+  static USER = 'pi pi-user';
+  static COMMENT = 'pi pi-comment';
+  static PLUS_CIRCLE = 'pi pi-plus-circle';
+  static ANGLE_DOWN = 'pi pi-angle-down';
+  static ANGLE_RIGHT = 'pi pi-angle-right';
+  static ANGLE_LEFT = 'pi pi-angle-left';
+  static HEART = 'pi pi-heart';
+  static EYE = 'pi pi-eye';
+  static EYE_SLASH = 'pi pi-eye-slash';
+  static ELLIPSIS = 'pi pi-ellipsis-h';
+  static SEND = 'pi pi-send';
+  static BELL_SLASH = 'pi pi-bell-slash';
+  static CALENDAR = 'pi pi-calendar';
+  static BARS = 'pi pi-bars';
+}
