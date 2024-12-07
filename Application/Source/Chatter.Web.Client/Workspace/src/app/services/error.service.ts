@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { IModelError } from '../models/error.model';
+import { IModelError } from '../models/models';
 
 @Injectable({
   providedIn: 'root'
