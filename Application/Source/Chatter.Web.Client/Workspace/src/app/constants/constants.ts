@@ -20,9 +20,8 @@ export class Constants {
   static ROUTE_HOME = '';
   static ROUTE_NOT_FOUND = 'not-found';
   static ROUTE_UNAUTHORIZED = 'unauthorized';
-  static ROUTE_AUTH = 'auth';
-  static ROUTE_AUTH_SIGNUP = 'signup';
-  static ROUTE_AUTH_SIGNIN = 'signin';
+  static ROUTE_LOGIN = 'login';
+  static ROUTE_SIGNUP = 'signup';
 
   // Route Parameters
   static PARAM_ID = ':id';

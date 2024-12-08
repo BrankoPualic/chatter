@@ -1,0 +1,69 @@
+// Responsive utilities for Bootstrap breakpoints
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+);
+
+//
+// Generate grid classes for each breakpoint
+//
+@each $breakpoint, $min-width in $breakpoints {
+  @media (min-width: #{$min-width}) {
+    @for $i from 1 through 12 {
+      .col-#{$breakpoint}-#{$i} {
+        width: calc($i / 12) * 100%; // Calculate the width as a percentage
+        padding: 0 5px; // Add desired padding
+      }
+    }
+  }
+}
+
+//
+// Paddings and Margins
+//
+@for $i from 1 through 50 {
+  // Padding classes
+  .padding-#{$i} { padding: #{calc($i / 16)}rem; }      // All sides
+  .padding-x-#{$i} { padding-left: #{calc($i / 16)}rem; padding-right: #{calc($i / 16)}rem; } // Horizontal
+  .padding-y-#{$i} { padding-top: #{calc($i / 16)}rem; padding-bottom: #{calc($i / 16)}rem; } // Vertical
+  .padding-top-#{$i} { padding-top: #{calc($i / 16)}rem; }
+  .padding-right-#{$i} { padding-right: #{calc($i / 16)}rem; }
+  .padding-bottom-#{$i} { padding-bottom: #{calc($i / 16)}rem; }
+  .padding-left-#{$i} { padding-left: #{calc($i / 16)}rem; }
+
+  // Margin classes
+  .margin-#{$i} { margin: #{calc($i / 16)}rem; }      // All sides
+  .margin-x-#{$i} { margin-left: #{calc($i / 16)}rem; margin-right: #{calc($i / 16)}rem; } // Horizontal
+  .margin-y-#{$i} { margin-top: #{calc($i / 16)}rem; margin-bottom: #{calc($i / 16)}rem; } // Vertical
+  .margin-top-#{$i} { margin-top: #{calc($i / 16)}rem; }
+  .margin-right-#{$i} { margin-right: #{calc($i / 16)}rem; }
+  .margin-bottom-#{$i} { margin-bottom: #{calc($i / 16)}rem; }
+  .margin-left-#{$i} { margin-left: #{calc($i / 16)}rem; }
+}
+
+@each $breakpoint, $value in $breakpoints {
+  @media (min-width: #{$value}) {
+    @for $i from 1 through 50 {
+      // Padding classes
+      .padding-#{$breakpoint}-#{$i} { padding: #{calc($i / 16)}rem; }
+      .padding-x-#{$breakpoint}-#{$i} { padding-left: #{calc($i / 16)}rem; padding-right: #{calc($i / 16)}rem; }
+      .padding-y-#{$breakpoint}-#{$i} { padding-top: #{calc($i / 16)}rem; padding-bottom: #{calc($i / 16)}rem; }
+      .padding-top-#{$breakpoint}-#{$i} { padding-top: #{calc($i / 16)}rem; }
+      .padding-right-#{$breakpoint}-#{$i} { padding-right: #{calc($i / 16)}rem; }
+      .padding-bottom-#{$breakpoint}-#{$i} { padding-bottom: #{calc($i / 16)}rem; }
+      .padding-left-#{$breakpoint}-#{$i} { padding-left: #{calc($i / 16)}rem; }
+
+      // Margin classes
+      .margin-#{$breakpoint}-#{$i} { margin: #{calc($i / 16)}rem; }
+      .margin-x-#{$breakpoint}-#{$i} { margin-left: #{calc($i / 16)}rem; margin-right: #{calc($i / 16)}rem; }
+      .margin-y-#{$breakpoint}-#{$i} { margin-top: #{calc($i / 16)}rem; margin-bottom: #{calc($i / 16)}rem; }
+      .margin-top-#{$breakpoint}-#{$i} { margin-top: #{calc($i / 16)}rem; }
+      .margin-right-#{$breakpoint}-#{$i} { margin-right: #{calc($i / 16)}rem; }
+      .margin-bottom-#{$breakpoint}-#{$i} { margin-bottom: #{calc($i / 16)}rem; }
+      .margin-left-#{$breakpoint}-#{$i} { margin-left: #{calc($i / 16)}rem; }
+    }
+  }
+}
