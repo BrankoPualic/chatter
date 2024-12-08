@@ -1,0 +1,81 @@
+<div class="d-flex flex-column" style="height: 100dvh">
+  <div class="form-header text-center padding-top-25 padding-bottom-30">
+    <h2 class="col-xs-12">Chatter</h2>
+    <p class="col-xs-12 font-sm">Your favorite social network</p>
+  </div>
+
+  <div class="primary-red-bg" style="flex: 1">
+    <form [formGroup]="form" class="form-group form" style="height: 100%">
+      <h1 class="col-xs-12 padding-y-40 font-xxl font-weight-normal">Create an account</h1>
+  
+      <div class="col-xs-12 margin-bottom-15" appValidation="FirstName">
+        <label for="FirstName" class="form-label">First Name <app-required-field-mark/></label>
+        <input type="text" class="form-control" id="FirstName" formControlName="FirstName">
+      </div>
+
+      <div class="col-xs-12 margin-bottom-15" appValidation="LastName">
+        <label for="LastName" class="form-label">Last Name <app-required-field-mark/></label>
+        <input type="text" class="form-control" id="LastName" formControlName="LastName">
+      </div>
+
+      <div class="col-xs-12 margin-bottom-15" appValidation="Username">
+        <label for="Username" class="form-label">Username <app-required-field-mark/></label>
+        <input type="text" class="form-control" id="Username" formControlName="Username">
+      </div>
+
+      <div class="col-xs-12 margin-bottom-15" appValidation="Email">
+        <label for="Email" class="form-label">Email <app-required-field-mark/></label>
+        <input type="email" class="form-control" id="Email" formControlName="Email">
+      </div>
+  
+      <div class="col-xs-12 margin-bottom-15" appValidation="Password">
+        <label for="Password" class="form-label">Password <app-required-field-mark/></label>
+        <div style="position: relative">
+          <input type="password" class="form-control" id="Password" formControlName="Password" #password>
+          <span [class]="currentPasswordIcon" class="form-input-icon" (click)="toggleVisibility(password, passwordVisibilityIconType.Password)"></span>
+        </div>
+      </div>
+
+      <div class="col-xs-12 margin-bottom-15" appValidation="ConfirmPassword">
+        <label for="ConfirmPassword" class="form-label">Confirm Password <app-required-field-mark/></label>
+        <div style="position: relative;">
+          <input type="password" class="form-control" id="ConfirmPassword" formControlName="ConfirmPassword" #confirmPassword>
+          <span [class]="currentConfirmPasswordIcon" class="form-input-icon" (click)="toggleVisibility(confirmPassword, passwordVisibilityIconType.ConfirmPassword)"></span>
+        </div>
+      </div>
+
+      <div class="col-xs-12 margin-bottom-15" appValidation="GenderId">
+        <label for="GenderId" class="form-label">Gender <app-required-field-mark/></label>
+        <app-lookup-dropdown [provider]="Providers.Genders" [(value)]="currentGender" (onChangeVoid)="onGenderChange()"/>
+      </div>
+
+      <div class="col-xs-12 margin-bottom-15">
+        <div class="form-check" aria-describedby="privacyHelp">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="privacy"
+            formControlName="IsPrivate"
+          />
+          <label class="form-check-label pointer" for="privacy">
+            Do you want your profile to be private?</label
+          >
+        </div>
+        <div id="privacyHelp" class="form-text">
+          This setting can be changed later in profile settings.
+        </div>
+      </div>
+
+      <div class="col-xs-12">
+        <button class="btn btn-primary col-xs-12 padding-y-10 margin-top-10 font-weight-medium" (click)="submit()">Sign up</button>
+      </div>
+
+      <div class="col-xs-12" appValidation="User"></div>
+
+      <div class="text-center col-xs-12 font-weight-medium margin-bottom-20 margin-top-20">
+        Already have an account? <a [routerLink]="['/' + Constants.ROUTE_LOGIN]">Log in</a>
+      </div>
+  
+    </form>
+  </div>
+</div>

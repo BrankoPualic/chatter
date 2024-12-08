@@ -1,6 +1,4 @@
 ﻿using Chatter.Application.Dtos.Users;
-using Chatter.Application.Extensions;
-using Microsoft.EntityFrameworkCore;
 
 namespace Chatter.Application.UseCases.Users;
 
@@ -12,7 +10,7 @@ internal class GetCurrentUserQueryHandler(IDatabaseContext db, IIdentityUser cur
 {
 	public override async Task<ResponseWrapper<UserDto>> Handle(GetCurrentUserQuery request, CancellationToken cancellationToken)
 	{
-		var result = await db.Users.FirstOrDefaultAsync(_ => _.Id == _currentUser.Id);
+		var result = await _db.Users.FirstOrDefaultAsync(_ => _.Id == _currentUser.Id, cancellationToken);
 
 		return result == null ? new(ERROR_NOT_FOUND) : new(_mapper.To<UserDto>(result));
 	}

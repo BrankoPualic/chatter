@@ -61,6 +61,24 @@ namespace Chatter.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} already exist..
+        /// </summary>
+        public static string Already_Exist {
+            get {
+                return ResourceManager.GetString("Already_Exist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} and {1} fields don&apos;t match..
+        /// </summary>
+        public static string Dont_Match {
+            get {
+                return ResourceManager.GetString("Dont_Match", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} cannot be more than {1} characters long..
         /// </summary>
         public static string MaximumLength {
@@ -93,6 +111,15 @@ namespace Chatter.Common.Resources {
         public static string Wrong_Credentials {
             get {
                 return ResourceManager.GetString("Wrong_Credentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is in the wrong format..
+        /// </summary>
+        public static string Wrong_Format {
+            get {
+                return ResourceManager.GetString("Wrong_Format", resourceCulture);
             }
         }
     }

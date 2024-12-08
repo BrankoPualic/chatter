@@ -1,10 +1,5 @@
 ﻿using Chatter.Application.Dtos.Auth;
-using Chatter.Application.Identity.Interfaces;
-using Chatter.Common.Extensions;
-using Chatter.Common.Resources;
 using Chatter.Domain.Models.Application.Users;
-using Humanizer;
-using Microsoft.EntityFrameworkCore;
 
 namespace Chatter.Application.UseCases.Auth;
 
@@ -17,7 +12,7 @@ internal class LoginCommandHandler(IDatabaseContext db, ITokenService tokenServi
 {
 	public override async Task<ResponseWrapper<TokenDto>> Handle(LoginCommand request, CancellationToken cancellationToken)
 	{
-		var model = await db.Users
+		var model = await _db.Users
 			.Include(_ => _.Roles)
 			.Where(_ => _.Username == request.Data.Username)
 			.FirstOrDefaultAsync(cancellationToken);
@@ -31,8 +26,8 @@ internal class LoginCommandHandler(IDatabaseContext db, ITokenService tokenServi
 
 		// Login log
 		UserLoginLog log = new(model.Id);
-		db.Logins.Add(log);
-		await db.SaveChangesAsync(false, cancellationToken);
+		_db.Logins.Add(log);
+		await _db.SaveChangesAsync(false, cancellationToken);
 
 		return new(new TokenDto { Token = tokenService.GenerateJwtToken(model) });
 	}

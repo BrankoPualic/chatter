@@ -1,5 +1,5 @@
 <div class="d-flex flex-column" style="height: 100dvh;">
-  <div class="form-header text-center pt-4 padding-bottom-30">
+  <div class="form-header text-center padding-top-25 padding-bottom-30">
     <h2 class="col-xs-12">Chatter</h2>
     <p class="col-xs-12 font-sm">Your favorite social network</p>
   </div>
@@ -28,7 +28,7 @@
       <div class="col-xs-12" appValidation="User"></div>
 
       <div class="text-center col-xs-12 font-weight-medium msg">
-        Don't have an account? <a href="">Sign up</a>
+        Don't have an account? <a [routerLink]="['/' + Constants.ROUTE_SIGNUP]">Sign up</a>
       </div>
   
     </form>

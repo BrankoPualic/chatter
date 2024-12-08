@@ -15,12 +15,24 @@ body {
   color: $soft-black;
 }
 
+.form-control.is-invalid,
+.form-control.is-valid {
+  background-image: none;
+}
+
 .form-group {
   padding: 0 15px;
 
   .form-label {
     margin-bottom: 5px;
   }
+}
+
+.form-input-icon {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
 }
 
 .btn-primary {

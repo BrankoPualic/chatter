@@ -25,6 +25,20 @@ export namespace api.Controller {
 			.pipe(map(response => response.body!));
 			
 		}
+		public Signup(data: api.SignupDto) : Observable<api.TokenDto>
+		{
+			const body = <any>data;
+			return this.httpClient.post<api.TokenDto>(
+			this.settingsService.createApiUrl('Auth/Signup'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
 		constructor (httpClient: HttpClient, settingsService: SettingsService)
 		{
 			super(httpClient, settingsService);
@@ -69,13 +83,24 @@ export namespace api {
 		Name: string;
 		Description: string;
 	}
+	export class SignupDto
+	{
+		FirstName: string;
+		LastName: string;
+		Username: string;
+		Email: string;
+		Password: string;
+		ConfirmPassword: string;
+		GenderId: api.eGender;
+		IsPrivate: boolean;
+	}
 	export class TokenDto
 	{
 		Token: string;
 	}
 	export class UserDto
 	{
-		Id: number;
+		Id: string;
 		Username: string;
 		FullName: string;
 		FirstName: string;
