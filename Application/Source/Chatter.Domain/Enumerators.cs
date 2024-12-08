@@ -19,3 +19,13 @@ public enum eSystemRole
 	[Description("Legal Department")]
 	LegalDepartment = 5
 }
+
+public enum eGender
+{
+	[Description("")]
+	NotSet = 0,
+
+	Male,
+	Female,
+	Other
+}
