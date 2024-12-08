@@ -1,0 +1,37 @@
+<div class="d-flex flex-column" style="height: 100dvh;">
+  <div class="form-header text-center pt-4 padding-bottom-30">
+    <h2 class="col-xs-12">Chatter</h2>
+    <p class="col-xs-12 font-sm">Your favorite social network</p>
+  </div>
+
+  <div class="primary-red-bg" style="flex: 1">
+    <form [formGroup]="form" class="form-group form" style="height: 100%">
+      <h1 class="col-xs-12 padding-y-40 font-xxl font-weight-normal">Log in</h1>
+  
+      <div class="col-xs-12 margin-bottom-15" appValidation="Username">
+        <label for="Username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="Username" formControlName="Username">
+      </div>
+  
+      <div class="col-xs-12 margin-bottom-15" appValidation="Password">
+        <div>
+          <label for="Password" class="form-label float-start">Password</label>
+          <a href="" class="font-sm float-end">Forgot your password?</a>
+        </div>
+        <input type="password" class="form-control" id="Password" formControlName="Password">
+      </div>
+
+      <div class="col-xs-12">
+        <button class="btn btn-primary col-xs-12 padding-y-10 margin-top-10 font-weight-medium" (click)="submit()">Log in</button>
+      </div>
+
+      <div class="col-xs-12" appValidation="User"></div>
+
+      <div class="text-center col-xs-12 font-weight-medium msg">
+        Don't have an account? <a href="">Sign up</a>
+      </div>
+  
+    </form>
+  </div>
+
+</div>

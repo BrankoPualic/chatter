@@ -1,7 +1,7 @@
 import { Directive, ElementRef, input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ErrorService } from '../services/error.service';
-import { IModelError } from '../models/error.model';
+import { IModelError } from '../models/models';
 
 @Directive({
   selector: '[appValidation]',

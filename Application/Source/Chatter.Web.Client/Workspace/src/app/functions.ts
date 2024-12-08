@@ -1,5 +1,5 @@
 import { cloneDeep } from "lodash";
-import { INameofOptions } from "./app/models/function-options.model";
+import { INameofOptions } from "./models/function-options.model";
 
 export class Functions {
   static nameof<T extends object>(

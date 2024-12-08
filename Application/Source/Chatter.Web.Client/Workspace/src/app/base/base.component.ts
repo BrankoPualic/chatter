@@ -19,8 +19,7 @@ export abstract class BaseComponent extends BaseConstants implements IBaseCompon
     (
       protected errorService: ErrorService,
       protected loaderService: PageLoaderService,
-      protected toastService: ToastService,
-      protected router: Router
+      protected toastService: ToastService
     ) {
     super();
     loaderService.loaderState$.pipe(takeUntil(this._destroy$)).subscribe(_ => this._loading = _);
@@ -50,10 +49,6 @@ export abstract class BaseComponent extends BaseConstants implements IBaseCompon
   error(error: Record<string, string[]>) {
     const message = Object.values(error).flat().join('\r\n');
     this.toastService.notifyError(message);
-  }
-  errorAndRedirect(error: Record<string, string[]>) {
-    this.error(error);
-    this.router.navigateByUrl('/');
   }
 
   warning(error: Record<string, string[]>) {

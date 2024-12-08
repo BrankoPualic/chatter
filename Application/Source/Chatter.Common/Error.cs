@@ -22,5 +22,7 @@ public class Error
 		Errors[key].Add(message);
 	}
 
+	public void AddErrors(string key, List<string> messages) => messages.ForEach(_ => AddError(key, _));
+
 	public List<string> GetValue(string key) => Errors.TryGetValue(key, out List<string>? value) ? value : [];
 }

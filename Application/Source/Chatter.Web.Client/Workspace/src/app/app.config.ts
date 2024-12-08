@@ -2,18 +2,23 @@ import { ApplicationConfig, Provider, provideZoneChangeDetection } from '@angula
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { api } from './_generated/project';
 import { SettingsService } from './services/settings.service';
 import { ConfirmationService } from 'primeng/api';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { errorInterceptor } from './interceptors/error.interceptor';
+import { jwtInterceptor } from './interceptors/jwt.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimations(),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch(), withInterceptors([
+      errorInterceptor,
+      jwtInterceptor
+    ])),
     controllerProviders(),
     serviceProviders()
   ]
@@ -21,7 +26,8 @@ export const appConfig: ApplicationConfig = {
 
 function controllerProviders(): Provider[] {
   return [
-    api.Controller.AuthController
+    api.Controller.AuthController,
+    api.Controller.UserController
   ]
 }
 

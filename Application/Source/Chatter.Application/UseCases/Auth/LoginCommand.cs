@@ -17,7 +17,11 @@ internal class LoginCommandHandler(IDatabaseContext db, ITokenService tokenServi
 {
 	public override async Task<ResponseWrapper<TokenDto>> Handle(LoginCommand request, CancellationToken cancellationToken)
 	{
-		var model = await db.Users.Where(_ => _.Username == request.Data.Username).FirstOrDefaultAsync(cancellationToken);
+		var model = await db.Users
+			.Include(_ => _.Roles)
+			.Where(_ => _.Username == request.Data.Username)
+			.FirstOrDefaultAsync(cancellationToken);
+
 		if (model == null)
 			return new(new Error(nameof(User), ResourcesValidation.Wrong_Credentials));
 

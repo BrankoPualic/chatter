@@ -1,0 +1,25 @@
+@import '../../../../assets/styles/variables';
+
+.form-header {
+  background-color: $primary-red;
+  color: $off-white;
+}
+
+.form {
+  border-radius: $border-radius-big $border-radius-big 0 0;
+  background-color: $off-white;
+
+  h1 {
+    color: $soft-black;
+  }
+}
+
+.primary-red-bg {
+  background-color: $primary-red;
+}
+
+.msg {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+}

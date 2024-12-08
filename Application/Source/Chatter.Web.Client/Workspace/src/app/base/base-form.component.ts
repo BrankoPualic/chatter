@@ -18,10 +18,9 @@ export abstract class BaseFormComponent<T extends object> extends BaseComponentG
       errorService: ErrorService,
       loaderService: PageLoaderService,
       toastService: ToastService,
-      router: Router,
       protected fb: FormBuilder
     ) {
-    super(errorService, loaderService, toastService, router);
+    super(errorService, loaderService, toastService);
 
     this.form = this.fb.group({});
     this.formData = new FormData();

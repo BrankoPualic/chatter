@@ -30,6 +30,25 @@ export namespace api.Controller {
 			super(httpClient, settingsService);
 		}
 	}
+	@Injectable() export class UserController extends api.Controller.BaseController
+	{
+		public GetCurrentUser() : Observable<api.UserDto>
+		{
+			return this.httpClient.get<api.UserDto>(
+			this.settingsService.createApiUrl('User/GetCurrentUser'),
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
+		constructor (httpClient: HttpClient, settingsService: SettingsService)
+		{
+			super(httpClient, settingsService);
+		}
+	}
 }
 export namespace api {
 	export class EnumProvider
@@ -54,6 +73,18 @@ export namespace api {
 	{
 		Token: string;
 	}
+	export class UserDto
+	{
+		Id: number;
+		Username: string;
+		FullName: string;
+		FirstName: string;
+		LastName: string;
+		ProfileImageUrl: string;
+		GenderId: api.eGender;
+		Gender: api.LookupValueDto;
+		IsPrivate: boolean;
+	}
 	@Injectable() export class Providers
 	{
 		getSystemRoles() : api.EnumProvider[]
@@ -66,6 +97,15 @@ export namespace api {
 			    { Id: 5, Name: 'LegalDepartment', Description: 'Legal Department', BgColor: '' }
 			];
 		}
+		getGenders() : api.EnumProvider[]
+		{
+			return [
+			    { Id: 0, Name: 'NotSet', Description: '', BgColor: '' },
+			    { Id: 1, Name: 'Male', Description: 'Male', BgColor: '' },
+			    { Id: 2, Name: 'Female', Description: 'Female', BgColor: '' },
+			    { Id: 3, Name: 'Other', Description: 'Other', BgColor: '' }
+			];
+		}
 	}
 	export enum eSystemRole {
 		SystemAdministrator = 1,
@@ -73,5 +113,11 @@ export namespace api {
 		UserAdmin = 3,
 		Moderator = 4,
 		LegalDepartment = 5
+	}
+	export enum eGender {
+		NotSet = 0,
+		Male = 1,
+		Female = 2,
+		Other = 3
 	}
 }

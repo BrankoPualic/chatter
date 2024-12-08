@@ -3,7 +3,47 @@
 @import './assets/styles/utilities';
 @import './assets/styles/primeng';
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none !important;
+}
+
 body {
   background-color: $background-light;
   color: $soft-black;
+}
+
+.form-group {
+  padding: 0 15px;
+
+  .form-label {
+    margin-bottom: 5px;
+  }
+}
+
+.btn-primary {
+  background-color: $primary-red;
+  border-color: $primary-red;
+  color: #FFFFFF;  // White text color
+
+  &:hover {
+    background-color: darken($primary-red, 10%);
+    border-color: darken($primary-red, 10%);
+  }
+
+  &:focus, &:active {
+    background-color: darken($primary-red, 15%) !important;
+    border-color: darken($primary-red, 15%);
+    box-shadow: none;
+    outline: none;
+  }
+
+  &:disabled {
+    background-color: $btn-disabled-color;
+    border-color: $btn-disabled-color;
+    color: #A0A0A0; // Light gray text for disabled state
+    cursor: not-allowed;
+  }
 }

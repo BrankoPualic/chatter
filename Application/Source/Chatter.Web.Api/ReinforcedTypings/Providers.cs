@@ -7,4 +7,7 @@ public enum Providers
 {
 	[EnumProvider<eSystemRole>]
 	SystemRoles,
+
+	[EnumProvider<eGender>]
+	Genders,
 }

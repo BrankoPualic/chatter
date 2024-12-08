@@ -1,7 +1,7 @@
-﻿using Chatter.Common;
+﻿using Chatter.Application.Exceptions;
+using Chatter.Common;
 using Chatter.Common.Extensions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System.Net;
 
 namespace Chatter.Web.Api.Middlewares;
@@ -24,11 +24,24 @@ public class ExceptionMiddleware(RequestDelegate next)
 	{
 		logger.LogError(ex, "{message}", ex.Message);
 		context.Response.ContentType = "application/json";
-		context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+		context.Response.StatusCode = ex switch
+		{
+			FluentValidationException _ => (int)HttpStatusCode.UnprocessableEntity,
+			_ => (int)HttpStatusCode.InternalServerError
+		};
 
 		var response = ErrorConstants.ERROR_INTERNAL_ERROR;
 
-		var json = response.SerializeJsonObject(new CamelCasePropertyNamesContractResolver(), formatting: Formatting.Indented);
+		if (ex is FluentValidationException validationException)
+		{
+			var errors = new Error();
+
+			validationException.Failures.ToList().ForEach(_ => errors.AddErrors(_.Key, _.Value.ToList()));
+
+			response = errors;
+		}
+
+		var json = response.SerializeJsonObject(formatting: Formatting.Indented);
 
 		return context.Response.WriteAsync(json);
 	}

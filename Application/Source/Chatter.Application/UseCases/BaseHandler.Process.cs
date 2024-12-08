@@ -1,10 +1,12 @@
-﻿using Chatter.Domain;
-using Microsoft.Extensions.Logging;
-
-namespace Chatter.Application.UseCases;
+﻿namespace Chatter.Application.UseCases;
 
 public abstract class BaseHandlerProcess
 {
+	public static readonly Error ERROR_NOT_FOUND = ErrorConstants.ERROR_NOT_FOUND;
+	public static readonly Error ERROR_INVALID_OPERATION = ErrorConstants.ERROR_INVALID_OPERATION;
+	public static readonly Error ERROR_UNAUTHORIZED = ErrorConstants.ERROR_UNAUTHORIZED;
+	public static readonly Error ERROR_INTERNAL_ERROR = ErrorConstants.ERROR_INTERNAL_ERROR;
+
 	protected static void TryRun(Action action, ILogger logger)
 	{
 		try

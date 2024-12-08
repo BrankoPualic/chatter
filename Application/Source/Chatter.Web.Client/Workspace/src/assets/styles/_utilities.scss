@@ -67,3 +67,51 @@ $breakpoints: (
     }
   }
 }
+
+//
+// Font sizes
+//
+$font-sizes: (
+  xs: 0.8rem,
+  sm: 0.9rem,
+  md: 1rem,       // Base size (usually 16px)
+  lg: 1.25rem,
+  xl: 1.5rem,
+  xxl: 2rem
+);
+
+// Generate font size classes
+@each $size-name, $size-value in $font-sizes {
+  .font-#{$size-name} {
+    font-size: #{$size-value};
+  }
+}
+
+@each $breakpoint, $min-width in $breakpoints {
+  @media (min-width: #{$min-width}) {
+    @each $size-name, $size-value in $font-sizes {
+      .font-#{$breakpoint}-#{$size-name} {
+        font-size: #{$size-value};
+      }
+    }
+  }
+}
+
+//
+// Font weight
+//
+$font-weights: (
+  light: 300,
+  normal: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+  extrabold: 800
+);
+
+// Generate font weight classes
+@each $weight-name, $weight-value in $font-weights {
+  .font-weight-#{$weight-name} {
+    font-weight: #{$weight-value};
+  }
+}
