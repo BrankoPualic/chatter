@@ -28,4 +28,5 @@ export class IconConstants {
   static CALENDAR = 'pi pi-calendar';
   static BARS = 'pi pi-bars';
   static PLUS = 'pi pi-plus';
+  static BELL = 'pi pi-bell';
 }

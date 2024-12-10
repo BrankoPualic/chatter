@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MobileNavigationBarComponent } from "../../components/mobile-navigation-bar/mobile-navigation-bar.component";
+import { IconConstants } from '../../constants/icon-constants';
 
 @Component({
   selector: 'app-home',
@@ -8,4 +9,6 @@ import { MobileNavigationBarComponent } from "../../components/mobile-navigation
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+
+  Icons = IconConstants;
 }

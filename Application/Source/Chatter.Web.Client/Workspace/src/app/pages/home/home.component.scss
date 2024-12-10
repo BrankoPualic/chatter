@@ -1,0 +1,22 @@
+.action-bar-top {
+  position: relative;
+  height: 5rem;
+
+  .logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1rem;
+    
+    svg {
+      zoom: 45%;
+    }
+  }
+
+  .icon {
+    span{
+      font-size: 1.2rem;
+    }
+  }
+}
