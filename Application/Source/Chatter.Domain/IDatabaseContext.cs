@@ -13,4 +13,6 @@ public partial interface IDatabaseContext : IDatabaseContextBase
 	DbSet<User> Users { get; }
 
 	DbSet<UserLoginLog> Logins { get; }
+
+	DbSet<UserFollow> Follows { get; }
 }
