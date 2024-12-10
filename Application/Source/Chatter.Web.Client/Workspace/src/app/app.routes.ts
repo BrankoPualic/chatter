@@ -5,8 +5,9 @@ import { authGuard } from './guards/auth.guard';
 export const routes: Routes = [
   {
     path: Constants.ROUTE_HOME,
+    title: 'Home | ' + Constants.TITLE,
     canActivate: [authGuard],
-    children: []
+    loadComponent: () => import('./pages/home/home.component').then(_ => _.HomeComponent)
   },
 
   // Log in and Sign up
