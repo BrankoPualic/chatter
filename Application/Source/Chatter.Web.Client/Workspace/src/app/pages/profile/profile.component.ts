@@ -7,6 +7,7 @@ import { PageLoaderService } from '../../services/page-loader.service';
 import { ToastService } from '../../services/toast.service';
 import { ActivatedRoute } from '@angular/router';
 import { GLOBAL_MODULES } from '../../_global.modules';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-profile',
@@ -23,6 +24,7 @@ export class ProfileComponent extends BaseComponentGeneric<api.UserDto> implemen
     loaderService: PageLoaderService,
     toastService: ToastService,
     private route: ActivatedRoute,
+    private profileService: ProfileService,
     private api_UserController: api.Controller.UserController
   ) {
     super(errorService, loaderService, toastService)
@@ -41,5 +43,7 @@ export class ProfileComponent extends BaseComponentGeneric<api.UserDto> implemen
       .catch(_ => this.error(_.error.Errors))
       .finally(() => this.loading = false);
   }
+
+  loadProfilePhoto = () => this.profileService.getProfilePhoto(this.user?.ProfileImageUrl, this.user?.GenderId);
 
 }

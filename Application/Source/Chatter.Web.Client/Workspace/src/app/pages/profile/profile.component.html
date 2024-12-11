@@ -2,12 +2,12 @@
 
 <div class="profile-info">
   <div class="thumbnail">
-    <img src="https://images.pexels.com/photos/15539380/pexels-photo-15539380/free-photo-of-a-great-white-shark-swimming-in-the-ocean.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="">
+    <img src="https://images.pexels.com/photos/15539380/pexels-photo-15539380/free-photo-of-a-great-white-shark-swimming-in-the-ocean.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Profile thumbnail">
   </div>
   
   <div class="wrapper">
     <div class="info">
-      <img class="profile-image" src="../../../assets/images/default-avatar-profile-picture-male-icon.png" alt="">
+      <img class="profile-image" [src]="[loadProfilePhoto()]" alt="User profile photo">
 
       <h2 class="margin-top-10 margin-bottom-0">{{ user?.FullName }}</h2>
       <p class="small gray">&commat;{{ user?.Username }}</p>
