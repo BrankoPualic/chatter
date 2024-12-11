@@ -28,6 +28,7 @@ public static class FluentConfiguration
 		.AddImport("{ Observable }", "rxjs")
 		.AddImport("{ map }", "rxjs/operators")
 		//.ExportTo("services.ts")
+		.ConfigureTypeMapping()
 		.OverrideNamespace("api.Controller")
 		.WithCodeGenerator<AngularControllerGenerator>();
 

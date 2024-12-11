@@ -1,0 +1,41 @@
+<app-mobile-navigation-bar/>
+
+<div class="profile-info">
+  <div class="thumbnail">
+    <img src="https://images.pexels.com/photos/15539380/pexels-photo-15539380/free-photo-of-a-great-white-shark-swimming-in-the-ocean.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="">
+  </div>
+  
+  <div class="wrapper">
+    <div class="info">
+      <img class="profile-image" src="../../../assets/images/default-avatar-profile-picture-male-icon.png" alt="">
+
+      <h2 class="margin-top-10 margin-bottom-0">{{ user?.FullName }}</h2>
+      <p class="small gray">&commat;{{ user?.Username }}</p>
+
+      <div class="w-100 d-flex justify-content-between padding-x-20">
+        <div class="col-xs-10">
+          <button class="btn btn-empty w-100">Edit profile</button>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-empty float-end"><span [class]="Icons.COG"></span></button>
+        </div>
+      </div>
+
+      <div class="w-100 d-flex justify-content-between margin-y-10 padding-x-30">
+        <div class="col-xs-4 d-flex flex-column align-items-center">
+          <span class="font-weight-medium">{{ 5223 | abbreviateNumber }}</span>
+          <span class="small gray">posts</span>
+        </div>
+        <div class="col-xs-4 d-flex flex-column align-items-center">
+          <span class="font-weight-medium" [ngClass]="{'gray': (user?.Followers || 0) < 1}">{{ (user?.Followers || 0) | abbreviateNumber }}</span>
+          <span class="small gray">followers</span>
+        </div>
+        <div class="col-xs-4 d-flex flex-column align-items-center">
+          <span class="font-weight-medium" [ngClass]="{'gray': (user?.Following || 0) < 1}">{{ (user?.Following || 0) | abbreviateNumber }}</span>
+          <span class="small gray">following</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

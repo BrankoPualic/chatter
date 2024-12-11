@@ -5,6 +5,7 @@ import { Constants } from '../constants/constants';
 import { api } from '../_generated/project';
 import { PageLoaderService } from './page-loader.service';
 import { ProfileService } from './profile.service';
+import { ICurrentUser } from '../models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,16 @@ export class AuthService {
     }
   }
 
+  getCurrentUser(): ICurrentUser | null {
+    const token = this.getToken();
+    if (!token)
+      return null;
+
+    const tokenInfo = this.getDecodedToken(token);
+
+    return this.createCurrentUser(token, tokenInfo);
+  }
+
   loadCurrentUser(): void {
     this.loaderService.show();
     this.api_UserController.GetCurrentUser().toPromise()
@@ -61,5 +72,23 @@ export class AuthService {
 
   private getDecodedToken(token: string) {
     return JSON.parse(atob(token.split('.')[1]));
+  }
+
+  private createCurrentUser(token: string, tokenInfo: any): ICurrentUser {
+    const user: ICurrentUser = {
+      id: tokenInfo.ID,
+      roles: [],
+      email: tokenInfo.EMAIL,
+      username: tokenInfo.USERNAME,
+      token: token,
+      tokenExpirationDate: new Date(tokenInfo.exp * 1000)
+    }
+
+    if (Array.isArray(tokenInfo.ROLES))
+      tokenInfo.ROLES.forEach((_: string) => user.roles?.push(Number(_)));
+    else
+      user.roles?.push(Number(tokenInfo.ROLES));
+
+    return user;
   }
 }

@@ -15,6 +15,8 @@ public abstract class BaseHandler<TRequest, TResponse> : BaseHandlerProcess, IRe
 
 	protected BaseHandler(IDatabaseContext db, IIdentityUser currentUser) : this(db) => _currentUser = currentUser;
 
+	protected BaseHandler(IDatabaseContext db, IMapper mapper) : this(db) => _mapper = mapper;
+
 	protected BaseHandler(IDatabaseContext db, IIdentityUser currentUser, IMapper mapper) : this(db, currentUser) => _mapper = mapper;
 
 	protected BaseHandler(IDatabaseContext db, IIdentityUser currentUser, IMapper mapper, ILogger logger) : this(db, currentUser, mapper) => _logger = logger;

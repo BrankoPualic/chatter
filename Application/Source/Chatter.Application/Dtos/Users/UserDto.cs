@@ -19,4 +19,10 @@ public class UserDto
 	public LookupValueDto Gender { get; set; }
 
 	public bool IsPrivate { get; set; }
+
+	public bool HasAccess { get; set; }
+
+	public long Followers { get; set; }
+
+	public long Following { get; set; }
 }

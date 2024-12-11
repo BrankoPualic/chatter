@@ -1,7 +1,7 @@
 <div class="navigation w-100 shadow-style d-flex align-items-center justify-content-between">
   <div class="d-flex justify-content-between col-xs-5">
     <div class="icon col-xs-6">
-      <span [class]="Icons.HOME"></span>
+      <span [class]="Icons.HOME" [routerLink]="['/']"></span>
     </div>
     <div class="icon col-xs-6">
       <span [class]="Icons.SEARCH"></span>
@@ -17,7 +17,7 @@
       <span [class]="Icons.COMMENT"></span>
     </div>
     <div class="icon col-xs-6">
-      <span [class]="Icons.USER"></span>
+      <span [class]="Icons.USER" [routerLink]="['/' + Constants.ROUTE_PROFILE, currentUser?.id]"></span>
     </div>
   </div>
   

@@ -22,6 +22,7 @@ export class Constants {
   static ROUTE_UNAUTHORIZED = 'unauthorized';
   static ROUTE_LOGIN = 'login';
   static ROUTE_SIGNUP = 'signup';
+  static ROUTE_PROFILE = 'profile';
 
   // Route Parameters
   static PARAM_ID = ':id';

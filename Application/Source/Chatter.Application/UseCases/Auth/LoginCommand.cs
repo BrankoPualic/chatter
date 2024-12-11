@@ -5,7 +5,7 @@ namespace Chatter.Application.UseCases.Auth;
 
 public class LoginCommand(LoginDto data) : BaseCommand<TokenDto>
 {
-	public LoginDto Data { get; set; } = data;
+	public LoginDto Data { get; } = data;
 }
 
 internal class LoginCommandHandler(IDatabaseContext db, ITokenService tokenService, IUserManager userManager) : BaseCommandHandler<LoginCommand, TokenDto>(db)

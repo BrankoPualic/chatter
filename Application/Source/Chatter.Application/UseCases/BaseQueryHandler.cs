@@ -14,6 +14,10 @@ public abstract class BaseQueryHandler<TQuery, TResponse> : BaseHandler<TQuery, 
 	{
 	}
 
+	protected BaseQueryHandler(IDatabaseContext db, IMapper mapper) : base(db, mapper)
+	{
+	}
+
 	protected BaseQueryHandler(IDatabaseContext db, IIdentityUser currentUser, IMapper mapper) : base(db, currentUser, mapper)
 	{
 	}

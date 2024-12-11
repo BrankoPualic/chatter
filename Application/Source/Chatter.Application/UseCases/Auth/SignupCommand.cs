@@ -5,7 +5,7 @@ namespace Chatter.Application.UseCases.Auth;
 
 public class SignupCommand(SignupDto data) : BaseCommand<TokenDto>
 {
-	public SignupDto Data { get; set; } = data;
+	public SignupDto Data { get; } = data;
 }
 
 internal class SignupCommandHandler(IDatabaseContext db, ITokenService tokenService, IUserManager userManager) : BaseCommandHandler<SignupCommand, TokenDto>(db)

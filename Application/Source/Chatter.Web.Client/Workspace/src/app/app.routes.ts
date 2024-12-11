@@ -22,5 +22,12 @@ export const routes: Routes = [
     title: 'Sign up | ' + Constants.TITLE,
     canActivate: [authGuard],
     loadComponent: () => import('./pages/auth/signup/signup.component').then(_ => _.SignupComponent)
+  },
+
+  {
+    path: Constants.ROUTE_PROFILE + '/' + Constants.PARAM_ID,
+    title: 'Profile | ' + Constants.TITLE,
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/profile/profile.component').then(_ => _.ProfileComponent)
   }
 ];

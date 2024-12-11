@@ -3,6 +3,7 @@ import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { EnumNamePipe } from "./pipes/enum-name.pipe";
 import { TimeAgoPipe } from "./pipes/time-ago.pipe";
+import { AbbreviateNumberPipe } from "./pipes/abbreviate-number.pipe";
 
 export const GLOBAL_MODULES = [
   // Modules
@@ -12,5 +13,6 @@ export const GLOBAL_MODULES = [
 
   // Pipes
   EnumNamePipe,
-  TimeAgoPipe
+  TimeAgoPipe,
+  AbbreviateNumberPipe
 ];

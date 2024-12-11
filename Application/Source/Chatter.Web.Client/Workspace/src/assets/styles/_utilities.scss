@@ -24,7 +24,7 @@ $breakpoints: (
 //
 // Paddings and Margins
 //
-@for $i from 1 through 50 {
+@for $i from 0 through 50 {
   // Padding classes
   .padding-#{$i} { padding: #{calc($i / 16)}rem; }      // All sides
   .padding-x-#{$i} { padding-left: #{calc($i / 16)}rem; padding-right: #{calc($i / 16)}rem; } // Horizontal
@@ -46,7 +46,7 @@ $breakpoints: (
 
 @each $breakpoint, $value in $breakpoints {
   @media (min-width: #{$value}) {
-    @for $i from 1 through 50 {
+    @for $i from 0 through 50 {
       // Padding classes
       .padding-#{$breakpoint}-#{$i} { padding: #{calc($i / 16)}rem; }
       .padding-x-#{$breakpoint}-#{$i} { padding-left: #{calc($i / 16)}rem; padding-right: #{calc($i / 16)}rem; }

@@ -58,6 +58,18 @@ export namespace api.Controller {
 			.pipe(map(response => response.body!));
 			
 		}
+		public GetProfile(userId: string) : Observable<api.UserDto>
+		{
+			return this.httpClient.get<api.UserDto>(
+			this.settingsService.createApiUrl('User/GetProfile') + '/' + userId,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
 		constructor (httpClient: HttpClient, settingsService: SettingsService)
 		{
 			super(httpClient, settingsService);
@@ -109,6 +121,9 @@ export namespace api {
 		GenderId: api.eGender;
 		Gender: api.LookupValueDto;
 		IsPrivate: boolean;
+		HasAccess: boolean;
+		Followers: number;
+		Following: number;
 	}
 	@Injectable() export class Providers
 	{

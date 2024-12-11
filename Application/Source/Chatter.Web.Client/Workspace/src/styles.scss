@@ -11,7 +11,7 @@
 }
 
 body {
-  background-color: $background-light;
+  background-color: $off-white;
   color: $soft-black;
 }
 
@@ -38,7 +38,7 @@ body {
 .btn-primary {
   background-color: $primary-red;
   border-color: $primary-red;
-  color: #FFFFFF;  // White text color
+  color: $white;  // White text color
 
   &:hover {
     background-color: darken($primary-red, 10%);
@@ -58,4 +58,36 @@ body {
     color: #A0A0A0; // Light gray text for disabled state
     cursor: not-allowed;
   }
+}
+
+.btn-empty {
+  background-color: transparent;
+  border-color: $neutral-gray;
+  color: $dark-gray;
+
+  &:hover {
+    background-color: darken($neutral-gray, 10%);
+    border-color: darken($neutral-gray, 10%);
+  }
+
+  &:focus, &:active {
+    background-color: transparent !important;
+    border-color: $neutral-gray;
+    box-shadow: none;
+    outline: none;
+  }
+
+  &:disabled {
+    background-color: $btn-disabled-color;
+    border-color: $btn-disabled-color;
+    color: #A0A0A0; // Light gray text for disabled state
+    cursor: not-allowed;
+  }
+}
+
+.gray {
+  color: $neutral-gray;
+}
+.dark-gray {
+  color: $dark-gray;
 }

@@ -1,0 +1,43 @@
+@import '../../../assets/styles/variables';
+
+$image-resolution: 6.5rem;
+
+.profile-info {
+  position: relative;
+  
+  .thumbnail {
+    position: relative;
+    width: 100%;
+    height: 25dvh;
+    z-index: 1;
+    border-radius: 0 0 $border-radius $border-radius;
+    
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+  
+  .wrapper {
+    z-index: 2;
+    position: relative;
+    width: 100%;
+
+    .info {
+    position: relative;
+    top: - calc($image-resolution / 2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+      .profile-image {
+        width: $image-resolution;
+        height: $image-resolution;
+        border-radius: 50%;
+        border: 5px solid $off-white;
+      }
+  
+    }
+  }
+}
