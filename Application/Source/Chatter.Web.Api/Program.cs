@@ -1,19 +1,27 @@
 using Chatter.DependencyRegister;
 using Chatter.Domain;
 using Chatter.Persistence;
+using Chatter.Web.Api;
 using Chatter.Web.Api.Middlewares;
 using Chatter.Web.Api.Objects;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddLogging();
-builder.Services.AddControllers()
-	.AddJsonOptions(options =>
-	{
-		options.JsonSerializerOptions.PropertyNamingPolicy = null;
-		options.JsonSerializerOptions.DictionaryKeyPolicy = null;
-	});
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddControllers()
+	.AddNewtonsoftJson(options =>
+	{
+		options.SerializerSettings.ContractResolver = new ApplicationContractResolver();
+		options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
+		options.SerializerSettings.DefaultValueHandling = Newtonsoft.Json.DefaultValueHandling.IgnoreAndPopulate;
+		options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+
+		options.SerializerSettings.Error = (sender, args) => throw args.ErrorContext.Error;
+	})
+	.AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
+
 builder.Services.AddScoped<IIdentityUser, IdentityUser>();
 builder.Services.AddDbContext<DatabaseContext>();
 
@@ -54,6 +62,7 @@ app.UseCors(builder => builder
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseResponseCaching();
 
 app.MapControllers();
 
