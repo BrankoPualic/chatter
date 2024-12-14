@@ -117,7 +117,8 @@ export namespace api {
 		FullName: string;
 		FirstName: string;
 		LastName: string;
-		ProfileImageUrl: string;
+		ProfilePhoto: string;
+		Thumbnail: string;
 		GenderId: api.eGender;
 		Gender: api.LookupValueDto;
 		IsPrivate: boolean;

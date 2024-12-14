@@ -12,7 +12,9 @@ public class UserDto
 
 	public string LastName { get; set; }
 
-	public string ProfileImageUrl { get; set; }
+	public string ProfilePhoto { get; set; }
+
+	public string Thumbnail { get; set; }
 
 	public eGender? GenderId { get; set; }
 

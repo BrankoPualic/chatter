@@ -18,7 +18,7 @@ export class ProfileService {
   }
 
   setProfile(user: api.UserDto): void {
-    user.ProfileImageUrl = this.getProfilePhoto(user.ProfileImageUrl, user.Gender.Id);
+    user.ProfilePhoto = this.getProfilePhoto(user.ProfilePhoto, user.Gender.Id);
     this._profileSource.next(user);
   }
 }

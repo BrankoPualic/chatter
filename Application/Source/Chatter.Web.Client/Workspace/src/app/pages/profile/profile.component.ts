@@ -44,6 +44,6 @@ export class ProfileComponent extends BaseComponentGeneric<api.UserDto> implemen
       .finally(() => this.loading = false);
   }
 
-  loadProfilePhoto = () => this.profileService.getProfilePhoto(this.user?.ProfileImageUrl, this.user?.GenderId);
+  loadProfilePhoto = () => this.profileService.getProfilePhoto(this.user?.ProfilePhoto, this.user?.GenderId);
 
 }

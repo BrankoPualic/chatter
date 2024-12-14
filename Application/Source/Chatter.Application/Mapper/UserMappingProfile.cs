@@ -1,5 +1,4 @@
 ﻿using Chatter.Application.Dtos.Users;
-using Chatter.Application.Extensions;
 using Chatter.Domain.Models.Application.Users;
 
 namespace Chatter.Application.Mapper;

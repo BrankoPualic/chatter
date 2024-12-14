@@ -11,7 +11,10 @@ internal class GetProfileQueryHandler(IDatabaseContext db, IIdentityUser current
 {
 	public override async Task<ResponseWrapper<UserDto>> Handle(GetProfileQuery request, CancellationToken cancellationToken)
 	{
-		var result = await _db.Users.FirstOrDefaultAsync(_ => _.Id == request.UserId, cancellationToken);
+		var result = await _db.Users
+			.Include(_ => _.Blobs.Where(_ => (_.IsProfilePhoto == true || _.IsThumbnail == true) && _.IsActive == true))
+			.Where(_ => _.Id == request.UserId)
+			.FirstOrDefaultAsync(cancellationToken);
 		if (result == null)
 			return new(ERROR_NOT_FOUND);
 
@@ -26,6 +29,10 @@ internal class GetProfileQueryHandler(IDatabaseContext db, IIdentityUser current
 			.FirstOrDefaultAsync(cancellationToken);
 
 		var data = _mapper.To<UserDto>(result);
+
+		data.ProfilePhoto = result.Blobs.Where(_ => _.IsProfilePhoto == true).FirstOrDefault()?.Url;
+		data.Thumbnail = result.Blobs.Where(_ => _.IsThumbnail == true).FirstOrDefault()?.Url;
+
 		data.Following = follows?.Following ?? 0;
 		data.Followers = follows?.Followers ?? 0;
 

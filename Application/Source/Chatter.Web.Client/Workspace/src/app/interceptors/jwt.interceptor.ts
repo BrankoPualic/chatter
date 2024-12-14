@@ -13,5 +13,6 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
       headers: req.headers.set('Authorization', `Bearer ${token}`)
     });
 
-  return next(req).pipe(delay(2000));
+  return next(req)
+    .pipe(delay(500));
 };
