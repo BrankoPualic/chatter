@@ -29,3 +29,9 @@ public enum eGender
 	Female,
 	Other
 }
+
+public enum eBlobType
+{
+	Image = 100,
+	Video = 200
+}

@@ -1,4 +1,5 @@
-﻿using Chatter.Domain.Models.Application.Users;
+﻿using Chatter.Domain.Models.Application;
+using Chatter.Domain.Models.Application.Users;
 
 namespace Chatter.Persistence;
 
@@ -9,4 +10,6 @@ public partial class DatabaseContext : IDatabaseContext
 	public virtual DbSet<UserLoginLog> Logins { get; set; }
 
 	public virtual DbSet<UserFollow> Follows { get; set; }
+
+	public virtual DbSet<Blob> Blobs { get; set; }
 }

@@ -19,10 +19,6 @@ public class User : BaseIndexAuditedDomain<User>, IConfigurableEntity
 
 	public string Password { get; set; }
 
-	public string ProfileImageUrl { get; set; }
-
-	public string PublicId { get; set; }
-
 	public eGender? GenderId { get; set; }
 
 	public bool IsPrivate { get; set; }
@@ -42,6 +38,9 @@ public class User : BaseIndexAuditedDomain<User>, IConfigurableEntity
 
 	[InverseProperty(nameof(UserFollow.Following))]
 	public virtual ICollection<UserFollow> UserFollowers { get; set; } = [];
+
+	[InverseProperty(nameof(Blob.User))]
+	public virtual ICollection<Blob> Blobs { get; set; } = [];
 
 	//
 	// Indexes
