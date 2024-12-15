@@ -2,12 +2,14 @@
 @import './assets/styles/variables';
 @import './assets/styles/utilities';
 @import './assets/styles/primeng';
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   text-decoration: none !important;
+  font-family: "Funnel Sans", sans-serif;
 }
 
 body {
@@ -90,4 +92,27 @@ body {
 }
 .dark-gray {
   color: $dark-gray;
+}
+
+.action-bar-top {
+  position: relative;
+  height: 5rem;
+
+  .logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1rem;
+
+    svg {
+      width: 10rem;
+    }
+  }
+
+  .icon {
+    span{
+      font-size: 1.2rem;
+    }
+  }
 }

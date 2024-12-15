@@ -29,5 +29,12 @@ export const routes: Routes = [
     title: 'Profile | ' + Constants.TITLE,
     canActivate: [authGuard],
     loadComponent: () => import('./pages/profile/profile.component').then(_ => _.ProfileComponent)
+  },
+
+  {
+    path: Constants.ROUTE_EXPLORE,
+    title: 'Explore | ' + Constants.TITLE,
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/explore/explore.component').then(_ => _.ExploreComponent)
   }
 ];

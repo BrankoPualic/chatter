@@ -7,7 +7,7 @@ import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
   standalone: true,
   imports: [],
   template: `
-  <div class="relative">
+  <div style="position: relative;">
     <span [class]="Icons.SEARCH + ' position-center small light-grey'" style="left: calc(1.5 * 0.75rem)"></span>
     <input
       type="text"
@@ -21,9 +21,18 @@ import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
   @import '../../assets/styles/_variables.scss';
   .search-input {
     padding-left: calc(1.5 * 0.75rem + 14px);
-    background-color: $light-primary;
+    background-color: $background-light;
     border: none;
     // box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  .position-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }`
 })
 export class SearchComponent {

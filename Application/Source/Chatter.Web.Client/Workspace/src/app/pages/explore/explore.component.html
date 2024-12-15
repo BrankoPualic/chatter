@@ -1,0 +1,20 @@
+<app-mobile-navigation-bar/>
+
+<div class="col-xs-12 action-bar-top">
+  <div class="logo">
+    <h2>Explore</h2>
+  </div>
+</div>
+
+<div class="col-xs-12 padding-x-20 margin-bottom-20">
+  <app-search/>
+</div>
+
+<p-tabView [(activeIndex)]="activeTabIndex" (onChange)="onTabChange($event)">
+  <p-tabPanel header="Top">
+  </p-tabPanel>
+  <p-tabPanel header="Users">
+  </p-tabPanel>
+  <p-tabPanel header="Posts">
+  </p-tabPanel>
+</p-tabView>
