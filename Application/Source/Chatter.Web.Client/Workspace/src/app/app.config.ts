@@ -27,7 +27,8 @@ export const appConfig: ApplicationConfig = {
 function controllerProviders(): Provider[] {
   return [
     api.Controller.AuthController,
-    api.Controller.UserController
+    api.Controller.UserController,
+    api.Controller.FollowController
   ]
 }
 

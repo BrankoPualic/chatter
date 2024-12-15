@@ -8,6 +8,9 @@ import { ToastService } from '../../services/toast.service';
 import { ActivatedRoute } from '@angular/router';
 import { GLOBAL_MODULES } from '../../_global.modules';
 import { ProfileService } from '../../services/profile.service';
+import { QService } from '../../services/q.service';
+import { AuthService } from '../../services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -18,22 +21,48 @@ import { ProfileService } from '../../services/profile.service';
 export class ProfileComponent extends BaseComponentGeneric<api.UserDto> implements OnInit {
   user?: api.UserDto;
   userId: string;
+  followData: api.FollowDto;
+  isFollowed = false;
 
   constructor(
     errorService: ErrorService,
     loaderService: PageLoaderService,
     toastService: ToastService,
+    authService: AuthService,
+    private $q: QService,
     private route: ActivatedRoute,
     private profileService: ProfileService,
-    private api_UserController: api.Controller.UserController
+    private api_UserController: api.Controller.UserController,
+    private api_FollowController: api.Controller.FollowController
   ) {
-    super(errorService, loaderService, toastService)
-
-    route.paramMap.subscribe(params => { this.userId = params['get']('id')! });
+    super(errorService, loaderService, toastService, authService)
   }
 
   ngOnInit(): void {
-    this.loadProfile();
+    this.route.paramMap.subscribe(params => {
+      this.userId = params['get']('id')!;
+
+      this.followData = {
+        FollowerId: this.currentUser.id,
+        FollowingId: this.userId
+      };
+
+      this.initialize();
+    });
+  }
+
+  initialize(): void {
+    this.loading = true;
+    this.$q.sequential([
+      () => this.api_UserController.GetProfile(this.userId).toPromise(),
+      () => this.api_FollowController.IsFollowing(this.followData).toPromise()
+    ])
+      .then(result => {
+        this.user = result[0];
+        this.isFollowed = result[1];
+      })
+      .catch(_ => this.error(_.error.Errors))
+      .finally(() => this.loading = false);
   }
 
   loadProfile(): void {
@@ -45,5 +74,23 @@ export class ProfileComponent extends BaseComponentGeneric<api.UserDto> implemen
   }
 
   loadProfilePhoto = () => this.profileService.getProfilePhoto(this.user?.ProfilePhoto, this.user?.GenderId);
+  isMyProfile = () => !!this.currentUser && this.user?.Id === this.currentUser.id;
 
+  follow = () => this.followActions(_ => _.Follow(this.followData));
+  unfollow = () => this.followActions(_ => _.Unfollow(this.followData));
+
+  followActions(func: (api: api.Controller.FollowController) => Observable<any>): void {
+    this.loading = true;
+    this.$q.sequential([
+      () => func(this.api_FollowController).toPromise(),
+      () => this.api_UserController.GetProfile(this.userId).toPromise(),
+      () => this.api_FollowController.IsFollowing(this.followData).toPromise()
+    ])
+      .then(result => {
+        this.user = result[1];
+        this.isFollowed = result[2];
+      })
+      .catch(_ => this.error(_.error.Errors))
+      .finally(() => this.loading = false);
+  }
 }

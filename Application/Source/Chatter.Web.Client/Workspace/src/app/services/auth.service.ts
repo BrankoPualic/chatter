@@ -35,10 +35,12 @@ export class AuthService {
     }
   }
 
-  getCurrentUser(): ICurrentUser | null {
+  getCurrentUser(): ICurrentUser {
     const token = this.getToken();
-    if (!token)
-      return null;
+    if (!token) {
+      this.signout();
+      return {} as ICurrentUser;
+    }
 
     const tokenInfo = this.getDecodedToken(token);
 

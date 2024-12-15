@@ -7,10 +7,10 @@ export interface IModelError {
 }
 
 export interface ICurrentUser {
-    id?: number;
-    username?: string;
-    email?: string;
-    roles?: api.eSystemRole[];
-    token?: string;
-    tokenExpirationDate?: Date;
+    id: string;
+    username: string;
+    email: string;
+    roles: api.eSystemRole[];
+    token: string;
+    tokenExpirationDate: Date;
 }

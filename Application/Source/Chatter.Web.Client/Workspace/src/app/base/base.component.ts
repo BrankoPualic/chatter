@@ -7,6 +7,8 @@ import { ErrorService } from "../services/error.service";
 import { PageLoaderService } from "../services/page-loader.service";
 import { ToastService } from "../services/toast.service";
 import { BaseConstants, IBaseComponent } from "../models/base-component.model";
+import { ICurrentUser } from "../models/models";
+import { AuthService } from "../services/auth.service";
 
 @Injectable()
 export abstract class BaseComponent extends BaseConstants implements IBaseComponent, OnDestroy {
@@ -14,15 +16,18 @@ export abstract class BaseComponent extends BaseConstants implements IBaseCompon
   private _destroy$ = new Subject<void>();
   errors = [];
   hasAccess = false;
+  currentUser: ICurrentUser;
 
   constructor
     (
       protected errorService: ErrorService,
       protected loaderService: PageLoaderService,
-      protected toastService: ToastService
+      protected toastService: ToastService,
+      protected authService: AuthService
     ) {
     super();
     loaderService.loaderState$.pipe(takeUntil(this._destroy$)).subscribe(_ => this._loading = _);
+    this.currentUser = authService.getCurrentUser();
   }
 
   ngOnDestroy(): void {

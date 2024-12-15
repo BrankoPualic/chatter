@@ -5,6 +5,7 @@ import { ToastService } from "../services/toast.service";
 import { BaseComponentGeneric } from "./base.component";
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IBaseFormComponent } from "../models/base-component.model";
+import { AuthService } from "../services/auth.service";
 
 /**
  * Import ReactiveFormsModule inside component imports if it's standalone component.
@@ -18,9 +19,10 @@ export abstract class BaseFormComponent<T extends object> extends BaseComponentG
       errorService: ErrorService,
       loaderService: PageLoaderService,
       toastService: ToastService,
+      authService: AuthService,
       protected fb: FormBuilder
     ) {
-    super(errorService, loaderService, toastService);
+    super(errorService, loaderService, toastService, authService);
 
     this.form = this.fb.group({});
     this.formData = new FormData();

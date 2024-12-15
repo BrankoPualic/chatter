@@ -60,6 +60,34 @@ export namespace api.Controller {
 			.pipe(map(response => response.body!));
 			
 		}
+		public Follow(data: api.FollowDto) : Observable<any>
+		{
+			const body = <any>data;
+			return this.httpClient.post<any>(
+			this.settingsService.createApiUrl('Follow/Follow'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
+		public Unfollow(data: api.FollowDto) : Observable<any>
+		{
+			const body = <any>data;
+			return this.httpClient.post<any>(
+			this.settingsService.createApiUrl('Follow/Unfollow'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
 		constructor (httpClient: HttpClient, settingsService: SettingsService)
 		{
 			super(httpClient, settingsService);

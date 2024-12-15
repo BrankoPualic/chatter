@@ -21,11 +21,11 @@ export class LoginComponent extends BaseFormComponent<api.LoginDto> implements O
     errorService: ErrorService,
     loaderService: PageLoaderService,
     toastService: ToastService,
+    authService: AuthService,
     fb: FormBuilder,
-    private authService: AuthService,
     private api_AuthController: api.Controller.AuthController
   ) {
-    super(errorService, loaderService, toastService, fb);
+    super(errorService, loaderService, toastService, authService, fb);
   }
 
   ngOnInit(): void {

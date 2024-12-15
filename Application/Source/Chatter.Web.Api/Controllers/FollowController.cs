@@ -17,8 +17,11 @@ public class FollowController(IMediator mediator) : BaseController(mediator)
 
 	[HttpPost]
 	[Authorize]
+	[AngularMethod(typeof(void))]
 	public async Task<IActionResult> Follow(FollowDto data) => Result(await Mediator.Send(new FollowCommand(data)));
 
 	[HttpPost]
+	[Authorize]
+	[AngularMethod(typeof(void))]
 	public async Task<IActionResult> Unfollow(FollowDto data) => Result(await Mediator.Send(new UnfollowCommand(data)));
 }

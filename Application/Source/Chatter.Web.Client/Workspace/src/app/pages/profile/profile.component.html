@@ -13,12 +13,27 @@
       <p class="small gray">&commat;{{ user?.Username }}</p>
 
       <div class="w-100 d-flex justify-content-between padding-x-20">
-        <div class="col-xs-10">
-          <button class="btn btn-empty w-100">Edit profile</button>
-        </div>
-        <div class="col-xs-2">
-          <button class="btn btn-empty float-end"><span [class]="Icons.COG"></span></button>
-        </div>
+        @if(isMyProfile()){
+          <div class="col-xs-10">
+            <button class="btn btn-empty w-100">Edit profile</button>
+          </div>
+          <div class="col-xs-2">
+            <button class="btn btn-empty float-end"><span [class]="Icons.COG"></span></button>
+          </div>
+        }
+        @else if(!isFollowed){
+          <div class="col-xs-12">
+            <button class="btn btn-primary w-100" (click)="follow()">Follow</button>
+          </div>
+        }
+        @else {
+          <div class="col-xs-6">
+            <button class="btn btn-empty w-100" (click)="unfollow()">Unfollow</button>
+          </div>
+          <div class="col-xs-6">
+            <button class="btn btn-empty w-100">Message</button>
+          </div>
+        }
       </div>
 
       <div class="w-100 d-flex justify-content-between margin-y-10 padding-x-30">
