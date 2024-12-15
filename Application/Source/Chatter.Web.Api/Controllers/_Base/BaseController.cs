@@ -23,4 +23,10 @@ public class BaseController(IMediator mediator) : ControllerBase
 	public IActionResult ResultNotFound(ResponseWrapper response) => response.IsSuccess ? Ok() : NotFound(response.Errors);
 
 	public IActionResult ResultNotFound<T>(ResponseWrapper<T> response) => response.IsSuccess ? Ok(response.Data) : NotFound(response.Errors);
+
+	public IActionResult ResultWrapper<T>(Func<T> func) => Result(ResponseWrapper.TryRun(func));
+
+	public async Task<IActionResult> ResultWrapper(Task func) => Result(await ResponseWrapper.TryRunAsync(func));
+
+	public async Task<IActionResult> ResultWrapper<T>(Task<T> func) => Result(await ResponseWrapper.TryRunAsync(func));
 }

@@ -44,6 +44,27 @@ export namespace api.Controller {
 			super(httpClient, settingsService);
 		}
 	}
+	@Injectable() export class FollowController extends api.Controller.BaseController
+	{
+		public IsFollowing(data: api.FollowDto) : Observable<boolean>
+		{
+			const body = <any>data;
+			return this.httpClient.post<boolean>(
+			this.settingsService.createApiUrl('Follow/IsFollowing'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
+		constructor (httpClient: HttpClient, settingsService: SettingsService)
+		{
+			super(httpClient, settingsService);
+		}
+	}
 	@Injectable() export class UserController extends api.Controller.BaseController
 	{
 		public GetCurrentUser() : Observable<api.UserDto>
@@ -83,6 +104,11 @@ export namespace api {
 		Name: string;
 		Description: string;
 		BgColor: string;
+	}
+	export class FollowDto
+	{
+		FollowerId: string;
+		FollowingId: string;
 	}
 	export class LoginDto
 	{

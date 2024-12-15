@@ -1,6 +1,6 @@
 ﻿namespace Chatter.Application.UseCases;
 
-public abstract class BaseQueryHandler<TQuery, TResponse> : BaseHandler<TQuery, TResponse>
+public abstract class BaseQueryHandler<TQuery, TResponse> : BaseHandler<TQuery, ResponseWrapper<TResponse>>
 	where TQuery : BaseQuery<TResponse>
 {
 	protected BaseQueryHandler()

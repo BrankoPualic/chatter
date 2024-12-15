@@ -1,6 +1,6 @@
 ﻿namespace Chatter.Application.UseCases;
 
-public abstract class BaseCommandHandler<TCommand> : BaseHandler<TCommand>
+public abstract class BaseCommandHandler<TCommand> : BaseHandler<TCommand, ResponseWrapper>
 	where TCommand : BaseCommand
 {
 	protected BaseCommandHandler()
@@ -14,9 +14,11 @@ public abstract class BaseCommandHandler<TCommand> : BaseHandler<TCommand>
 	protected BaseCommandHandler(IDatabaseContext db, IIdentityUser currentUser) : base(db, currentUser)
 	{
 	}
+
+	public abstract override Task<ResponseWrapper> Handle(TCommand request, CancellationToken cancellationToken);
 }
 
-public abstract class BaseCommandHandler<TCommand, TResponse> : BaseHandler<TCommand, TResponse>
+public abstract class BaseCommandHandler<TCommand, TResponse> : BaseHandler<TCommand, ResponseWrapper<TResponse>>
 	where TCommand : BaseCommand<TResponse>
 {
 	protected BaseCommandHandler()
