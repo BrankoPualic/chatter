@@ -33,8 +33,29 @@ export const routes: Routes = [
 
   {
     path: Constants.ROUTE_EXPLORE,
-    title: 'Explore | ' + Constants.TITLE,
     canActivate: [authGuard],
-    loadComponent: () => import('./pages/explore/explore.component').then(_ => _.ExploreComponent)
+    loadComponent: () => import('./pages/explore/explore.component').then(_ => _.ExploreComponent),
+    children: [
+      {
+        path: '',
+        redirectTo: Constants.ROUTE_TOP,
+        pathMatch: 'full'
+      },
+      {
+        path: Constants.ROUTE_TOP,
+        title: 'Explore Top | ' + Constants.TITLE,
+        loadComponent: () => import('./pages/explore/top/top.component').then(_ => _.TopComponent)
+      },
+      {
+        path: Constants.ROUTE_USERS,
+        title: 'Explore Users | ' + Constants.TITLE,
+        loadComponent: () => import('./pages/explore/users/users.component').then(_ => _.UsersComponent)
+      },
+      {
+        path: Constants.ROUTE_POSTS,
+        title: 'Explore Posts | ' + Constants.TITLE,
+        loadComponent: () => import('./pages/explore/posts/posts.component').then(_ => _.PostsComponent)
+      },
+    ],
   }
 ];

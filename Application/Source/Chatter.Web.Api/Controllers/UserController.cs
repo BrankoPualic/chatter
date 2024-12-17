@@ -1,4 +1,6 @@
-﻿using Chatter.Application.Dtos.Users;
+﻿using Chatter.Application.Dtos;
+using Chatter.Application.Dtos.Users;
+using Chatter.Application.Search;
 using Chatter.Application.UseCases.Users;
 using Chatter.Web.Api.Controllers._Base;
 using Chatter.Web.Api.ReinforcedTypings.Generator;
@@ -19,4 +21,9 @@ public class UserController(IMediator mediator) : BaseController(mediator)
 	[Authorize]
 	[AngularMethod(typeof(UserDto))]
 	public async Task<IActionResult> GetProfile(Guid userId) => Result(await Mediator.Send(new GetProfileQuery(userId)));
+
+	[HttpPost]
+	[Authorize]
+	[AngularMethod(typeof(PagingResult<UserLightDto>))]
+	public async Task<IActionResult> GetUserList(UserSearchOptions options) => Result(await Mediator.Send(new GetUserListQuery(options)));
 }

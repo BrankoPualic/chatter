@@ -119,6 +119,20 @@ export namespace api.Controller {
 			.pipe(map(response => response.body!));
 			
 		}
+		public GetUserList(options: api.UserSearchOptions) : Observable<api.PagingResult<api.UserLightDto>>
+		{
+			const body = <any>options;
+			return this.httpClient.post<api.PagingResult<api.UserLightDto>>(
+			this.settingsService.createApiUrl('User/GetUserList'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
 		constructor (httpClient: HttpClient, settingsService: SettingsService)
 		{
 			super(httpClient, settingsService);
@@ -148,6 +162,11 @@ export namespace api {
 		Id: number;
 		Name: string;
 		Description: string;
+	}
+	export class PagingResult<TData>
+	{
+		Data: TData[];
+		Total: number;
 	}
 	export class SignupDto
 	{
@@ -179,6 +198,21 @@ export namespace api {
 		HasAccess: boolean;
 		Followers: number;
 		Following: number;
+	}
+	export class UserLightDto
+	{
+		Id: string;
+		Username: string;
+		ProfilePhoto: string;
+		GenderId: api.eGender;
+		IsFollowed: boolean;
+	}
+	export class UserSearchOptions
+	{
+		Skip: number;
+		Take: number;
+		Filter: string;
+		TotalCount: boolean;
 	}
 	@Injectable() export class Providers
 	{

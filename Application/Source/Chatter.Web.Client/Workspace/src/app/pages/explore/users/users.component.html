@@ -1,0 +1,20 @@
+<div class="col-xs-12 padding-x-20">
+  @if(users.length > 0){
+    @for (user of users; track $index) {
+    <div class="user" [routerLink]="['/' + Constants.ROUTE_PROFILE, user.Id]">
+      <div class="image">
+          <img [src]="[loadProfilePhoto(user)]" alt="User profile photo">
+        </div>
+  
+        <div>
+          &commat;{{ user.Username }}
+          @if(user.IsFollowed){
+            <span class="font-xs gray">&middot; Following</span>
+          }</div>
+      </div>
+    }
+  }
+  @else if(keyword !== '' && users.length < 1) {
+    No user found!
+  }
+</div>

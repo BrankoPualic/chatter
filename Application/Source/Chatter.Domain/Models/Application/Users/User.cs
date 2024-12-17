@@ -34,10 +34,10 @@ public class User : BaseIndexAuditedDomain<User>, IConfigurableEntity
 	public virtual ICollection<UserLoginLog> Logins { get; set; } = [];
 
 	[InverseProperty(nameof(UserFollow.Follower))]
-	public virtual ICollection<UserFollow> UserFollowing { get; set; } = [];
+	public virtual ICollection<UserFollow> Following { get; set; } = [];
 
 	[InverseProperty(nameof(UserFollow.Following))]
-	public virtual ICollection<UserFollow> UserFollowers { get; set; } = [];
+	public virtual ICollection<UserFollow> Followers { get; set; } = [];
 
 	[InverseProperty(nameof(Blob.User))]
 	public virtual ICollection<Blob> Blobs { get; set; } = [];

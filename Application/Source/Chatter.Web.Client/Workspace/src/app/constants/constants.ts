@@ -24,6 +24,12 @@ export class Constants {
   static ROUTE_SIGNUP = 'signup';
   static ROUTE_PROFILE = 'profile';
   static ROUTE_EXPLORE = 'explore';
+  static ROUTE_EXPLORE_TOP = 'explore/top';
+  static ROUTE_EXPLORE_USERS = 'explore/users';
+  static ROUTE_EXPLORE_POSTS = 'explore/posts';
+  static ROUTE_TOP = 'top';
+  static ROUTE_USERS = 'users';
+  static ROUTE_POSTS = 'posts';
 
   // Route Parameters
   static PARAM_ID = ':id';

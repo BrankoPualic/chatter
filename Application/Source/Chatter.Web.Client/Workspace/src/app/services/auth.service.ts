@@ -38,7 +38,6 @@ export class AuthService {
   getCurrentUser(): ICurrentUser {
     const token = this.getToken();
     if (!token) {
-      this.signout();
       return {} as ICurrentUser;
     }
 

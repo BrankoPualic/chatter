@@ -7,7 +7,7 @@
 </div>
 
 <div class="col-xs-12 padding-x-20 margin-bottom-20">
-  <app-search/>
+  <app-search (onSearch)="onSearch($event)"/>
 </div>
 
 <p-tabView [(activeIndex)]="activeTabIndex" (onChange)="onTabChange($event)">
@@ -18,3 +18,9 @@
   <p-tabPanel header="Posts">
   </p-tabPanel>
 </p-tabView>
+
+<div [ngSwitch]="activeTabIndex">
+  <router-outlet *ngSwitchCase="0" key="top"></router-outlet>
+  <router-outlet *ngSwitchCase="1" key="users"></router-outlet>
+  <router-outlet *ngSwitchCase="2" key="posts"></router-outlet>
+</div>
