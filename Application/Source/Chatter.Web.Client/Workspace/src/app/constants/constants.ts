@@ -30,6 +30,7 @@ export class Constants {
   static ROUTE_TOP = 'top';
   static ROUTE_USERS = 'users';
   static ROUTE_POSTS = 'posts';
+  static ROUTE_INBOX = 'inbox';
 
   // Route Parameters
   static PARAM_ID = ':id';

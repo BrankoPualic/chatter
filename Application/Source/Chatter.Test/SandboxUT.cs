@@ -1,4 +1,5 @@
-﻿using Chatter.Application.Dtos.Follows;
+﻿using Chatter.Application.UseCases.Messaging.Chats;
+using MediatR;
 
 [TestFixture]
 public partial class SandboxUT : BaseUT
@@ -6,15 +7,6 @@ public partial class SandboxUT : BaseUT
 	[Test, Explicit]
 	public async Task SandboxBPR()
 	{
-		var response = await TestHttpClient.TestAsync(new()
-		{
-			Url = "https://localhost:7039/api/Follow/Unfollow",
-			Method = HttpMethod.Post,
-			Payload = new FollowDto
-			{
-				FollowerId = Guid.Empty,
-				FollowingId = Guid.Empty,
-			}
-		});
+		var response = await Get<IMediator>().Send(new GetChatListQuery(new Chatter.Application.Search.ChatSearchOptions()));
 	}
 }

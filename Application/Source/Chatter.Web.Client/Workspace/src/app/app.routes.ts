@@ -57,5 +57,18 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/explore/posts/posts.component').then(_ => _.PostsComponent)
       },
     ],
+  },
+
+  {
+    path: Constants.ROUTE_INBOX,
+    canActivate: [authGuard],
+    children: [
+      {
+        path: '',
+        title: 'Inbox | ' + Constants.TITLE,
+        loadComponent: () => import('./pages/inbox/inbox.component').then(_ => _.InboxComponent),
+        pathMatch: 'full'
+      }
+    ]
   }
 ];

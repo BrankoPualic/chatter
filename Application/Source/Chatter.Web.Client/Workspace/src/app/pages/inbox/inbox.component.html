@@ -1,0 +1,15 @@
+<app-mobile-navigation-bar/>
+
+<div class="col-xs-12 action-bar-top">
+  <div class="logo">
+    <h2>Inbox</h2>
+  </div>
+
+  <div class="float-end icon">
+    <span [class]="Icons.PEN_TO_SQUARE"></span>
+  </div>
+</div>
+
+<div class="col-xs-12 padding-x-20 margin-bottom-20">
+  <app-search (onSearch)="onSearch($event)"/>
+</div>

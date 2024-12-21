@@ -29,4 +29,5 @@ export class IconConstants {
   static BARS = 'pi pi-bars';
   static PLUS = 'pi pi-plus';
   static BELL = 'pi pi-bell';
+  static PEN_TO_SQUARE = 'pi pi-pen-to-square';
 }

@@ -9,6 +9,5 @@ import { IconConstants } from '../../constants/icon-constants';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-
   Icons = IconConstants;
 }

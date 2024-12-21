@@ -6,6 +6,7 @@ global using Chatter.Common;
 global using Chatter.Common.Extensions;
 global using Chatter.Common.Resources;
 global using Chatter.Domain;
+global using Chatter.Domain.Interfaces;
 global using FluentValidation;
 global using FluentValidation.Results;
 global using Humanizer;

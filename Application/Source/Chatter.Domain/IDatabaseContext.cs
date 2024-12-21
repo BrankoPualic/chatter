@@ -1,4 +1,5 @@
 ﻿using Chatter.Domain.Models.Application;
+using Chatter.Domain.Models.Application.Messaging;
 using Chatter.Domain.Models.Application.Users;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,4 +19,14 @@ public partial interface IDatabaseContext : IDatabaseContextBase
 	DbSet<UserFollow> Follows { get; }
 
 	DbSet<Blob> Blobs { get; }
+
+	// Messaging
+
+	DbSet<Chat> Chats { get; }
+
+	DbSet<Message> Messages { get; }
+
+	DbSet<ChatMember> ChatMembers { get; }
+
+	DbSet<Attachment> Attachments { get; }
 }

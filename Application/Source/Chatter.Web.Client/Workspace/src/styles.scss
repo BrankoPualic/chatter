@@ -98,6 +98,9 @@ body {
 .action-bar-top {
   position: relative;
   height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: end;
 
   .logo {
     position: absolute;
@@ -112,6 +115,7 @@ body {
   }
 
   .icon {
+    padding-right: #{calc(20 / 16)}rem;
     span{
       font-size: 1.2rem;
     }

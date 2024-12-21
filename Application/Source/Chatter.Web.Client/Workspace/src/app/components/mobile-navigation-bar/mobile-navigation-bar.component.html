@@ -14,7 +14,7 @@
 
   <div class="d-flex justify-content-between  col-xs-5">
     <div class="icon col-xs-6">
-      <span [class]="Icons.COMMENT"></span>
+      <span [class]="Icons.COMMENT" [routerLink]="['/' + Constants.ROUTE_INBOX]"></span>
     </div>
     <div class="icon col-xs-6">
       <span [class]="Icons.USER" [routerLink]="['/' + Constants.ROUTE_PROFILE, currentUser?.id]"></span>
