@@ -1,6 +1,4 @@
-﻿using Chatter.Common.Extensions;
-
-namespace Chatter.Application.Extensions;
+﻿namespace Chatter.Application.Extensions;
 
 public static class LookupExtensions
 {
