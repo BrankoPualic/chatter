@@ -16,4 +16,6 @@ public static class Constants
 	public const string ERROR_INVALID_OPERATION = "Invalid operation!";
 	public const string ERROR_UNAUTHORIZED = "Unauthorized!";
 	public const string ERROR_INTERNAL_ERROR = "Internal server error!";
+
+	public const int MESSAGE_EDIT_TIME_LIMIT_SECONDS = 600;
 }
