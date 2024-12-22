@@ -44,6 +44,27 @@ export namespace api.Controller {
 			super(httpClient, settingsService);
 		}
 	}
+	@Injectable() export class ChatController extends api.Controller.BaseController
+	{
+		public GetChatList(options: api.ChatSearchOptions) : Observable<api.PagingResultDto<api.ChatDto>>
+		{
+			const body = <any>options;
+			return this.httpClient.post<api.PagingResultDto<api.ChatDto>>(
+			this.settingsService.createApiUrl('Chat/GetChatList'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
+		constructor (httpClient: HttpClient, settingsService: SettingsService)
+		{
+			super(httpClient, settingsService);
+		}
+	}
 	@Injectable() export class FollowController extends api.Controller.BaseController
 	{
 		public IsFollowing(data: api.FollowDto) : Observable<boolean>
@@ -119,10 +140,10 @@ export namespace api.Controller {
 			.pipe(map(response => response.body!));
 			
 		}
-		public GetUserList(options: api.UserSearchOptions) : Observable<api.PagingResult<api.UserLightDto>>
+		public GetUserList(options: api.UserSearchOptions) : Observable<api.PagingResultDto<api.UserLightDto>>
 		{
 			const body = <any>options;
-			return this.httpClient.post<api.PagingResult<api.UserLightDto>>(
+			return this.httpClient.post<api.PagingResultDto<api.UserLightDto>>(
 			this.settingsService.createApiUrl('User/GetUserList'),
 			body,
 			{
@@ -140,6 +161,25 @@ export namespace api.Controller {
 	}
 }
 export namespace api {
+	export class ChatDto
+	{
+		Id: string;
+		Name: string;
+		IsGroup: boolean;
+		IsMuted: boolean;
+		ImageUrl: string;
+		LastMessageOn: Date;
+		LastMessage: string;
+		LastMessageStatusId: number;
+		UserGenderId: api.eGender;
+	}
+	export class ChatSearchOptions
+	{
+		Skip: number;
+		Take: number;
+		Filter: string;
+		TotalCount: boolean;
+	}
 	export class EnumProvider
 	{
 		Id: number;
@@ -163,7 +203,7 @@ export namespace api {
 		Name: string;
 		Description: string;
 	}
-	export class PagingResult<TData>
+	export class PagingResultDto<TData>
 	{
 		Data: TData[];
 		Total: number;
