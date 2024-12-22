@@ -15,14 +15,14 @@ internal class GetChatListQueryHandler(IDatabaseContext db, IIdentityUser curren
 	{
 		var filters = new List<Expression<Func<Chat, bool>>>()
 		{
-			_ => _.Memebers.Any(_ => _.UserId == _currentUser.Id)
+			_ => _.Members.Any(_ => _.UserId == _currentUser.Id)
 		};
 
 		if (request.Options.Filter.IsNotNullOrWhiteSpace())
 		{
 			filters.Add(_ => _.IsGroup
 				? _.GroupName.Contains(request.Options.Filter)
-				: _.Memebers.Any(_ => _.UserId != _currentUser.Id && _.User.Username.Contains(request.Options.Filter))
+				: _.Members.Any(_ => _.UserId != _currentUser.Id && _.User.Username.Contains(request.Options.Filter))
 			);
 		}
 

@@ -13,7 +13,7 @@ public class Chat : BaseIndexAuditedDomain<Chat>, IConfigurableEntity
 	public DateTime LastMessageOn { get; set; }
 
 	[InverseProperty(nameof(Chat))]
-	public virtual ICollection<ChatMember> Memebers { get; set; } = [];
+	public virtual ICollection<ChatMember> Members { get; set; } = [];
 
 	[InverseProperty(nameof(Chat))]
 	public virtual ICollection<Message> Messages { get; set; } = [];

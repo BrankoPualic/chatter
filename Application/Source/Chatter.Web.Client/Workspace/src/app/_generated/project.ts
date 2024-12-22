@@ -114,6 +114,69 @@ export namespace api.Controller {
 			super(httpClient, settingsService);
 		}
 	}
+	@Injectable() export class MessageController extends api.Controller.BaseController
+	{
+		public GetMessageList(options: api.MessageSearchOptions) : Observable<api.PagingResultDto<api.MessageDto>>
+		{
+			const body = <any>options;
+			return this.httpClient.post<api.PagingResultDto<api.MessageDto>>(
+			this.settingsService.createApiUrl('Message/GetMessageList'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
+		public CreateMessage(data: api.MessageCreateDto) : Observable<any>
+		{
+			const body = <any>data;
+			return this.httpClient.post<any>(
+			this.settingsService.createApiUrl('Message/CreateMessage'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
+		public EditMessage(data: api.MessageDto) : Observable<any>
+		{
+			const body = <any>data;
+			return this.httpClient.post<any>(
+			this.settingsService.createApiUrl('Message/EditMessage'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
+		public DeleteMessage(id: string) : Observable<any>
+		{
+			const body = <any>id;
+			return this.httpClient.post<any>(
+			this.settingsService.createApiUrl('Message/DeleteMessage'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
+		constructor (httpClient: HttpClient, settingsService: SettingsService)
+		{
+			super(httpClient, settingsService);
+		}
+	}
 	@Injectable() export class UserController extends api.Controller.BaseController
 	{
 		public GetCurrentUser() : Observable<api.UserDto>
@@ -161,6 +224,25 @@ export namespace api.Controller {
 	}
 }
 export namespace api {
+	export class AttachmentDto
+	{
+		Id: string;
+		MessageId: string;
+		BlobId: string;
+		Order: number;
+		Blob: api.BlobDto;
+	}
+	export class BlobDto
+	{
+		Id: string;
+		UserId: string;
+		TypeId: number;
+		Type: api.LookupValueDto;
+		MimeType: string;
+		Url: string;
+		Size: number;
+		Duration: number;
+	}
 	export class ChatDto
 	{
 		Id: string;
@@ -202,6 +284,39 @@ export namespace api {
 		Id: number;
 		Name: string;
 		Description: string;
+	}
+	export class MessageCreateDto
+	{
+		ChatId: string;
+		SenderId: string;
+		RecipientId: string;
+		Content: string;
+		TypeId: number;
+		StatusId: number;
+		Attachments: api.AttachmentDto[];
+	}
+	export class MessageDto
+	{
+		Id: string;
+		ChatId: string;
+		UserId: string;
+		Content: string;
+		TypeId: number;
+		Type: api.LookupValueDto;
+		StatusId: number;
+		Status: api.LookupValueDto;
+		IsEditable: boolean;
+		CreatedOn: Date;
+		User: api.UserDto;
+		Attachments: api.AttachmentDto[];
+	}
+	export class MessageSearchOptions
+	{
+		ChatId: string;
+		Skip: number;
+		Take: number;
+		Filter: string;
+		TotalCount: boolean;
 	}
 	export class PagingResultDto<TData>
 	{
