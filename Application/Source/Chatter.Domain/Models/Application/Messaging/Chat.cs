@@ -10,7 +10,12 @@ public class Chat : BaseIndexAuditedDomain<Chat>, IConfigurableEntity
 
 	public bool IsGroup { get; set; }
 
+	public Guid? GroupImageId { get; set; }
+
 	public DateTime LastMessageOn { get; set; }
+
+	[ForeignKey(nameof(GroupImageId))]
+	public Blob GroupImage { get; set; }
 
 	[InverseProperty(nameof(Chat))]
 	public virtual ICollection<ChatMember> Members { get; set; } = [];
