@@ -373,6 +373,7 @@ export namespace api {
 		getSystemRoles() : api.EnumProvider[]
 		{
 			return [
+			    { Id: 0, Name: 'NotSet', Description: '', BgColor: '' },
 			    { Id: 1, Name: 'SystemAdministrator', Description: 'System Administrator', BgColor: '' },
 			    { Id: 2, Name: 'Member', Description: 'Member', BgColor: '' },
 			    { Id: 3, Name: 'UserAdmin', Description: 'User Admin', BgColor: '' },
@@ -391,6 +392,7 @@ export namespace api {
 		}
 	}
 	export enum eSystemRole {
+		NotSet = 0,
 		SystemAdministrator = 1,
 		Member = 2,
 		UserAdmin = 3,

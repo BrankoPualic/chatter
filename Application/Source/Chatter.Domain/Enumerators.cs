@@ -4,6 +4,9 @@ namespace Chatter.Domain;
 
 public enum eBlobType
 {
+	[Description("")]
+	NotSet = 0,
+
 	Image = 100,
 	Video = 200
 }
@@ -28,20 +31,28 @@ public enum eGender
 	[Description("")]
 	NotSet = 0,
 
-	Male,
-	Female,
-	Other
+	Male = 1,
+	Female = 2,
+	Other = 3
 }
 
 public enum eMessageStatus
 {
-	Sent = 0,
-	Delivered = 1,
-	Seen = 2
+	[Description("")]
+	NotSet = 0,
+
+	Draft = 1,
+	Sent = 2,
+	Delivered = 3,
+	Seen = 4,
+	Forwarded = 5
 }
 
 public enum eSystemRole
 {
+	[Description("")]
+	NotSet = 0,
+
 	[Description("System Administrator")]
 	SystemAdministrator = 1,
 
@@ -60,7 +71,10 @@ public enum eSystemRole
 
 public enum eMessageType
 {
-	Text = 0,
+	[Description("")]
+	NotSet = 0,
+
+	Text = 1,
 	Image = 100,
 	Video = 200,
 	Document = 300,
