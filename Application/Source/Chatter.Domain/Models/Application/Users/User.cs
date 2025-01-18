@@ -39,8 +39,8 @@ public class User : BaseIndexAuditedDomain<User>, IConfigurableEntity
 	[InverseProperty(nameof(UserFollow.Following))]
 	public virtual ICollection<UserFollow> Followers { get; set; } = [];
 
-	[InverseProperty(nameof(Blob.User))]
-	public virtual ICollection<Blob> Blobs { get; set; } = [];
+	[InverseProperty(nameof(UserBlob.User))]
+	public virtual ICollection<UserBlob> Blobs { get; set; } = [];
 
 	//
 	// Indexes

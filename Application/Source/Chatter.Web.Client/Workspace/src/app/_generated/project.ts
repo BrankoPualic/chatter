@@ -235,7 +235,6 @@ export namespace api {
 	export class BlobDto
 	{
 		Id: string;
-		UserId: string;
 		TypeId: number;
 		Type: api.LookupValueDto;
 		MimeType: string;

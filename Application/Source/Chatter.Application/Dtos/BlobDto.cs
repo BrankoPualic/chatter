@@ -4,8 +4,6 @@ public class BlobDto
 {
 	public Guid Id { get; set; }
 
-	public Guid UserId { get; set; }
-
 	public eBlobType TypeId { get; set; }
 
 	public LookupValueDto Type { get; set; }

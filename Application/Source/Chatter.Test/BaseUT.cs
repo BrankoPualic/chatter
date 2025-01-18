@@ -15,6 +15,7 @@ public abstract class BaseUT
 		var services = new ServiceCollection();
 
 		services.AddLogging();
+		services.AddDbContext<DatabaseContext>();
 		services.AllAplicationServices();
 		services.AddSingleton(MockIdentityUser());
 

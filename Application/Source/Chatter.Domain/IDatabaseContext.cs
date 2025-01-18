@@ -18,6 +18,8 @@ public partial interface IDatabaseContext : IDatabaseContextBase
 
 	DbSet<UserFollow> Follows { get; }
 
+	DbSet<UserBlob> UserBlobs { get; }
+
 	DbSet<Blob> Blobs { get; }
 
 	// Messaging

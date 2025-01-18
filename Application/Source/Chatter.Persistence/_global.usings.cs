@@ -5,3 +5,4 @@ global using Chatter.Domain.Interfaces;
 global using Chatter.Domain.Models;
 global using Microsoft.Data.SqlClient;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Migrations;

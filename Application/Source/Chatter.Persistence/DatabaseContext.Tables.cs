@@ -12,6 +12,8 @@ public partial class DatabaseContext : IDatabaseContext
 
 	public virtual DbSet<UserFollow> Follows { get; set; }
 
+	public virtual DbSet<UserBlob> UserBlobs { get; set; }
+
 	public virtual DbSet<Blob> Blobs { get; set; }
 
 	// Messaging

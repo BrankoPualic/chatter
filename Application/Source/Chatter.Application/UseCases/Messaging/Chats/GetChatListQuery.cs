@@ -36,7 +36,10 @@ internal class GetChatListQueryHandler(IDatabaseContext db, IIdentityUser curren
 				_.ChatId,
 				_.UserId,
 				_.User.Username,
-				UserImage = _.User.Blobs.Where(_ => _.IsProfilePhoto == true && _.IsActive == true).FirstOrDefault(),
+				UserImage = _.User.Blobs
+								.Where(_ => _.IsProfilePhoto == true && _.Blob.IsActive == true)
+								.Select(_ => _.Blob)
+								.FirstOrDefault(),
 				_.IsMuted,
 				_.User.GenderId
 			})

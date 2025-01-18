@@ -12,11 +12,18 @@ internal class GetProfileQueryHandler(IDatabaseContext db, IIdentityUser current
 	public override async Task<ResponseWrapper<UserDto>> Handle(GetProfileQuery request, CancellationToken cancellationToken)
 	{
 		var result = await _db.Users
-			.Include(_ => _.Blobs.Where(_ => (_.IsProfilePhoto == true || _.IsThumbnail == true) && _.IsActive == true))
+			//.Include(_ => _.Blobs.Where(_ => (_.IsProfilePhoto == true || _.IsThumbnail == true) && _.Blob.IsActive == true))
 			.Where(_ => _.Id == request.UserId)
 			.FirstOrDefaultAsync(cancellationToken);
 		if (result == null)
 			return new(ERROR_NOT_FOUND);
+
+		await _db.UserBlobs
+			.Where(_ => _.UserId == request.UserId)
+			.Where(_ => _.IsProfilePhoto == true || _.IsThumbnail == true)
+			.Where(_ => _.Blob.IsActive == true)
+			.Include(_ => _.Blob)
+			.ToListAsync(cancellationToken);
 
 		var follows = await _db.Follows
 			.Where(_ => _.FollowerId == request.UserId || _.FollowingId == request.UserId)
@@ -30,8 +37,8 @@ internal class GetProfileQueryHandler(IDatabaseContext db, IIdentityUser current
 
 		var data = _mapper.To<UserDto>(result);
 
-		data.ProfilePhoto = result.Blobs.Where(_ => _.IsProfilePhoto == true).FirstOrDefault()?.Url;
-		data.Thumbnail = result.Blobs.Where(_ => _.IsThumbnail == true).FirstOrDefault()?.Url;
+		data.ProfilePhoto = result.Blobs.Where(_ => _.IsProfilePhoto == true).Select(_ => _.Blob).FirstOrDefault()?.Url;
+		data.Thumbnail = result.Blobs.Where(_ => _.IsThumbnail == true).Select(_ => _.Blob).FirstOrDefault()?.Url;
 
 		data.Following = follows?.Following ?? 0;
 		data.Followers = follows?.Followers ?? 0;

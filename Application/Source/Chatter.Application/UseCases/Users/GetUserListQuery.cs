@@ -31,7 +31,7 @@ internal class GetUserListQueryHandler(IDatabaseContext db, IIdentityUser curren
 			Id = _.Id,
 			Username = _.Username,
 			GenderId = _.GenderId,
-			ProfilePhoto = _.Blobs.Where(_ => _.IsProfilePhoto == true && _.IsActive == true).Any() ? _.Blobs.FirstOrDefault().Url : null,
+			ProfilePhoto = _.Blobs.Where(_ => _.IsProfilePhoto == true && _.Blob.IsActive == true).Any() ? _.Blobs.Select(_ => _.Blob).FirstOrDefault().Url : null,
 			IsFollowed = _.Followers.Where(_ => _.FollowerId == _currentUser.Id).Any(),
 		}, filters);
 
