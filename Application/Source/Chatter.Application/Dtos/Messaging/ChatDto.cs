@@ -18,5 +18,7 @@ public class ChatDto
 
 	public eMessageStatus LastMessageStatusId { get; set; }
 
+	public bool IsLastMessageMine { get; set; }
+
 	public eGender? UserGenderId { get; set; }
 }

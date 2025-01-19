@@ -28,7 +28,9 @@ function controllerProviders(): Provider[] {
   return [
     api.Controller.AuthController,
     api.Controller.UserController,
-    api.Controller.FollowController
+    api.Controller.FollowController,
+    api.Controller.ChatController,
+    api.Controller.MessageController
   ]
 }
 

@@ -26,7 +26,7 @@ internal class GetChatListQueryHandler(IDatabaseContext db, IIdentityUser curren
 			);
 		}
 
-		var result = await _db.Chats.SearchAsync(request.Options, _ => _.LastMessageOn, true, filters);
+		var result = await _db.Chats.SearchAsync(request.Options, _ => _.LastMessageOn, true, filters, _ => _.GroupImage);
 		var ids = result.Data.SelectIds();
 
 		var members = await _db.ChatMembers
@@ -45,15 +45,15 @@ internal class GetChatListQueryHandler(IDatabaseContext db, IIdentityUser curren
 			})
 			.ToListAsync(cancellationToken);
 
-		var lastMessageStatuses = await _db.Chats
+		var lastMessageInformation = await _db.Chats
 			.Where(_ => ids.Contains(_.Id))
 			.Select(_ => new
 			{
 				ChatId = _.Id,
-				Status = _.Messages
+				Information = _.Messages
 					.OrderByDescending(_ => _.CreatedOn)
-					.Select(_ => _.Status)
-					.FirstOrDefault()
+					.Select(_ => new { _.Status, _.Content, _.UserId })
+					.FirstOrDefault(),
 			})
 			.ToListAsync(cancellationToken);
 
@@ -68,10 +68,12 @@ internal class GetChatListQueryHandler(IDatabaseContext db, IIdentityUser curren
 				Id = chat.Id,
 				Name = chat.IsGroup ? chat.GroupName : chatMembers.Where(_ => _.UserId != _currentUser.Id).Select(_ => _.Username).FirstOrDefault(),
 				IsMuted = chatMembers.Where(_ => _.UserId == _currentUser.Id).Select(_ => _.IsMuted).FirstOrDefault(),
-				ImageUrl = chat.IsGroup ? null : chatMembers.Where(_ => _.UserId != _currentUser.Id).Select(_ => _.UserImage).FirstOrDefault()?.Url,
+				ImageUrl = chat.IsGroup ? chat.GroupImage.Url : chatMembers.Where(_ => _.UserId != _currentUser.Id).Select(_ => _.UserImage).FirstOrDefault()?.Url,
+				LastMessage = lastMessageInformation.Where(_ => _.ChatId == chat.Id).Select(_ => _.Information.Content).FirstOrDefault(),
 				LastMessageOn = chat.LastMessageOn,
-				LastMessageStatusId = lastMessageStatuses.Where(_ => _.ChatId == chat.Id).Select(_ => _.Status).FirstOrDefault(),
+				LastMessageStatusId = lastMessageInformation.Where(_ => _.ChatId == chat.Id).Select(_ => _.Information.Status).FirstOrDefault(),
 				UserGenderId = chat.IsGroup ? null : chatMembers.Where(_ => _.UserId != _currentUser.Id).Select(_ => _.GenderId).FirstOrDefault(),
+				IsLastMessageMine = lastMessageInformation.Where(_ => _.ChatId == chat.Id).Select(_ => _.Information.UserId).FirstOrDefault() == _currentUser.Id,
 			};
 
 			data.Add(projection);

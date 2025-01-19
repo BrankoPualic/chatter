@@ -84,9 +84,9 @@ public static class IDatabaseContextExtensions
 		if (withoutConvert is MemberExpression memeberExpression)
 		{
 			var thisPart = memeberExpression.Member.Name;
-			if (!TryParsePath(memeberExpression.Expression, out var parentPart))
-				return false;
-			//TryParsePath(memeberExpression.Expression, out var parentPart);
+			//if (!TryParsePath(memeberExpression.Expression, out var parentPart))
+			//	return false;
+			TryParsePath(memeberExpression.Expression, out var parentPart);
 			path = parentPart == null ? thisPart : $"{parentPart}.{thisPart}";
 			return true;
 		}

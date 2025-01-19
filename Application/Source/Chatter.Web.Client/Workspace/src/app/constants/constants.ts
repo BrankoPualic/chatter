@@ -1,6 +1,7 @@
 export class Constants {
   static DEFAULT_PHOTO_MALE = 'default-avatar-profile-picture-male-icon.png';
   static DEFAULT_PHOTO_FEMALE = 'default-avatar-profile-picture-female-icon.png';
+  static DEFAULT_PHOTO_GROUP = 'default-group-image.jpg';
 
   static TOKEN = 'token.1';
 
@@ -31,6 +32,7 @@ export class Constants {
   static ROUTE_USERS = 'users';
   static ROUTE_POSTS = 'posts';
   static ROUTE_INBOX = 'inbox';
+  static ROUTE_CHAT = 'chat';
 
   // Route Parameters
   static PARAM_ID = ':id';

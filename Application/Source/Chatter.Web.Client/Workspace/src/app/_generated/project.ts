@@ -251,7 +251,8 @@ export namespace api {
 		ImageUrl: string;
 		LastMessageOn: Date;
 		LastMessage: string;
-		LastMessageStatusId: number;
+		LastMessageStatusId: api.eMessageStatus;
+		IsLastMessageMine: boolean;
 		UserGenderId: api.eGender;
 	}
 	export class ChatSearchOptions
@@ -290,8 +291,8 @@ export namespace api {
 		SenderId: string;
 		RecipientId: string;
 		Content: string;
-		TypeId: number;
-		StatusId: number;
+		TypeId: api.eMessageType;
+		StatusId: api.eMessageStatus;
 		Attachments: api.AttachmentDto[];
 	}
 	export class MessageDto
@@ -300,9 +301,9 @@ export namespace api {
 		ChatId: string;
 		UserId: string;
 		Content: string;
-		TypeId: number;
+		TypeId: api.eMessageType;
 		Type: api.LookupValueDto;
-		StatusId: number;
+		StatusId: api.eMessageStatus;
 		Status: api.LookupValueDto;
 		IsEditable: boolean;
 		CreatedOn: Date;
@@ -404,5 +405,21 @@ export namespace api {
 		Male = 1,
 		Female = 2,
 		Other = 3
+	}
+	export enum eMessageStatus {
+		NotSet = 0,
+		Draft = 1,
+		Sent = 2,
+		Delivered = 3,
+		Seen = 4,
+		Forwarded = 5
+	}
+	export enum eMessageType {
+		NotSet = 0,
+		Text = 1,
+		Image = 100,
+		Video = 200,
+		Document = 300,
+		Voice = 400
 	}
 }

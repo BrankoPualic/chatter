@@ -89,7 +89,9 @@ public static class FluentConfiguration
 
 		Type[] enums = [
 			typeof(eSystemRole),
-			typeof(eGender)
+			typeof(eGender),
+			typeof(eMessageStatus),
+			typeof(eMessageType)
 		];
 
 		builder.ExportAsEnums(enums,
