@@ -27,4 +27,7 @@ export class Functions {
 
   // Object
   static clone = <T extends object>(model?: T): T => !!model ? cloneDeep(model) : {} as T;
+
+  // String
+  static formatString = (text?: string): string => !!text ? text.replace(/\n/g, '<br/>') : '';
 }

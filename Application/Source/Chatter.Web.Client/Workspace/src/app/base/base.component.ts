@@ -49,6 +49,7 @@ export abstract class BaseComponent extends BaseConstants implements IBaseCompon
 
   // Functions
   clone = Functions.clone;
+  formatString = Functions.formatString;
 
   // Notiifcations
   error(error: Record<string, string[]>) {

@@ -1,0 +1,57 @@
+@if(chat){
+  <div class="col-xs-12 action-bar-top justify-content-between box-shadow" style="height: 4rem">
+    <div class="d-flex align-items-center">
+      <span class="font-lg padding-x-10" [class]="Icons.ANGLE_LEFT" [routerLink]="['/' + Constants.ROUTE_INBOX]"></span>
+      <div [routerLink]="['/' + Constants.ROUTE_PROFILE, chat.UserId]" class="d-flex align-items-center">
+        <div class="chat-image">
+          <img [src]="[loadChatPhoto()]" alt="Chat image" class="img-fluid rounded-circle">
+        </div>
+        <span>{{ chat.Name }}</span>
+      </div>
+    </div>
+  
+    <div>
+      <span class="font-lg padding-x-10" [class]="Icons.ELLIPSIS"></span>
+    </div>
+  </div>
+
+  <div class="col-xs-12 padding-y-10">
+    @for(message of messages; track $index){
+      @if(displayDate($index)){
+        <div class="text-center margin-bottom-8">
+          <span class="small gray">{{ message.CreatedOn | date: DateConstants.FORMAT_d_MMM_yyyy }}</span>
+        </div>
+      }
+      <div class="d-flex"
+        [ngClass]="{
+          'flex-row-reverse' : message.IsMine,
+          'flex-row': !message.IsMine
+          }">
+        @if(displayImage(message, $index)){
+          <div class="image margin-right-10">
+            <img [src]="getUserImage(message.User)" alt="User image" class="img-fluid rounded-circle">
+          </div>
+        }
+        <div
+          class="message margin-bottom-10"
+          [ngClass]="{
+            'other': !message.IsMine,
+            'my': message.IsMine,
+            'indent-message': indentMessage(message, $index)
+          }">
+          <div [innerHTML]="formatString(message.Content)"></div>
+        </div>
+      </div>
+    }
+  </div>
+
+
+  <div class="col-xs-12 bottom-actions shadow-box align-row-center justify-content-between">
+    <div class="col-xs-12" style="position: relative">
+      <textarea class="form-control w-100" rows="1" style="resize: none; padding-right: calc(0.375rem + 40px + 0.375rem)" placeholder="Message" [(ngModel)]="message"></textarea>
+    <div class="icon float-end btn-send" (click)="submit()">
+      <span [class]="Icons.SEND" style="font-size: 1.1rem; color: white"></span>
+    </div>
+    </div>
+  </div>
+}

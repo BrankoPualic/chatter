@@ -16,4 +16,9 @@ public class ChatController(IMediator mediator) : BaseController(mediator)
 	[Authorize]
 	[AngularMethod(typeof(PagingResultDto<ChatDto>))]
 	public async Task<IActionResult> GetChatList(ChatSearchOptions options) => Result(await Mediator.Send(new GetChatListQuery(options)));
+
+	[HttpPost]
+	[Authorize]
+	[AngularMethod(typeof(ChatLightDto))]
+	public async Task<IActionResult> GetChat(MessageSearchOptions options) => Result(await Mediator.Send(new GetChatQuery(options)));
 }

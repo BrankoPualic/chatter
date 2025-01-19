@@ -15,17 +15,15 @@ public class MessageDto
 
 	public eMessageType TypeId { get; set; }
 
-	public LookupValueDto Type { get; set; }
-
 	public eMessageStatus StatusId { get; set; }
-
-	public LookupValueDto Status { get; set; }
 
 	public bool IsEditable { get; set; }
 
+	public bool IsMine { get; set; }
+
 	public DateTime CreatedOn { get; set; }
 
-	public UserDto User { get; set; }
+	public UserLightDto User { get; set; }
 
 	public List<AttachmentDto> Attachments { get; set; } = [];
 

@@ -9,10 +9,9 @@ public class MessagingMappingProfile : AutoMapperProfile
 	{
 		CreateMap<Message, MessageDto>()
 			.ForMember(dest => dest.StatusId, opt => opt.MapFrom(src => src.Status))
-			.ForMember(dest => dest.IsEditable, opt => opt.MapFrom(src => src.IsEditable()))
-			.ForLookup(_ => _.Type, _ => _.TypeId)
-			.ForLookup(_ => _.Status, _ => _.Status);
+			.ForMember(dest => dest.IsEditable, opt => opt.MapFrom(src => src.IsEditable()));
 		CreateMap<Attachment, AttachmentDto>();
 		CreateMap<Chat, ChatDto>();
+		CreateMap<Chat, ChatLightDto>();
 	}
 }

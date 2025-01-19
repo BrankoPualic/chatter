@@ -60,6 +60,20 @@ export namespace api.Controller {
 			.pipe(map(response => response.body!));
 			
 		}
+		public GetChat(options: api.MessageSearchOptions) : Observable<api.ChatLightDto>
+		{
+			const body = <any>options;
+			return this.httpClient.post<api.ChatLightDto>(
+			this.settingsService.createApiUrl('Chat/GetChat'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
 		constructor (httpClient: HttpClient, settingsService: SettingsService)
 		{
 			super(httpClient, settingsService);
@@ -255,6 +269,17 @@ export namespace api {
 		IsLastMessageMine: boolean;
 		UserGenderId: api.eGender;
 	}
+	export class ChatLightDto
+	{
+		Id: string;
+		UserId: string;
+		Name: string;
+		IsGroup: boolean;
+		IsMuted: boolean;
+		ImageUrl: string;
+		UserGenderId: api.eGender;
+		Messages: api.PagingResultDto<api.MessageDto>;
+	}
 	export class ChatSearchOptions
 	{
 		Skip: number;
@@ -302,12 +327,11 @@ export namespace api {
 		UserId: string;
 		Content: string;
 		TypeId: api.eMessageType;
-		Type: api.LookupValueDto;
 		StatusId: api.eMessageStatus;
-		Status: api.LookupValueDto;
 		IsEditable: boolean;
+		IsMine: boolean;
 		CreatedOn: Date;
-		User: api.UserDto;
+		User: api.UserLightDto;
 		Attachments: api.AttachmentDto[];
 	}
 	export class MessageSearchOptions

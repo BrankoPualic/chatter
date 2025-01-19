@@ -68,6 +68,11 @@ export const routes: Routes = [
         title: 'Inbox | ' + Constants.TITLE,
         loadComponent: () => import('./pages/inbox/inbox.component').then(_ => _.InboxComponent),
         pathMatch: 'full'
+      },
+      {
+        path: Constants.ROUTE_CHAT + '/' + Constants.PARAM_ID,
+        title: 'Chat | ' + Constants.TITLE,
+        loadComponent: () => import('./pages/inbox/chat/chat.component').then(_ => _.ChatComponent)
       }
     ]
   }

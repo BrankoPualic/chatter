@@ -17,7 +17,7 @@
 <div class="col-xs-12 padding-x-20">
   @if(chats.length > 0){
     @for(chat of chats; track $index) {
-      <div class="chat" [routerLink]="['/' + Constants.ROUTE_CHAT, chat.Id]">
+      <div class="chat" [routerLink]="['/' + Constants.ROUTE_INBOX + '/' + Constants.ROUTE_CHAT, chat.Id]">
         <div class="image">
           <img [src]="[loadChatPhoto(chat)]" alt="Chat photo">
         </div>
@@ -25,7 +25,7 @@
         <div class="d-flex flex-column align-items-start" style="width: calc(100% - 45px - 0.5rem)">
           <div class="col-xs-12">
             <span class="float-start">{{ chat.Name }}</span>
-            <span class="float-end small">{{ chat.LastMessageOn | timeAgo }}</span>
+            <span class="float-end smaller">{{ chat.LastMessageOn | timeAgo }}</span>
           </div>
           <div class="col-xs-12" [ngClass]="{'font-weight-bold' : isUnreadMessage(chat)}" style="text-overflow: ellipsis; text-wrap: nowrap; overflow: hidden;">
             @if(chat.IsLastMessageMine){
