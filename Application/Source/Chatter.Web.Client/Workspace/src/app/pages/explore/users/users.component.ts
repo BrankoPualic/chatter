@@ -45,7 +45,10 @@ export class UsersComponent extends BaseComponentGeneric<api.UserLightDto> {
     options.Take = 25;
 
     this.api_UserController.GetUserList(options).toPromise()
-      .then(_ => this.users = _!.Data)
+      .then(_ => {
+        if (_?.Data)
+          this.users = _.Data
+      })
       .catch(_ => this.error(_.error.Errors))
       .finally(() => this.loading = false);
   }

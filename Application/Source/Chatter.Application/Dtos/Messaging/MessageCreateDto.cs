@@ -24,6 +24,6 @@ public class MessageCreateDto
 		model.UserId = SenderId;
 		model.Content = Content;
 		model.TypeId = TypeId;
-		model.Status = StatusId;
+		model.Status = eMessageStatus.Delivered;
 	}
 }

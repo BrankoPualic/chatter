@@ -31,7 +31,6 @@ internal class CreateMessageCommandHandler(IDatabaseContext db, IIdentityUser cu
 			};
 
 			_db.Create(chat);
-			//await _db.SaveChangesAsync(true, cancellationToken);
 		}
 		else if (chat?.Id == request.Data.ChatId)
 		{

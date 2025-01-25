@@ -46,7 +46,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
 
-  isUnreadMessage = (chat: api.ChatDto) => !chat.IsLastMessageMine && chat.LastMessageStatusId === api.eMessageStatus.Sent;
+  isUnreadMessage = (chat: api.ChatDto) => !chat.IsLastMessageMine && chat.LastMessageStatusId === api.eMessageStatus.Delivered;
 
   loadChatPhoto = (chat: api.ChatDto) => this.sharedService.getChatPhoto(chat.IsGroup, chat.ImageUrl, chat.UserGenderId);
 }

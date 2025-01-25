@@ -29,7 +29,7 @@
           </div>
           <div class="col-xs-12" [ngClass]="{'font-weight-bold' : isUnreadMessage(chat)}" style="text-overflow: ellipsis; text-wrap: nowrap; overflow: hidden;">
             @if(chat.IsLastMessageMine){
-              You:&nbsp;
+              You:
             }{{ chat.LastMessage }}
           </div>
         </div>

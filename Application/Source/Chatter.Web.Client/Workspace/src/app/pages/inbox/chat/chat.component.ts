@@ -92,6 +92,25 @@ export class ChatComponent extends BaseComponent implements OnInit {
   }
 
   submit(): void {
+    if (!this.message)
+      return;
 
+    const data: api.MessageCreateDto = {
+      ChatId: this.chatId,
+      SenderId: this.currentUser.id,
+      RecipientId: this.chat.UserId,
+      Content: this.message,
+      TypeId: this.messageType(),
+      StatusId: api.eMessageStatus.Sent,
+      Attachments: []
+    };
+
+    this.api_MessageController.CreateMessage(data).toPromise()
+      .then()
+      .catch(_ => this.error(_.error.Errors));
+  }
+
+  private messageType(): api.eMessageType {
+    return api.eMessageType.Text
   }
 }
