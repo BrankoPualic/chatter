@@ -72,6 +72,25 @@ export class ChatComponent extends BaseComponent implements OnInit {
 
   indentMessage = (message: api.MessageDto, index: number) => !message.IsMine && (index !== 0 && (this.messages[index - 1]?.UserId === message.UserId));
 
+  adjustTextareaHeight(event: Event): void {
+    const textarea = event.target as HTMLTextAreaElement;
+    const container = textarea.parentElement as HTMLElement;
+
+    // Reset textarea height to calculate the new scroll height correctly
+    textarea.style.height = 'auto';
+
+    const lineHeight = parseInt(window.getComputedStyle(textarea).lineHeight || '20', 10);
+    const maxHeight = this.Constants.MAX_ROWS * lineHeight;
+    const scrollHeight = textarea.scrollHeight;
+
+    // Set the new textarea height
+    const newHeight = Math.min(scrollHeight, maxHeight);
+    textarea.style.height = `${newHeight}px`;
+
+    // Update the container height to match the textarea's height
+    container.style.height = `${newHeight}px`;
+  }
+
   submit(): void {
 
   }

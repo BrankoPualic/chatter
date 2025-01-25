@@ -23,6 +23,11 @@ body {
   background-image: none;
 }
 
+.form-control:focus {
+  border-color: transparent;
+  box-shadow: $box-shadow;
+}
+
 .form-group {
   padding: 0 15px;
 

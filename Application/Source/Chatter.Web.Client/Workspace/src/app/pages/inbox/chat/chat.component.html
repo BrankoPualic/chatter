@@ -46,12 +46,12 @@
   </div>
 
 
-  <div class="col-xs-12 bottom-actions shadow-box align-row-center justify-content-between">
-    <div class="col-xs-12" style="position: relative">
-      <textarea class="form-control w-100" rows="1" style="resize: none; padding-right: calc(0.375rem + 40px + 0.375rem)" placeholder="Message" [(ngModel)]="message"></textarea>
-    <div class="icon float-end btn-send" (click)="submit()">
-      <span [class]="Icons.SEND" style="font-size: 1.1rem; color: white"></span>
-    </div>
+  <div class="col-xs-12 message-container">
+    <div class="col-xs-12 message-box-container">
+      <textarea class="form-control w-100 message-box" rows="1" placeholder="Message" [(ngModel)]="message" (input)="adjustTextareaHeight($event)"></textarea>
+      <div class="icon float-end btn-send" (click)="submit()">
+        <span [class]="Icons.SEND"></span>
+      </div>
     </div>
   </div>
 }

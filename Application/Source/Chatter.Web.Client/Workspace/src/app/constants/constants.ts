@@ -8,6 +8,9 @@ export class Constants {
   // Search options
   static TAKE = 25;
 
+  // Textarea
+  static MAX_ROWS = 4;
+
   // Providers
   static Providers = {
     Genders: 'Genders',
