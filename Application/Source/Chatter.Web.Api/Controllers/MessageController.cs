@@ -19,7 +19,7 @@ public class MessageController(IMediator mediator) : BaseController(mediator)
 
 	[HttpPost]
 	[Authorize]
-	[AngularMethod(typeof(void))]
+	[AngularMethod(typeof(Guid))]
 	public async Task<IActionResult> CreateMessage(MessageCreateDto data) => Result(await Mediator.Send(new CreateMessageCommand(data)));
 
 	[HttpPost]

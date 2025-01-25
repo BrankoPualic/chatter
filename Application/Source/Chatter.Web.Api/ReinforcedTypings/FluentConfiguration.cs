@@ -110,6 +110,7 @@ public static class FluentConfiguration
 			.Substitute(typeof(DateTime), new RtSimpleTypeName("Date"))
 			.Substitute(typeof(DateOnly), new RtSimpleTypeName("Date"))
 			.Substitute(typeof(IFormFile), new RtSimpleTypeName("File"));
+		//.Substitute(typeof(Guid?), new RtSimpleTypeName("string | null"));
 
 		return config;
 	}

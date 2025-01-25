@@ -4,7 +4,7 @@ namespace Chatter.Application.Dtos.Messaging;
 
 public class MessageCreateDto
 {
-	public Guid ChatId { get; set; }
+	public Guid? ChatId { get; set; }
 
 	public Guid SenderId { get; set; }
 
@@ -20,7 +20,9 @@ public class MessageCreateDto
 
 	public void ToModel(Message model)
 	{
-		model.ChatId = ChatId;
+		if (ChatId != null && ChatId.IsNotEmpty())
+			model.ChatId = (Guid)ChatId;
+
 		model.UserId = SenderId;
 		model.Content = Content;
 		model.TypeId = TypeId;

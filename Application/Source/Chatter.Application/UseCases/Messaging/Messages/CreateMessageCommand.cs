@@ -3,26 +3,25 @@ using Chatter.Domain.Models.Application.Messaging;
 
 namespace Chatter.Application.UseCases.Messaging.Messages;
 
-public class CreateMessageCommand(MessageCreateDto data) : BaseCommand
+public class CreateMessageCommand(MessageCreateDto data) : BaseCommand<Guid>
 {
 	public MessageCreateDto Data { get; } = data;
 }
 
-internal class CreateMessageCommandHandler(IDatabaseContext db, IIdentityUser currentUser) : BaseCommandHandler<CreateMessageCommand>(db, currentUser)
+internal class CreateMessageCommandHandler(IDatabaseContext db, IIdentityUser currentUser) : BaseCommandHandler<CreateMessageCommand, Guid>(db, currentUser)
 {
-	public override async Task<ResponseWrapper> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
+	public override async Task<ResponseWrapper<Guid>> Handle(CreateMessageCommand request, CancellationToken cancellationToken)
 	{
 		var now = DateTime.UtcNow;
-		var chat = await _db.Chats
-			.Where(_ => _.Members.Any(_ => _.UserId == _currentUser.Id) &&
-				_.Members.Any(_ => _.UserId == request.Data.RecipientId)
-			)
-			.FirstOrDefaultAsync(cancellationToken);
+		var chat = await _db.Chats.GetSingleAsync(_ => _.Id == request.Data.ChatId);
 
+		Guid? chatId = chat?.Id;
 		if (request.Data.ChatId.IsEmpty() && chat == null)
 		{
+			chatId = Guid.NewGuid();
 			chat = new Chat()
 			{
+				Id = (Guid)chatId,
 				LastMessageOn = now,
 				Members = [
 					new() { UserId = _currentUser.Id },
@@ -32,21 +31,16 @@ internal class CreateMessageCommandHandler(IDatabaseContext db, IIdentityUser cu
 
 			_db.Create(chat);
 		}
-		else if (chat?.Id == request.Data.ChatId)
-		{
-			chat.LastMessageOn = now;
-		}
 		else
 		{
-			chat = await _db.Chats.GetSingleAsync(_ => _.Id == request.Data.ChatId);
 			chat.LastMessageOn = now;
 		}
 
 		var model = new Message();
 		request.Data.ToModel(model);
-		model.ChatId = chat.Id;
+		model.ChatId = (Guid)chatId;
 		_db.Create(model);
 		await _db.SaveChangesAsync(true, cancellationToken);
-		return new();
+		return new((Guid)chatId);
 	}
 }

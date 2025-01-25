@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { BaseComponent } from '../../../base/base.component';
+import { AfterViewInit, Component, effect, ElementRef, OnChanges, OnDestroy, SimpleChanges, viewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { api } from '../../../_generated/project';
 import { GLOBAL_MODULES } from '../../../_global.modules';
+import { BaseComponent } from '../../../base/base.component';
+import { AuthService } from '../../../services/auth.service';
 import { ErrorService } from '../../../services/error.service';
 import { PageLoaderService } from '../../../services/page-loader.service';
-import { ToastService } from '../../../services/toast.service';
-import { AuthService } from '../../../services/auth.service';
-import { SharedService } from '../../../services/shared.service';
-import { api } from '../../../_generated/project';
-import { ActivatedRoute } from '@angular/router';
 import { ProfileService } from '../../../services/profile.service';
+import { SharedService } from '../../../services/shared.service';
+import { ToastService } from '../../../services/toast.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-chat',
@@ -16,11 +17,17 @@ import { ProfileService } from '../../../services/profile.service';
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
-export class ChatComponent extends BaseComponent implements OnInit {
+export class ChatComponent extends BaseComponent implements OnDestroy, AfterViewInit {
+  messagesContainer = viewChild<ElementRef>('messagesContainer');
+  textarea = viewChild<ElementRef>('textarea');
+  container = viewChild<ElementRef>('container');
+  originalTextareaScrollHeight: number;
+
   chatId: string;
   chat: api.ChatLightDto;
   messages: api.MessageDto[] = [];
   message: string;
+  userFromService?: api.UserDto;
 
   constructor(
     errorService: ErrorService,
@@ -30,18 +37,33 @@ export class ChatComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     private profileService: ProfileService,
     private sharedService: SharedService,
+    private userService: UserService,
     private api_ChatController: api.Controller.ChatController,
     private api_MessageController: api.Controller.MessageController
   ) {
     super(errorService, loaderService, toastService, authService);
     this.route.paramMap.subscribe(params => this.chatId = params['get']('id')!);
+
+    effect(() => {
+      this.userFromService = this.userService.userProfileSignal();
+      this.loadMessages();
+    })
   }
 
-  ngOnInit(): void {
-    this.loadMessages();
+  override ngOnDestroy(): void {
+    super.ngOnDestroy();
+    this.userService.setUserProfile(undefined);
+  }
+
+  ngAfterViewInit(): void {
+    this.originalTextareaScrollHeight = this.textarea()!.nativeElement.scrollHeight;
   }
 
   loadMessages(): void {
+    if (this.userFromService) {
+      this.setupEmptyChat();
+      return;
+    }
     const options = new api.MessageSearchOptions();
     options.ChatId = this.chatId;
     this.loading = true;
@@ -49,9 +71,26 @@ export class ChatComponent extends BaseComponent implements OnInit {
       .then(_ => {
         this.chat = _!;
         this.messages = _!.Messages.Data;
+
+        setTimeout(() => {
+          this.scrollToBottom();
+        }, 0);
       })
       .catch(_ => this.error(_.error.Errors))
       .finally(() => this.loading = false);
+  }
+
+  private setupEmptyChat(): void {
+    this.chat = {
+      Id: this.Constants.GUID_EMPTY,
+      UserId: this.userFromService?.Id!,
+      Name: this.userFromService?.Username!,
+      IsGroup: false,
+      IsMuted: false,
+      ImageUrl: this.userFromService?.ProfilePhoto!,
+      UserGenderId: this.userFromService?.GenderId!,
+      Messages: { Total: 0, Data: [] }
+    }
   }
 
   loadChatPhoto = () => this.sharedService.getChatPhoto(this.chat.IsGroup, this.chat.ImageUrl, this.chat.UserGenderId);
@@ -72,23 +111,20 @@ export class ChatComponent extends BaseComponent implements OnInit {
 
   indentMessage = (message: api.MessageDto, index: number) => !message.IsMine && (index !== 0 && (this.messages[index - 1]?.UserId === message.UserId));
 
-  adjustTextareaHeight(event: Event): void {
-    const textarea = event.target as HTMLTextAreaElement;
-    const container = textarea.parentElement as HTMLElement;
-
+  adjustTextareaHeight(): void {
     // Reset textarea height to calculate the new scroll height correctly
-    textarea.style.height = 'auto';
+    this.textarea()!.nativeElement.style.height = 'auto';
 
-    const lineHeight = parseInt(window.getComputedStyle(textarea).lineHeight || '20', 10);
+    const lineHeight = parseInt(window.getComputedStyle(this.textarea()!.nativeElement).lineHeight || '20', 10);
     const maxHeight = this.Constants.MAX_ROWS * lineHeight;
-    const scrollHeight = textarea.scrollHeight;
+    const scrollHeight = this.textarea()!.nativeElement.scrollHeight;
 
     // Set the new textarea height
     const newHeight = Math.min(scrollHeight, maxHeight);
-    textarea.style.height = `${newHeight}px`;
+    this.textarea()!.nativeElement.style.height = `${newHeight}px`;
 
     // Update the container height to match the textarea's height
-    container.style.height = `${newHeight}px`;
+    this.container()!.nativeElement.style.height = `${newHeight}px`;
   }
 
   submit(): void {
@@ -96,7 +132,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
       return;
 
     const data: api.MessageCreateDto = {
-      ChatId: this.chatId,
+      ChatId: this.chat.Id.isEmptyGuid() ? null! : this.chat.Id,
       SenderId: this.currentUser.id,
       RecipientId: this.chat.UserId,
       Content: this.message,
@@ -106,11 +142,31 @@ export class ChatComponent extends BaseComponent implements OnInit {
     };
 
     this.api_MessageController.CreateMessage(data).toPromise()
-      .then()
-      .catch(_ => this.error(_.error.Errors));
+      .then((chatId) => {
+        this.chat.Id = chatId;
+        this.message = '';
+        this.textarea()!.nativeElement.style.height = `${this.originalTextareaScrollHeight}px`;
+        this.container()!.nativeElement.style.height = `${this.originalTextareaScrollHeight}px`;
+      })
+      .catch(_ => this.error(_.error.Errors))
+      .finally(() => {
+        if (this.userFromService) {
+          this.userService.setUserProfile(undefined);
+        }
+        else {
+          this.loadMessages();
+        }
+      });
   }
 
   private messageType(): api.eMessageType {
     return api.eMessageType.Text
+  }
+
+  private scrollToBottom(): void {
+    if (this.messagesContainer()) {
+      const element = this.messagesContainer()!.nativeElement;
+      element.scrollTop = element.scrollHeight;
+    }
   }
 }

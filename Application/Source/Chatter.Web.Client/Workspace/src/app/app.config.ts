@@ -9,6 +9,8 @@ import { ConfirmationService } from 'primeng/api';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { errorInterceptor } from './interceptors/error.interceptor';
 import { jwtInterceptor } from './interceptors/jwt.interceptor';
+import './extensions/string-extension';
+import './extensions/observable-extension';
 
 export const appConfig: ApplicationConfig = {
   providers: [

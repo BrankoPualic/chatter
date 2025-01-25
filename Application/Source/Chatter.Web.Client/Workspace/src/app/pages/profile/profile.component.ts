@@ -5,12 +5,13 @@ import { BaseComponentGeneric } from '../../base/base.component';
 import { ErrorService } from '../../services/error.service';
 import { PageLoaderService } from '../../services/page-loader.service';
 import { ToastService } from '../../services/toast.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GLOBAL_MODULES } from '../../_global.modules';
 import { ProfileService } from '../../services/profile.service';
 import { QService } from '../../services/q.service';
 import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -31,7 +32,9 @@ export class ProfileComponent extends BaseComponentGeneric<api.UserDto> implemen
     authService: AuthService,
     private $q: QService,
     private route: ActivatedRoute,
+    private router: Router,
     private profileService: ProfileService,
+    private userService: UserService,
     private api_UserController: api.Controller.UserController,
     private api_FollowController: api.Controller.FollowController
   ) {
@@ -92,5 +95,10 @@ export class ProfileComponent extends BaseComponentGeneric<api.UserDto> implemen
       })
       .catch(_ => this.error(_.error.Errors))
       .finally(() => this.loading = false);
+  }
+
+  message(): void {
+    this.userService.setUserProfile(this.user!);
+    this.router.navigate(['/' + this.Constants.ROUTE_INBOX + '/' + this.Constants.ROUTE_CHAT, this.user?.ChatId.isEmptyGuid() ? '' : this.user?.ChatId]);
   }
 }

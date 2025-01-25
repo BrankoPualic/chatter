@@ -43,6 +43,13 @@ internal class GetProfileQueryHandler(IDatabaseContext db, IIdentityUser current
 		data.Following = follows?.Following ?? 0;
 		data.Followers = follows?.Followers ?? 0;
 
+		data.ChatId = await _db.Chats
+			.Where(_ => _.Members.Any(_ => _.UserId == request.UserId)
+					&& _.Members.Any(_ => _.UserId == _currentUser.Id)
+			)
+			.Select(_ => _.Id)
+			.FirstOrDefaultAsync(cancellationToken);
+
 		data.HasAccess = _currentUser.Id == request.UserId
 			|| !data.IsPrivate
 			|| (await _db.Follows.FirstOrDefaultAsync(_ => _.FollowerId == _currentUser.Id && _.FollowingId == data.Id, cancellationToken) != null);

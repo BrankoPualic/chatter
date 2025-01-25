@@ -144,14 +144,14 @@ export namespace api.Controller {
 			.pipe(map(response => response.body!));
 			
 		}
-		public CreateMessage(data: api.MessageCreateDto) : Observable<any>
+		public CreateMessage(data: api.MessageCreateDto) : Observable<string>
 		{
 			const body = <any>data;
-			return this.httpClient.post<any>(
+			return this.httpClient.post(
 			this.settingsService.createApiUrl('Message/CreateMessage'),
 			body,
 			{
-				responseType: 'json',
+				responseType: 'text',
 				observe: 'response',
 				withCredentials: true
 			})
@@ -377,6 +377,7 @@ export namespace api {
 		HasAccess: boolean;
 		Followers: number;
 		Following: number;
+		ChatId: string;
 	}
 	export class UserLightDto
 	{

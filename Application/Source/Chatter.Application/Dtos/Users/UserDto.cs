@@ -27,4 +27,6 @@ public class UserDto
 	public long Followers { get; set; }
 
 	public long Following { get; set; }
+
+	public Guid? ChatId { get; set; }
 }

@@ -15,7 +15,7 @@
     </div>
   </div>
 
-  <div class="col-xs-12 padding-y-10">
+  <div class="col-xs-12 padding-y-10 messages" #messagesContainer>
     @for(message of messages; track $index){
       @if(displayDate($index)){
         <div class="text-center margin-bottom-8">
@@ -46,12 +46,12 @@
   </div>
 
 
-  <div class="col-xs-12 message-container">
-    <div class="col-xs-12 message-box-container">
-      <textarea class="form-control w-100 message-box" rows="1" placeholder="Message" [(ngModel)]="message" (input)="adjustTextareaHeight($event)"></textarea>
-      <div class="icon float-end btn-send" (click)="submit()">
-        <span [class]="Icons.SEND"></span>
-      </div>
+}
+<div class="col-xs-12 message-container">
+  <div class="col-xs-12 message-box-container" #container>
+    <textarea class="form-control w-100 message-box" rows="1" placeholder="Message" [(ngModel)]="message" (input)="adjustTextareaHeight()" #textarea></textarea>
+    <div class="icon float-end btn-send" (click)="submit()">
+      <span [class]="Icons.SEND"></span>
     </div>
   </div>
-}
+</div>

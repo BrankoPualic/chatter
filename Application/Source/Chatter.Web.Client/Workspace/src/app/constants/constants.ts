@@ -3,6 +3,8 @@ export class Constants {
   static DEFAULT_PHOTO_FEMALE = 'default-avatar-profile-picture-female-icon.png';
   static DEFAULT_PHOTO_GROUP = 'default-group-image.jpg';
 
+  static GUID_EMPTY = '00000000-0000-0000-0000-000000000000';
+
   static TOKEN = 'token.1';
 
   // Search options

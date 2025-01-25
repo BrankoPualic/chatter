@@ -20,6 +20,4 @@ export class SharedService {
       ? `../../assets/images/${Constants.DEFAULT_PHOTO_GROUP}`
       : this.profileService.getProfilePhoto(photo, genderId);
   }
-
-
 }

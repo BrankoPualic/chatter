@@ -39,18 +39,18 @@ internal class GetChatQueryHandler(IDatabaseContext db, IIdentityUser currentUse
 
 		var result = new ChatLightDto
 		{
-			Id = chat.Id,
-			UserId = chat.IsGroup ? null : chat.Members.Where(_ => _.UserId != _currentUser.Id).FirstOrDefault().UserId,
-			Name = chat.IsGroup ? chat.GroupName : chat.Members.Where(_ => _.UserId != _currentUser.Id).FirstOrDefault().User.Username,
-			IsGroup = chat.IsGroup,
-			IsMuted = chat.Members.Where(_ => _.UserId == _currentUser.Id).FirstOrDefault().IsMuted,
-			ImageUrl = chat.IsGroup ? chat.GroupImage?.Url : chat.Members.Where(_ => _.UserId != _currentUser.Id).FirstOrDefault().User.Blobs.FirstOrDefault()?.Blob?.Url,
-			UserGenderId = chat.IsGroup ? null : chat.Members.Where(_ => _.UserId != _currentUser.Id).FirstOrDefault().User.GenderId,
+			Id = chat?.Id,
+			UserId = chat?.IsGroup == true ? null : chat?.Members.Where(_ => _.UserId != _currentUser.Id).FirstOrDefault().UserId,
+			Name = chat?.IsGroup == true ? chat?.GroupName : chat?.Members.Where(_ => _.UserId != _currentUser.Id).FirstOrDefault().User.Username,
+			IsGroup = chat?.IsGroup == true,
+			IsMuted = chat?.Members.Where(_ => _.UserId == _currentUser.Id).FirstOrDefault().IsMuted == true,
+			ImageUrl = chat?.IsGroup == true ? chat?.GroupImage?.Url : chat?.Members.Where(_ => _.UserId != _currentUser.Id).FirstOrDefault().User.Blobs.FirstOrDefault()?.Blob?.Url,
+			UserGenderId = chat?.IsGroup == true ? null : chat?.Members.Where(_ => _.UserId != _currentUser.Id).FirstOrDefault().User.GenderId,
 			//Messages = _mapper.To<PagingResultDto<MessageDto>>(messages),
 			Messages = new PagingResultDto<MessageDto>
 			{
-				Total = messages.Total,
-				Data = messages.Data.Select(_ => new MessageDto
+				Total = messages?.Total ?? 0,
+				Data = messages?.Data.Select(_ => new MessageDto
 				{
 					Id = _.Id,
 					ChatId = _.ChatId,
@@ -65,7 +65,7 @@ internal class GetChatQueryHandler(IDatabaseContext db, IIdentityUser currentUse
 					Attachments = _mapper.To<AttachmentDto>(_.Attachments).ToList()
 				})
 			}
-		};
+		}; ;
 
 		return new(result);
 	}
