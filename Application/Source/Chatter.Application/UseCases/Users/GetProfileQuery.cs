@@ -27,7 +27,7 @@ internal class GetProfileQueryHandler(IDatabaseContext db, IIdentityUser current
 
 		var follows = await _db.Follows
 			.Where(_ => _.FollowerId == request.UserId || _.FollowingId == request.UserId)
-			.GroupBy(_ => _.FollowingId == request.UserId)
+			.GroupBy(_ => 1)
 			.Select(_ => new
 			{
 				Following = _.Count(_ => _.FollowerId == request.UserId),

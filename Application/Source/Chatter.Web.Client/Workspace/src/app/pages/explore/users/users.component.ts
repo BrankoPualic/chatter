@@ -1,4 +1,4 @@
-import { Component, effect, OnInit } from '@angular/core';
+import { Component, effect, OnDestroy, OnInit } from '@angular/core';
 import { api } from '../../../_generated/project';
 import { GLOBAL_MODULES } from '../../../_global.modules';
 import { BaseComponentGeneric } from '../../../base/base.component';
@@ -15,7 +15,7 @@ import { SharedService } from '../../../services/shared.service';
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
-export class UsersComponent extends BaseComponentGeneric<api.UserLightDto> {
+export class UsersComponent extends BaseComponentGeneric<api.UserLightDto> implements OnDestroy {
   users: api.UserLightDto[] = [];
   keyword: string = '';
 
@@ -36,7 +36,16 @@ export class UsersComponent extends BaseComponentGeneric<api.UserLightDto> {
     })
   }
 
+  override ngOnDestroy(): void {
+    super.ngOnDestroy();
+    this.sharedService.setExploreSearchInput('');
+  }
+
   load(keyword: string = ''): void {
+    if (!keyword) {
+      this.users = [];
+      return;
+    }
     this.loading = true;
 
     const options = new api.UserSearchOptions();
