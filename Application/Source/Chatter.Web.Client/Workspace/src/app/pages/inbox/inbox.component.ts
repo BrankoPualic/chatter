@@ -18,6 +18,7 @@ import { SharedService } from '../../services/shared.service';
 })
 export class InboxComponent extends BaseComponent implements OnInit {
   chats: api.ChatDto[] = [];
+  searched: string = '';
 
   constructor(
     errorService: ErrorService,
@@ -35,15 +36,19 @@ export class InboxComponent extends BaseComponent implements OnInit {
   }
 
   loadChats(): void {
+    const options = new api.ChatSearchOptions();
+    options.Filter = this.searched;
+
     this.loading = true;
-    this.api_ChatController.GetChatList(new api.ChatSearchOptions()).toPromise()
+    this.api_ChatController.GetChatList(options).toPromise()
       .then(_ => this.chats = _!.Data)
       .catch(_ => this.error(_.error.Errors))
       .finally(() => this.loading = false);
   }
 
   onSearch($event: string) {
-    throw new Error('Method not implemented.');
+    this.searched = $event;
+    this.loadChats();
   }
 
   isUnreadMessage = (chat: api.ChatDto) => !chat.IsLastMessageMine && chat.LastMessageStatusId === api.eMessageStatus.Delivered;
