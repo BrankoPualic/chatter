@@ -27,6 +27,8 @@ builder.Services.AddScoped<IIdentityUser, IdentityUser>();
 builder.Services.AddDbContext<DatabaseContext>();
 
 builder.Services.AddSignalR();
+builder.Services.AddSingleton<PresenceTracker>();
+
 builder.Services.AllAplicationServices();
 
 var app = builder.Build();
