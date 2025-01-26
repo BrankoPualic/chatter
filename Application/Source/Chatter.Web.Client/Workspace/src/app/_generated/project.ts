@@ -337,6 +337,7 @@ export namespace api {
 	export class MessageSearchOptions
 	{
 		ChatId: string;
+		RecipientId: string;
 		Skip: number;
 		Take: number;
 		Filter: string;
