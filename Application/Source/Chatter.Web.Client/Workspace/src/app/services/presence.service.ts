@@ -13,9 +13,10 @@ export class PresenceService {
   private _onlineUsers = signal<string[]>([]);
   onlineUsersSignal = this._onlineUsers.asReadonly();
 
-  constructor(private toast: ToastService) { }
+  constructor(private toastService: ToastService) { }
 
   createHubConnection(token: string) {
+    let reconnectingCount = 0;
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(this.hubUrl + 'presence', {
         accessTokenFactory: () => token
@@ -26,16 +27,17 @@ export class PresenceService {
     this.hubConnection.start()
       .catch(_ => console.error(_));
 
-    this.hubConnection.on('UserIsOnline', username => {
-      this.toast.notifySuccess(username + ' has connected');
-    });
+    this.hubConnection.onreconnecting(() => {
+      if (reconnectingCount === 0)
+        this.toastService.notifyWarning('You are offline.');
+    })
 
-    this.hubConnection.on('UserIsOffline', username => {
-      this.toast.notifyWarning(username + ' has disconnected');
-    });
+    this.hubConnection.onreconnected(() => {
+      this.toastService.notifySuccess('You are online.');
+      reconnectingCount = 0;
+    })
 
     this.hubConnection.on('GetOnlineUsers', usernames => {
-      console.log(usernames);
       this._onlineUsers.set(usernames);
     })
   }

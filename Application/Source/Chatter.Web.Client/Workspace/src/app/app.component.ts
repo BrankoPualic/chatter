@@ -1,4 +1,4 @@
-import { Component, effect, OnInit } from '@angular/core';
+import { Component, effect, OnDestroy, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
@@ -16,7 +16,7 @@ import { AuthService } from './services/auth.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private messageService: MessageService,
     private toastService: ToastService,
@@ -38,5 +38,9 @@ export class AppComponent implements OnInit {
     this.toastService.error.subscribe(_ => this.messageService.add({ severity: 'error', summary: 'Error', detail: _ }));
     this.toastService.warning.subscribe(_ => this.messageService.add({ severity: 'warn', summary: 'Warning', detail: _ }));
     this.toastService.success.subscribe(_ => this.messageService.add({ severity: 'success', summary: 'Success', detail: _ }));
+  }
+
+  ngOnDestroy(): void {
+    this.presenceService.stopHubConnection();
   }
 }
