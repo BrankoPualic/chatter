@@ -4,6 +4,7 @@ using Chatter.Persistence;
 using Chatter.Web.Api;
 using Chatter.Web.Api.Middlewares;
 using Chatter.Web.Api.Objects;
+using Chatter.Web.Api.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,7 @@ builder.Services.AddControllers()
 builder.Services.AddScoped<IIdentityUser, IdentityUser>();
 builder.Services.AddDbContext<DatabaseContext>();
 
+builder.Services.AddSignalR();
 builder.Services.AllAplicationServices();
 
 var app = builder.Build();
@@ -65,5 +67,7 @@ app.UseAuthorization();
 app.UseResponseCaching();
 
 app.MapControllers();
+
+app.MapHub<PresenceHub>("hubs/presence");
 
 app.Run();
