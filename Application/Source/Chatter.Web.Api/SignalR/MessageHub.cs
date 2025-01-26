@@ -2,10 +2,12 @@
 using Chatter.Application.UseCases.Messaging.Messages;
 using Chatter.Web.Api.Extensions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Chatter.Web.Api.SignalR;
 
+[Authorize]
 public class MessageHub(IMediator mediator) : Hub
 {
 	public override async Task OnConnectedAsync()
@@ -21,7 +23,7 @@ public class MessageHub(IMediator mediator) : Hub
 
 		var messages = (await mediator.Send(new GetMessageListQuery(new Application.Search.MessageSearchOptions { RecipientId = recipientId }))).Data.Data;
 
-		await Clients.Group(groupName).SendAsync("ReceiveMessageThread");
+		await Clients.Group(groupName).SendAsync("ReceiveMessageThread", messages);
 	}
 
 	public override Task OnDisconnectedAsync(Exception? exception)

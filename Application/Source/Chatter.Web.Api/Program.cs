@@ -26,7 +26,11 @@ builder.Services.AddControllers()
 builder.Services.AddScoped<IIdentityUser, IdentityUser>();
 builder.Services.AddDbContext<DatabaseContext>();
 
-builder.Services.AddSignalR();
+builder.Services.AddSignalR()
+	.AddJsonProtocol(options =>
+	{
+		options.PayloadSerializerOptions.PropertyNamingPolicy = null;
+	});
 builder.Services.AddSingleton<PresenceTracker>();
 
 builder.Services.AllAplicationServices();
