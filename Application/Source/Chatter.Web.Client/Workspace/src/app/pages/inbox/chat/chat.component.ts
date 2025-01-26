@@ -10,6 +10,7 @@ import { ProfileService } from '../../../services/profile.service';
 import { SharedService } from '../../../services/shared.service';
 import { ToastService } from '../../../services/toast.service';
 import { UserService } from '../../../services/user.service';
+import { PresenceService } from '../../../services/presence.service';
 
 @Component({
   selector: 'app-chat',
@@ -38,6 +39,7 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
     private profileService: ProfileService,
     private sharedService: SharedService,
     private userService: UserService,
+    public presenceService: PresenceService,
     private api_ChatController: api.Controller.ChatController,
     private api_MessageController: api.Controller.MessageController
   ) {

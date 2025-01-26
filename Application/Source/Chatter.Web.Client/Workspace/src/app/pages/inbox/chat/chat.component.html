@@ -3,7 +3,7 @@
     <div class="d-flex align-items-center">
       <span class="font-lg padding-x-10" [class]="Icons.ANGLE_LEFT" [routerLink]="['/' + Constants.ROUTE_INBOX]"></span>
       <div [routerLink]="['/' + Constants.ROUTE_PROFILE, chat.UserId]" class="d-flex align-items-center">
-        <div class="chat-image">
+        <div class="chat-image" [class.is-online]="presenceService.onlineUsersSignal().includes(chat.Name)">
           <img [src]="[loadChatPhoto()]" alt="Chat image" class="img-fluid rounded-circle">
         </div>
         <span>{{ chat.Name }}</span>

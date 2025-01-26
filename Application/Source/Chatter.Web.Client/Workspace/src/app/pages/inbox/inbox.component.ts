@@ -9,6 +9,7 @@ import { PageLoaderService } from '../../services/page-loader.service';
 import { ToastService } from '../../services/toast.service';
 import { AuthService } from '../../services/auth.service';
 import { SharedService } from '../../services/shared.service';
+import { PresenceService } from '../../services/presence.service';
 
 @Component({
   selector: 'app-inbox',
@@ -25,6 +26,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
     loaderService: PageLoaderService,
     toastService: ToastService,
     authService: AuthService,
+    public presenceService: PresenceService,
     private sharedService: SharedService,
     private api_ChatController: api.Controller.ChatController
   ) {
