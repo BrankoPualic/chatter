@@ -21,6 +21,9 @@ internal class GeMessageListQueryHandler(IDatabaseContext db, IIdentityUser curr
 		if (request.Options.ChatId.HasValue)
 			filters.Add(_ => _.ChatId == request.Options.ChatId.Value);
 
+		if (request.Options.RecipientId.HasValue)
+			filters.Add(_ => _.Chat.Members.Any(_ => _.UserId == request.Options.RecipientId) && _.Chat.Members.Count() == 2);
+
 		var result = await _db.Messages.SearchAsync(request.Options, _ => _.CreatedOn, false, filters,
 			includeProperties: [
 				_ => _.User,

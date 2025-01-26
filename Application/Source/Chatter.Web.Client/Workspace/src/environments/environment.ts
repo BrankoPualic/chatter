@@ -1,1 +1,4 @@
-export const environment = {};
+export const environment = {
+  api: 'api',
+  hub: 'hubs/'
+};

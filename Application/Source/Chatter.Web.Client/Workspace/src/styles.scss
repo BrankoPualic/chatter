@@ -99,6 +99,9 @@ body {
 .dark-gray {
   color: $dark-gray;
 }
+.primary-red {
+  color: $primary-red;
+}
 
 .action-bar-top {
   position: relative;
@@ -133,4 +136,45 @@ body {
 
 .box-shadow {
   box-shadow: $box-shadow;
+}
+
+.image,
+.chat-image {
+  position: relative;
+
+  &.is-online::after {
+    content: '';
+    position: absolute;
+    bottom: 5%;
+    right: 0;
+    width: 12.5px;
+    height: 12.5px;
+    background-color: $success-green;
+    border-radius: 50%;
+    border: 1px solid $white;
+  }
+}
+
+
+.double-check {
+  position: relative;
+  // display: inline-block;
+  right: 0.375rem;
+  font-size: 1rem; // Adjust size as needed
+  color: $primary-red; // Adjust color as needed
+  // text-shadow: 2px 2px 0 white, -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white;
+
+  &::before,
+  &::after {
+    content: "\f00c"; // Unicode for Font Awesome check icon
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900; // Ensures it's the solid version
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &::after {
+    left: 0.375rem; // Adjust overlap distance
+  }
 }

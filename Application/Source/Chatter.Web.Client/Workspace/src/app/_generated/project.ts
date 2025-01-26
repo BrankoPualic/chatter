@@ -293,6 +293,7 @@ export namespace api {
 		Name: string;
 		Description: string;
 		BgColor: string;
+		CssClass: string;
 	}
 	export class FollowDto
 	{
@@ -337,6 +338,7 @@ export namespace api {
 	export class MessageSearchOptions
 	{
 		ChatId: string;
+		RecipientId: string;
 		Skip: number;
 		Take: number;
 		Filter: string;
@@ -399,21 +401,32 @@ export namespace api {
 		getSystemRoles() : api.EnumProvider[]
 		{
 			return [
-			    { Id: 0, Name: 'NotSet', Description: '', BgColor: '' },
-			    { Id: 1, Name: 'SystemAdministrator', Description: 'System Administrator', BgColor: '' },
-			    { Id: 2, Name: 'Member', Description: 'Member', BgColor: '' },
-			    { Id: 3, Name: 'UserAdmin', Description: 'User Admin', BgColor: '' },
-			    { Id: 4, Name: 'Moderator', Description: 'Moderator', BgColor: '' },
-			    { Id: 5, Name: 'LegalDepartment', Description: 'Legal Department', BgColor: '' }
+			    { Id: 0, Name: 'NotSet', Description: '', BgColor: '', CssClass: '' },
+			    { Id: 1, Name: 'SystemAdministrator', Description: 'System Administrator', BgColor: '', CssClass: '' },
+			    { Id: 2, Name: 'Member', Description: 'Member', BgColor: '', CssClass: '' },
+			    { Id: 3, Name: 'UserAdmin', Description: 'User Admin', BgColor: '', CssClass: '' },
+			    { Id: 4, Name: 'Moderator', Description: 'Moderator', BgColor: '', CssClass: '' },
+			    { Id: 5, Name: 'LegalDepartment', Description: 'Legal Department', BgColor: '', CssClass: '' }
 			];
 		}
 		getGenders() : api.EnumProvider[]
 		{
 			return [
-			    { Id: 0, Name: 'NotSet', Description: '', BgColor: '' },
-			    { Id: 1, Name: 'Male', Description: 'Male', BgColor: '' },
-			    { Id: 2, Name: 'Female', Description: 'Female', BgColor: '' },
-			    { Id: 3, Name: 'Other', Description: 'Other', BgColor: '' }
+			    { Id: 0, Name: 'NotSet', Description: '', BgColor: '', CssClass: '' },
+			    { Id: 1, Name: 'Male', Description: 'Male', BgColor: '', CssClass: '' },
+			    { Id: 2, Name: 'Female', Description: 'Female', BgColor: '', CssClass: '' },
+			    { Id: 3, Name: 'Other', Description: 'Other', BgColor: '', CssClass: '' }
+			];
+		}
+		getMessageStatuses() : api.EnumProvider[]
+		{
+			return [
+			    { Id: 0, Name: 'NotSet', Description: '', BgColor: '', CssClass: '' },
+			    { Id: 1, Name: 'Draft', Description: 'Draft', BgColor: '', CssClass: '' },
+			    { Id: 2, Name: 'Sent', Description: 'Sent', BgColor: '', CssClass: 'fa-solid fa-check gray' },
+			    { Id: 3, Name: 'Delivered', Description: 'Delivered', BgColor: '', CssClass: 'fa-solid fa-check primary-red' },
+			    { Id: 4, Name: 'Seen', Description: 'Seen', BgColor: '', CssClass: 'double-check' },
+			    { Id: 5, Name: 'Forwarded', Description: 'Forwarded', BgColor: '', CssClass: 'fa-solid fa-share small' }
 			];
 		}
 	}

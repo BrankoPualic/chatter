@@ -16,7 +16,8 @@ export class Constants {
   // Providers
   static Providers = {
     Genders: 'Genders',
-    SystemRoles: 'SystemRoles'
+    SystemRoles: 'SystemRoles',
+    MessageStatuses: 'MessageStatuses'
   }
 
   // Route Titles

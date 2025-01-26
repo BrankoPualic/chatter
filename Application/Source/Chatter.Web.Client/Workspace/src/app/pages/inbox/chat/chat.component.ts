@@ -1,15 +1,18 @@
-import { AfterViewInit, Component, effect, ElementRef, OnChanges, OnDestroy, SimpleChanges, viewChild } from '@angular/core';
+import { AfterViewInit, Component, effect, ElementRef, OnDestroy, OnInit, viewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { api } from '../../../_generated/project';
 import { GLOBAL_MODULES } from '../../../_global.modules';
 import { BaseComponent } from '../../../base/base.component';
 import { AuthService } from '../../../services/auth.service';
 import { ErrorService } from '../../../services/error.service';
+import { MyMessageService } from '../../../services/message.service';
 import { PageLoaderService } from '../../../services/page-loader.service';
+import { PresenceService } from '../../../services/presence.service';
 import { ProfileService } from '../../../services/profile.service';
 import { SharedService } from '../../../services/shared.service';
 import { ToastService } from '../../../services/toast.service';
 import { UserService } from '../../../services/user.service';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
@@ -22,12 +25,17 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
   textarea = viewChild<ElementRef>('textarea');
   container = viewChild<ElementRef>('container');
   originalTextareaScrollHeight: number;
+  eMessageStatus = api.eMessageStatus;
 
   chatId: string;
   chat: api.ChatLightDto;
   messages: api.MessageDto[] = [];
   message: string;
   userFromService?: api.UserDto;
+
+  connectionEstablished = false;
+  private _typingSubject = new Subject<string>();
+  userIsTyping = false;
 
   constructor(
     errorService: ErrorService,
@@ -38,6 +46,8 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
     private profileService: ProfileService,
     private sharedService: SharedService,
     private userService: UserService,
+    public presenceService: PresenceService,
+    public messageService: MyMessageService,
     private api_ChatController: api.Controller.ChatController,
     private api_MessageController: api.Controller.MessageController
   ) {
@@ -46,13 +56,30 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
 
     effect(() => {
       this.userFromService = this.userService.userProfileSignal();
-      this.loadMessages();
+      if (!this.connectionEstablished)
+        this.loadMessages();
+      this.messages = this.messageService.messagesSignal();
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 0);
     })
+
+    effect(() => {
+      this.userIsTyping = this.messageService.isTypingSignal();
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 0);
+    })
+
+    this._typingSubject.pipe(
+      debounceTime(1500)
+    ).subscribe(chatId => this.messageService.stopTyping(chatId));
   }
 
   override ngOnDestroy(): void {
     super.ngOnDestroy();
     this.userService.setUserProfile(undefined);
+    this.messageService.stopHubConnection();
   }
 
   ngAfterViewInit(): void {
@@ -64,13 +91,18 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
       this.setupEmptyChat();
       return;
     }
+
     const options = new api.MessageSearchOptions();
     options.ChatId = this.chatId;
     this.loading = true;
     this.api_ChatController.GetChat(options).toPromise()
       .then(_ => {
         this.chat = _!;
-        this.messages = _!.Messages.Data;
+
+        this.messageService.setMessages(_!.Messages.Data);
+
+        this.messageService.createHubConnection(this.chat.Id);
+        this.connectionEstablished = true;
 
         setTimeout(() => {
           this.scrollToBottom();
@@ -141,12 +173,19 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
       Attachments: []
     };
 
+
+    if (!this.userFromService) {
+      this.messageService.sendMessage(data)?.then(() => setTimeout(() => {
+        this.scrollToBottom();
+        this.afterMessageSent();
+      }, 0));
+      return;
+    }
+
     this.api_MessageController.CreateMessage(data).toPromise()
       .then((chatId) => {
         this.chat.Id = chatId;
-        this.message = '';
-        this.textarea()!.nativeElement.style.height = `${this.originalTextareaScrollHeight}px`;
-        this.container()!.nativeElement.style.height = `${this.originalTextareaScrollHeight}px`;
+        this.afterMessageSent();
       })
       .catch(_ => this.error(_.error.Errors))
       .finally(() => {
@@ -157,6 +196,20 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
           this.loadMessages();
         }
       });
+  }
+
+  startTyping(event: Event): void {
+    if (this.userFromService || !event)
+      return;
+
+    this._typingSubject.next(this.chat.Id);
+    this.messageService.startTyping(this.chat.Id);
+  }
+
+  private afterMessageSent(): void {
+    this.message = '';
+    this.textarea()!.nativeElement.style.height = `${this.originalTextareaScrollHeight}px`;
+    this.container()!.nativeElement.style.height = `${this.originalTextareaScrollHeight}px`;
   }
 
   private messageType(): api.eMessageType {

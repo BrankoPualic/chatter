@@ -42,9 +42,17 @@ public enum eMessageStatus
 	NotSet = 0,
 
 	Draft = 1,
+
+	[CssClass("fa-solid fa-check gray")]
 	Sent = 2,
+
+	[CssClass("fa-solid fa-check primary-red")]
 	Delivered = 3,
+
+	[CssClass("double-check")]
 	Seen = 4,
+
+	[CssClass("fa-solid fa-share small")]
 	Forwarded = 5
 }
 

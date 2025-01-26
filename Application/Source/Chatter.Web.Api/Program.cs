@@ -4,6 +4,8 @@ using Chatter.Persistence;
 using Chatter.Web.Api;
 using Chatter.Web.Api.Middlewares;
 using Chatter.Web.Api.Objects;
+using Chatter.Web.Api.SignalR;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,13 @@ builder.Services.AddControllers()
 
 builder.Services.AddScoped<IIdentityUser, IdentityUser>();
 builder.Services.AddDbContext<DatabaseContext>();
+
+builder.Services.AddSignalR()
+	.AddJsonProtocol(options =>
+	{
+		options.PayloadSerializerOptions.PropertyNamingPolicy = null;
+	});
+builder.Services.AddSingleton<PresenceTracker>();
 
 builder.Services.AllAplicationServices();
 
@@ -46,6 +55,8 @@ using (var scope = app.Services.CreateScope())
 		logger.LogError("MIGRATION - FAILED");
 		logger.LogError(ex, "An error occurred while migrating the database.");
 	}
+
+	await context.Database.ExecuteSqlRawAsync("TRUNCATE TABLE [dbo].[Connection]");
 }
 
 app.UseHttpsRedirection();
@@ -65,5 +76,8 @@ app.UseAuthorization();
 app.UseResponseCaching();
 
 app.MapControllers();
+
+app.MapHub<PresenceHub>("hubs/presence");
+app.MapHub<MessageHub>("hubs/message");
 
 app.Run();
