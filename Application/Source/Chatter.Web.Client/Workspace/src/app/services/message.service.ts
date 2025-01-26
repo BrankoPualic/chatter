@@ -11,6 +11,8 @@ export class MyMessageService {
   hubUrl = environment.hub;
   hubConnection?: HubConnection;
 
+  constructor(private authService: AuthService) { }
+
   private _messages = signal<api.MessageDto[]>([]);
   messagesSignal = this._messages.asReadonly();
 
@@ -18,7 +20,8 @@ export class MyMessageService {
     this._messages.set(messages);
   }
 
-  constructor(private authService: AuthService) { }
+  private _isTyping = signal<boolean>(false);
+  isTypingSignal = this._isTyping.asReadonly();
 
   createHubConnection(otherUserId: string) {
     this.hubConnection = new HubConnectionBuilder()
@@ -45,6 +48,9 @@ export class MyMessageService {
       message.IsMine = this.authService.getCurrentUser().id === message.UserId;
       this._messages.set([...messages, message]);
     })
+
+    this.hubConnection.on('StartTyping', () => this._isTyping.set(true));
+    this.hubConnection.on('StopTyping', () => this._isTyping.set(false));
   }
 
   stopHubConnection() {
@@ -53,6 +59,16 @@ export class MyMessageService {
 
   sendMessage(data: api.MessageCreateDto) {
     return this.hubConnection?.invoke('SendMessage', data)
+      .catch(_ => console.error(_));
+  }
+
+  startTyping(recipientId: string) {
+    this.hubConnection?.invoke('StartTyping', recipientId)
+      .catch(_ => console.error(_));
+  }
+
+  stopTyping(recipientId: string) {
+    this.hubConnection?.invoke('StopTyping', recipientId)
       .catch(_ => console.error(_));
   }
 }

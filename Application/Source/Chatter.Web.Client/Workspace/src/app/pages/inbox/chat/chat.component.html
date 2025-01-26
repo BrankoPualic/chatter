@@ -43,13 +43,18 @@
           </div>
         </div>
       }
+      @if(userIsTyping){
+        <div class="typing-indicator">
+          <span class="typing-text">Typing...</span>
+        </div>
+      }
   </div>
 
 
 }
 <div class="col-xs-12 message-container">
   <div class="col-xs-12 message-box-container" #container>
-    <textarea class="form-control w-100 message-box" rows="1" placeholder="Message" [(ngModel)]="message" (input)="adjustTextareaHeight()" #textarea></textarea>
+    <textarea class="form-control w-100 message-box" rows="1" placeholder="Message" [(ngModel)]="message" (input)="adjustTextareaHeight(); startTyping($event)" #textarea></textarea>
     <div class="icon float-end btn-send" (click)="submit()">
       <span [class]="Icons.SEND"></span>
     </div>

@@ -42,6 +42,18 @@ public class MessageHub(IMediator mediator) : Hub
 		}
 	}
 
+	public async Task StartTyping(Guid recipientId)
+	{
+		var group = GetGroupName(Context.User.GetId(), recipientId.ToString());
+		await Clients.OthersInGroup(group).SendAsync("StartTyping");
+	}
+
+	public async Task StopTyping(Guid recipientId)
+	{
+		var group = GetGroupName(Context.User.GetId(), recipientId.ToString());
+		await Clients.OthersInGroup(group).SendAsync("StopTyping");
+	}
+
 	private string GetGroupName(string caller, string other)
 	{
 		var stringCompare = string.CompareOrdinal(caller, other) < 0;

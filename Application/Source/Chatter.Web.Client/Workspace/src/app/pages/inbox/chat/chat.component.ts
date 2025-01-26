@@ -12,6 +12,7 @@ import { ProfileService } from '../../../services/profile.service';
 import { SharedService } from '../../../services/shared.service';
 import { ToastService } from '../../../services/toast.service';
 import { UserService } from '../../../services/user.service';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
@@ -32,6 +33,8 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
   userFromService?: api.UserDto;
 
   connectionEstablished = false;
+  private _typingSubject = new Subject<string>();
+  userIsTyping = false;
 
   constructor(
     errorService: ErrorService,
@@ -55,7 +58,19 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
       if (!this.connectionEstablished)
         this.loadMessages();
       this.messages = this.messageService.messagesSignal();
+
     })
+
+    effect(() => {
+      this.userIsTyping = this.messageService.isTypingSignal();
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 0);
+    })
+
+    this._typingSubject.pipe(
+      debounceTime(1500)
+    ).subscribe(userId => this.messageService.stopTyping(userId));
   }
 
   override ngOnDestroy(): void {
@@ -157,7 +172,10 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
 
 
     if (!this.userFromService) {
-      this.messageService.sendMessage(data)?.then(() => this.afterMessageSent());
+      this.messageService.sendMessage(data)?.then(() => setTimeout(() => {
+        this.scrollToBottom();
+        this.afterMessageSent();
+      }, 0));
       return;
     }
 
@@ -175,6 +193,14 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
           this.loadMessages();
         }
       });
+  }
+
+  startTyping(event: Event): void {
+    if (this.userFromService || !event)
+      return;
+
+    this._typingSubject.next(this.chat.UserId);
+    this.messageService.startTyping(this.chat.UserId);
   }
 
   private afterMessageSent(): void {

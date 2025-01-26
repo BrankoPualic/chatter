@@ -24,7 +24,7 @@
 
         <div class="d-flex flex-column align-items-start" style="width: calc(100% - 45px - 0.5rem)">
           <div class="col-xs-12">
-            <span class="float-start">{{ chat.Name }} {{ presenceService.onlineUsersSignal().includes(chat.Name) ? 'is online' : 'not online'}}</span>
+            <span class="float-start">{{ chat.Name }}</span>
             <span class="float-end smaller">{{ chat.LastMessageOn | timeAgo }}</span>
           </div>
           <div class="col-xs-12" [ngClass]="{'font-weight-bold' : isUnreadMessage(chat)}" style="text-overflow: ellipsis; text-wrap: nowrap; overflow: hidden;">
