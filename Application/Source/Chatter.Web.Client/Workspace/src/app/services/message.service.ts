@@ -23,9 +23,9 @@ export class MyMessageService {
   private _isTyping = signal<boolean>(false);
   isTypingSignal = this._isTyping.asReadonly();
 
-  createHubConnection(otherUserId: string) {
+  createHubConnection(chatId: string) {
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl(this.hubUrl + 'message?userId=' + otherUserId, {
+      .withUrl(this.hubUrl + 'message?chatId=' + chatId, {
         accessTokenFactory: () => this.authService.getToken()!
       })
       .withAutomaticReconnect()
@@ -62,13 +62,13 @@ export class MyMessageService {
       .catch(_ => console.error(_));
   }
 
-  startTyping(recipientId: string) {
-    this.hubConnection?.invoke('StartTyping', recipientId)
+  startTyping(chatId: string) {
+    this.hubConnection?.invoke('StartTyping', chatId)
       .catch(_ => console.error(_));
   }
 
-  stopTyping(recipientId: string) {
-    this.hubConnection?.invoke('StopTyping', recipientId)
+  stopTyping(chatId: string) {
+    this.hubConnection?.invoke('StopTyping', chatId)
       .catch(_ => console.error(_));
   }
 }

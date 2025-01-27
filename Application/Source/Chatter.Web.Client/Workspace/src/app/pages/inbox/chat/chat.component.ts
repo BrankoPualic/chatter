@@ -58,7 +58,9 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
       if (!this.connectionEstablished)
         this.loadMessages();
       this.messages = this.messageService.messagesSignal();
-
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 0);
     })
 
     effect(() => {
@@ -70,7 +72,7 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
 
     this._typingSubject.pipe(
       debounceTime(1500)
-    ).subscribe(userId => this.messageService.stopTyping(userId));
+    ).subscribe(chatId => this.messageService.stopTyping(chatId));
   }
 
   override ngOnDestroy(): void {
@@ -98,7 +100,7 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
 
         this.messageService.setMessages(_!.Messages.Data);
 
-        this.messageService.createHubConnection(this.chat.UserId);
+        this.messageService.createHubConnection(this.chat.Id);
         this.connectionEstablished = true;
 
         setTimeout(() => {
@@ -199,8 +201,8 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
     if (this.userFromService || !event)
       return;
 
-    this._typingSubject.next(this.chat.UserId);
-    this.messageService.startTyping(this.chat.UserId);
+    this._typingSubject.next(this.chat.Id);
+    this.messageService.startTyping(this.chat.Id);
   }
 
   private afterMessageSent(): void {
