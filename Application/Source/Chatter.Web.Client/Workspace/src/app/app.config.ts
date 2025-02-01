@@ -31,7 +31,7 @@ function controllerProviders(): Provider[] {
     api.Controller.AuthController,
     api.Controller.UserController,
     api.Controller.FollowController,
-    api.Controller.ChatController,
+    api.Controller.InboxController,
     api.Controller.MessageController
   ]
 }

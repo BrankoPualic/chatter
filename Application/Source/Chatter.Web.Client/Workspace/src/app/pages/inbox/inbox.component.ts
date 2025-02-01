@@ -21,6 +21,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
   chats: api.ChatDto[] = [];
   searched: string = '';
   eMessageStatus = api.eMessageStatus;
+  top4: api.ChatDto[] = [];
 
   constructor(
     errorService: ErrorService,
@@ -29,7 +30,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
     authService: AuthService,
     public presenceService: PresenceService,
     private sharedService: SharedService,
-    private api_ChatController: api.Controller.ChatController
+    private api_InboxController: api.Controller.InboxController
   ) {
     super(errorService, loaderService, toastService, authService);
   }
@@ -39,12 +40,15 @@ export class InboxComponent extends BaseComponent implements OnInit {
   }
 
   loadChats(): void {
-    const options = new api.ChatSearchOptions();
+    const options = new api.InboxSearchOptions();
     options.Filter = this.searched;
 
     this.loading = true;
-    this.api_ChatController.GetChatList(options).toPromise()
-      .then(_ => this.chats = _!.Data)
+    this.api_InboxController.GetInbox(options).toPromise()
+      .then(_ => {
+        this.chats = _!.Data;
+        this.top4 = this.chats.slice(0, 4);
+      })
       .catch(_ => this.error(_.error.Errors))
       .finally(() => this.loading = false);
   }

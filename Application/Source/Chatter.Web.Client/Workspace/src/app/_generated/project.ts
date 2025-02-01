@@ -44,41 +44,6 @@ export namespace api.Controller {
 			super(httpClient, settingsService);
 		}
 	}
-	@Injectable() export class ChatController extends api.Controller.BaseController
-	{
-		public GetChatList(options: api.ChatSearchOptions) : Observable<api.PagingResultDto<api.ChatDto>>
-		{
-			const body = <any>options;
-			return this.httpClient.post<api.PagingResultDto<api.ChatDto>>(
-			this.settingsService.createApiUrl('Chat/GetChatList'),
-			body,
-			{
-				responseType: 'json',
-				observe: 'response',
-				withCredentials: true
-			})
-			.pipe(map(response => response.body!));
-			
-		}
-		public GetChat(options: api.MessageSearchOptions) : Observable<api.ChatLightDto>
-		{
-			const body = <any>options;
-			return this.httpClient.post<api.ChatLightDto>(
-			this.settingsService.createApiUrl('Chat/GetChat'),
-			body,
-			{
-				responseType: 'json',
-				observe: 'response',
-				withCredentials: true
-			})
-			.pipe(map(response => response.body!));
-			
-		}
-		constructor (httpClient: HttpClient, settingsService: SettingsService)
-		{
-			super(httpClient, settingsService);
-		}
-	}
 	@Injectable() export class FollowController extends api.Controller.BaseController
 	{
 		public IsFollowing(data: api.FollowDto) : Observable<boolean>
@@ -114,6 +79,41 @@ export namespace api.Controller {
 			const body = <any>data;
 			return this.httpClient.post<any>(
 			this.settingsService.createApiUrl('Follow/Unfollow'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
+		constructor (httpClient: HttpClient, settingsService: SettingsService)
+		{
+			super(httpClient, settingsService);
+		}
+	}
+	@Injectable() export class InboxController extends api.Controller.BaseController
+	{
+		public GetInbox(options: api.InboxSearchOptions) : Observable<api.PagingResultDto<api.ChatDto>>
+		{
+			const body = <any>options;
+			return this.httpClient.post<api.PagingResultDto<api.ChatDto>>(
+			this.settingsService.createApiUrl('Inbox/GetInbox'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
+		public GetChat(options: api.MessageSearchOptions) : Observable<api.ChatLightDto>
+		{
+			const body = <any>options;
+			return this.httpClient.post<api.ChatLightDto>(
+			this.settingsService.createApiUrl('Inbox/GetChat'),
 			body,
 			{
 				responseType: 'json',
@@ -280,13 +280,6 @@ export namespace api {
 		UserGenderId: api.eGender;
 		Messages: api.PagingResultDto<api.MessageDto>;
 	}
-	export class ChatSearchOptions
-	{
-		Skip: number;
-		Take: number;
-		Filter: string;
-		TotalCount: boolean;
-	}
 	export class EnumProvider
 	{
 		Id: number;
@@ -299,6 +292,13 @@ export namespace api {
 	{
 		FollowerId: string;
 		FollowingId: string;
+	}
+	export class InboxSearchOptions
+	{
+		Skip: number;
+		Take: number;
+		Filter: string;
+		TotalCount: boolean;
 	}
 	export class LoginDto
 	{

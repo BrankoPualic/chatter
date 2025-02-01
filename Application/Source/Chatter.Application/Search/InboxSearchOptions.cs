@@ -2,5 +2,5 @@
 
 namespace Chatter.Application.Search;
 
-public class ChatSearchOptions : SearchOptions
+public class InboxSearchOptions : SearchOptions
 { }

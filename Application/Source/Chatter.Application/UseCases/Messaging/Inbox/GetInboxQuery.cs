@@ -2,16 +2,16 @@
 using Chatter.Application.Search;
 using Chatter.Domain.Models.Application.Messaging;
 
-namespace Chatter.Application.UseCases.Messaging.Chats;
+namespace Chatter.Application.UseCases.Messaging.Inbox;
 
-public class GetChatListQuery(ChatSearchOptions options) : BaseQuery<PagingResultDto<ChatDto>>
+public class GetInboxQuery(InboxSearchOptions options) : BaseQuery<PagingResultDto<ChatDto>>
 {
-	public ChatSearchOptions Options { get; } = options;
+	public InboxSearchOptions Options { get; } = options;
 }
 
-internal class GetChatListQueryHandler(IDatabaseContext db, IIdentityUser currentUser) : BaseQueryHandler<GetChatListQuery, PagingResultDto<ChatDto>>(db, currentUser)
+internal class GetInboxQueryHandler(IDatabaseContext db, IIdentityUser currentUser) : BaseQueryHandler<GetInboxQuery, PagingResultDto<ChatDto>>(db, currentUser)
 {
-	public override async Task<ResponseWrapper<PagingResultDto<ChatDto>>> Handle(GetChatListQuery request, CancellationToken cancellationToken)
+	public override async Task<ResponseWrapper<PagingResultDto<ChatDto>>> Handle(GetInboxQuery request, CancellationToken cancellationToken)
 	{
 		var filters = new List<Expression<Func<Chat, bool>>>()
 		{

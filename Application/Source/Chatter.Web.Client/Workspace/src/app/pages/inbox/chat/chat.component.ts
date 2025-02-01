@@ -48,7 +48,7 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
     private userService: UserService,
     public presenceService: PresenceService,
     public messageService: MyMessageService,
-    private api_ChatController: api.Controller.ChatController,
+    private api_InboxController: api.Controller.InboxController,
     private api_MessageController: api.Controller.MessageController
   ) {
     super(errorService, loaderService, toastService, authService);
@@ -95,7 +95,7 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
     const options = new api.MessageSearchOptions();
     options.ChatId = this.chatId;
     this.loading = true;
-    this.api_ChatController.GetChat(options).toPromise()
+    this.api_InboxController.GetChat(options).toPromise()
       .then(_ => {
         this.chat = _!;
 

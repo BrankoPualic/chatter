@@ -3,7 +3,7 @@ using Chatter.Application.Dtos.Users;
 using Chatter.Application.Search;
 using Chatter.Domain.Models.Application.Messaging;
 
-namespace Chatter.Application.UseCases.Messaging.Chats;
+namespace Chatter.Application.UseCases.Messaging.Inbox;
 
 public class GetChatQuery(MessageSearchOptions options) : BaseQuery<ChatLightDto>
 {
