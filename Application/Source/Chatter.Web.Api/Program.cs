@@ -5,6 +5,7 @@ using Chatter.Web.Api;
 using Chatter.Web.Api.Middlewares;
 using Chatter.Web.Api.Objects;
 using Chatter.Web.Api.SignalR;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,6 +55,8 @@ using (var scope = app.Services.CreateScope())
 		logger.LogError("MIGRATION - FAILED");
 		logger.LogError(ex, "An error occurred while migrating the database.");
 	}
+
+	await context.Database.ExecuteSqlRawAsync("TRUNCATE TABLE [dbo].[Connection]");
 }
 
 app.UseHttpsRedirection();

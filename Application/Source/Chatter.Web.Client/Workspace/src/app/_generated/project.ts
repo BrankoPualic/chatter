@@ -423,10 +423,10 @@ export namespace api {
 			return [
 			    { Id: 0, Name: 'NotSet', Description: '', BgColor: '', CssClass: '' },
 			    { Id: 1, Name: 'Draft', Description: 'Draft', BgColor: '', CssClass: '' },
-			    { Id: 2, Name: 'Sent', Description: 'Sent', BgColor: '', CssClass: 'fa-solid fa-check' },
-			    { Id: 3, Name: 'Delivered', Description: 'Delivered', BgColor: '', CssClass: 'fa-solid fa-check primary-color' },
+			    { Id: 2, Name: 'Sent', Description: 'Sent', BgColor: '', CssClass: 'fa-solid fa-check gray' },
+			    { Id: 3, Name: 'Delivered', Description: 'Delivered', BgColor: '', CssClass: 'fa-solid fa-check primary-red' },
 			    { Id: 4, Name: 'Seen', Description: 'Seen', BgColor: '', CssClass: 'double-check' },
-			    { Id: 5, Name: 'Forwarded', Description: 'Forwarded', BgColor: '', CssClass: 'fa-solid fa-share' }
+			    { Id: 5, Name: 'Forwarded', Description: 'Forwarded', BgColor: '', CssClass: 'fa-solid fa-share small' }
 			];
 		}
 	}

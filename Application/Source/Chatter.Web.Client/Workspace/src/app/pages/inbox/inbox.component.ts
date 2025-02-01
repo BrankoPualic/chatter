@@ -20,6 +20,7 @@ import { PresenceService } from '../../services/presence.service';
 export class InboxComponent extends BaseComponent implements OnInit {
   chats: api.ChatDto[] = [];
   searched: string = '';
+  eMessageStatus = api.eMessageStatus;
 
   constructor(
     errorService: ErrorService,

@@ -26,3 +26,11 @@
     }
   }
 }
+
+.unread-message {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background-color: $soft-black;
+  border-radius: 50%;
+}

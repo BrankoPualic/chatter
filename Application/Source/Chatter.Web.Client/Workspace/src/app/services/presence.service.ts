@@ -28,8 +28,10 @@ export class PresenceService {
       .catch(_ => console.error(_));
 
     this.hubConnection.onreconnecting(() => {
-      if (reconnectingCount === 0)
+      if (reconnectingCount === 0) {
         this.toastService.notifyWarning('You are offline.');
+        this._onlineUsers.set([]);
+      }
     })
 
     this.hubConnection.onreconnected(() => {

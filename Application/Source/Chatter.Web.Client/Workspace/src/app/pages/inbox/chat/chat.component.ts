@@ -25,6 +25,7 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
   textarea = viewChild<ElementRef>('textarea');
   container = viewChild<ElementRef>('container');
   originalTextareaScrollHeight: number;
+  eMessageStatus = api.eMessageStatus;
 
   chatId: string;
   chat: api.ChatLightDto;
