@@ -10,6 +10,7 @@ import { ToastService } from '../../services/toast.service';
 import { AuthService } from '../../services/auth.service';
 import { SharedService } from '../../services/shared.service';
 import { PresenceService } from '../../services/presence.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-inbox',
@@ -28,15 +29,18 @@ export class InboxComponent extends BaseComponent implements OnInit {
     loaderService: PageLoaderService,
     toastService: ToastService,
     authService: AuthService,
+    private route: ActivatedRoute,
     public presenceService: PresenceService,
     private sharedService: SharedService,
     private api_InboxController: api.Controller.InboxController
   ) {
     super(errorService, loaderService, toastService, authService);
+
+    this.route.data.subscribe(_ => this.chats = _['inbox'].Data);
   }
 
   ngOnInit(): void {
-    this.loadChats();
+    // this.loadChats();
   }
 
   loadChats(): void {

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { Constants } from './constants/constants';
 import { authGuard } from './guards/auth.guard';
+import { inboxResolver } from './resolvers/inbox.resolver';
 
 export const routes: Routes = [
   {
@@ -62,6 +63,7 @@ export const routes: Routes = [
   {
     path: Constants.ROUTE_INBOX,
     canActivate: [authGuard],
+    resolve: { inbox: inboxResolver },
     children: [
       {
         path: '',
