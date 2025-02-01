@@ -10,4 +10,7 @@ public enum Providers
 
 	[EnumProvider<eGender>]
 	Genders,
+
+	[EnumProvider<eMessageStatus>]
+	MessageStatuses,
 }

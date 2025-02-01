@@ -67,8 +67,12 @@ public class EnumProviderGenerator : ClassCodeGenerator
 					: null)
 				: null;
 
+			// Get CssClass if exists
+			var cssClassAttribute = enumType.GetField(enumName)?.GetCustomAttribute<CssClassAttribute>();
+			var cssClass = cssClassAttribute?.CssClass;
+
 			// Create the enum object string
-			var enumObject = $@"{{ Id: {enumId}, Name: '{enumName}', Description: '{description}', BgColor: '{bgColor}' }}";
+			var enumObject = $@"{{ Id: {enumId}, Name: '{enumName}', Description: '{description}', BgColor: '{bgColor}', CssClass: '{cssClass}' }}";
 
 			enumArray.Add(enumObject); // Add the string representation
 		}

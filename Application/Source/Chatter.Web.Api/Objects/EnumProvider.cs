@@ -9,4 +9,6 @@ internal class EnumProvider
 	public string Description { get; set; }
 
 	public string BgColor { get; set; }
+
+	public string CssClass { get; set; }
 }

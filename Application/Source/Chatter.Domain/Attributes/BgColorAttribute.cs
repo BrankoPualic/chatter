@@ -1,12 +1,7 @@
 ﻿namespace Chatter.Domain;
 
 [AttributeUsage(AttributeTargets.Field)]
-public class BgColorAttribute : Attribute
+public class BgColorAttribute(string color) : Attribute
 {
-	public string BgColor { get; }
-
-	public BgColorAttribute(string color)
-	{
-		BgColor = color;
-	}
+	public string BgColor { get; } = color;
 }
