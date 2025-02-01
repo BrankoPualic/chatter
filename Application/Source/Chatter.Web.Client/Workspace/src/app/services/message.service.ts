@@ -20,8 +20,8 @@ export class MyMessageService {
     this._messages.set(messages);
   }
 
-  private _isTyping = signal<boolean>(false);
-  isTypingSignal = this._isTyping.asReadonly();
+  private _typingUser = signal<string | undefined>(undefined);
+  typingUserSignal = this._typingUser.asReadonly();
 
   createHubConnection(chatId: string) {
     this.hubConnection = new HubConnectionBuilder()
@@ -49,8 +49,8 @@ export class MyMessageService {
       this._messages.set([...messages, message]);
     })
 
-    this.hubConnection.on('StartTyping', () => this._isTyping.set(true));
-    this.hubConnection.on('StopTyping', () => this._isTyping.set(false));
+    this.hubConnection.on('StartTyping', (username) => this._typingUser.set(username));
+    this.hubConnection.on('StopTyping', () => this._typingUser.set(undefined));
   }
 
   stopHubConnection() {

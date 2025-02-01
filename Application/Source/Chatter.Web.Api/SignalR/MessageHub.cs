@@ -55,7 +55,7 @@ public class MessageHub(IDatabaseContext db, IMediator mediator) : Hub
 	public async Task StartTyping(Guid chatId)
 	{
 		var group = chatId.ToString();
-		await Clients.OthersInGroup(group).SendAsync("StartTyping");
+		await Clients.OthersInGroup(group).SendAsync("StartTyping", Context.User.GetUsername());
 	}
 
 	public async Task StopTyping(Guid chatId)

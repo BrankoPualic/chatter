@@ -2,7 +2,7 @@
   <div class="col-xs-12 action-bar-top justify-content-between box-shadow" style="height: 4rem">
     <div class="d-flex align-items-center">
       <span class="font-lg padding-x-10" [class]="Icons.ANGLE_LEFT" [routerLink]="['/' + Constants.ROUTE_INBOX]"></span>
-      <div [routerLink]="['/' + Constants.ROUTE_PROFILE, chat.UserId]" class="d-flex align-items-center">
+      <div class="d-flex align-items-center" (click)="openProfile()">
         <div class="chat-image" [class.is-online]="presenceService.onlineUsersSignal().includes(chat.Name)">
           <img [src]="[loadChatPhoto()]" alt="Chat image" class="img-fluid rounded-circle">
         </div>
@@ -65,9 +65,9 @@
         }
         </div>
       }
-      @if(userIsTyping){
+      @if(typingUser){
         <div class="typing-indicator">
-          <span class="typing-text">Typing...</span>
+          <span class="typing-text">{{ typingUser }} is typing...</span>
         </div>
       }
   </div>

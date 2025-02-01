@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, effect, ElementRef, OnDestroy, OnInit, viewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { AfterViewInit, Component, effect, ElementRef, OnDestroy, viewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { debounceTime, Subject } from 'rxjs';
 import { api } from '../../../_generated/project';
 import { GLOBAL_MODULES } from '../../../_global.modules';
 import { BaseComponent } from '../../../base/base.component';
@@ -12,7 +13,6 @@ import { ProfileService } from '../../../services/profile.service';
 import { SharedService } from '../../../services/shared.service';
 import { ToastService } from '../../../services/toast.service';
 import { UserService } from '../../../services/user.service';
-import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
@@ -35,7 +35,7 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
 
   connectionEstablished = false;
   private _typingSubject = new Subject<string>();
-  userIsTyping = false;
+  typingUser?: string;
 
   constructor(
     errorService: ErrorService,
@@ -43,6 +43,7 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
     toastService: ToastService,
     authService: AuthService,
     private route: ActivatedRoute,
+    private router: Router,
     private profileService: ProfileService,
     private sharedService: SharedService,
     private userService: UserService,
@@ -65,7 +66,7 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
     })
 
     effect(() => {
-      this.userIsTyping = this.messageService.isTypingSignal();
+      this.typingUser = this.messageService.typingUserSignal();
       setTimeout(() => {
         this.scrollToBottom();
       }, 0);
@@ -204,6 +205,13 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
 
     this._typingSubject.next(this.chat.Id);
     this.messageService.startTyping(this.chat.Id);
+  }
+
+  openProfile() {
+    if (!this.chat.IsGroup) {
+      this.router.navigateByUrl('/' + this.Constants.ROUTE_PROFILE + '/' + this.chat.UserId);
+      return;
+    }
   }
 
   private afterMessageSent(): void {
