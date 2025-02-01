@@ -1,5 +1,6 @@
 ﻿using Chatter.Domain.Models.Application;
 using Chatter.Domain.Models.Application.Messaging;
+using Chatter.Domain.Models.Application.SignalR;
 using Chatter.Domain.Models.Application.Users;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,4 +32,10 @@ public partial interface IDatabaseContext : IDatabaseContextBase
 	DbSet<ChatMember> ChatMembers { get; }
 
 	DbSet<Attachment> Attachments { get; }
+
+	// SignalR
+
+	DbSet<Group> Groups { get; }
+
+	DbSet<Connection> Connections { get; }
 }
