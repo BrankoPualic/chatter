@@ -63,10 +63,10 @@ export const routes: Routes = [
   {
     path: Constants.ROUTE_INBOX,
     canActivate: [authGuard],
-    resolve: { inbox: inboxResolver },
     children: [
       {
         path: '',
+        resolve: { inbox: inboxResolver },
         title: 'Inbox | ' + Constants.TITLE,
         loadComponent: () => import('./pages/inbox/inbox.component').then(_ => _.InboxComponent),
         pathMatch: 'full'
@@ -75,6 +75,11 @@ export const routes: Routes = [
         path: Constants.ROUTE_CHAT + '/' + Constants.PARAM_ID,
         title: 'Chat | ' + Constants.TITLE,
         loadComponent: () => import('./pages/inbox/chat/chat.component').then(_ => _.ChatComponent)
+      },
+      {
+        path: Constants.ROUTE_START_NEW_CHAT,
+        title: 'Start Chatting | ' + Constants.TITLE,
+        loadComponent: () => import('./pages/inbox/start-new-chat/start-new-chat.component').then(_ => _.StartNewChatComponent)
       }
     ]
   }

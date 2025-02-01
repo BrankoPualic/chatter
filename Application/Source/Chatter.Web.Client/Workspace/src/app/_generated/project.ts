@@ -391,6 +391,7 @@ export namespace api {
 	}
 	export class UserSearchOptions
 	{
+		IsFollowed: boolean;
 		Skip: number;
 		Take: number;
 		Filter: string;

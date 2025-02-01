@@ -38,6 +38,7 @@ export class Constants {
   static ROUTE_USERS = 'users';
   static ROUTE_POSTS = 'posts';
   static ROUTE_INBOX = 'inbox';
+  static ROUTE_START_NEW_CHAT = 'start_new';
   static ROUTE_CHAT = 'chat';
 
   // Route Parameters

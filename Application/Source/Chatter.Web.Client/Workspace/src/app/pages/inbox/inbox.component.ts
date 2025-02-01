@@ -36,7 +36,15 @@ export class InboxComponent extends BaseComponent implements OnInit {
   ) {
     super(errorService, loaderService, toastService, authService);
 
-    this.route.data.subscribe(_ => this.chats = _['inbox'].Data);
+    this.route.data.subscribe({
+      next: _ => {
+        this.chats = _['inbox'].Data;
+        this.top4 = this.chats.slice(0, 4);
+      },
+      error: _ => this.error(_.error.Errors)
+    });
+
+    this.loaderService.hide();
   }
 
   ngOnInit(): void {
@@ -51,7 +59,6 @@ export class InboxComponent extends BaseComponent implements OnInit {
     this.api_InboxController.GetInbox(options).toPromise()
       .then(_ => {
         this.chats = _!.Data;
-        this.top4 = this.chats.slice(0, 4);
       })
       .catch(_ => this.error(_.error.Errors))
       .finally(() => this.loading = false);

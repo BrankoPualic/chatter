@@ -4,14 +4,14 @@ using Chatter.Domain.Models.Application.Users;
 
 namespace Chatter.Application.UseCases.Users;
 
-public class GetUserListQuery(UserSearchOptions options) : BaseQuery<PagingResultDto<UserLightDto>>
+public class GetUserLightListQuery(UserSearchOptions options) : BaseQuery<PagingResultDto<UserLightDto>>
 {
 	public UserSearchOptions Options { get; } = options;
 }
 
-internal class GetUserListQueryHandler(IDatabaseContext db, IIdentityUser currentUser) : BaseQueryHandler<GetUserListQuery, PagingResultDto<UserLightDto>>(db, currentUser)
+internal class GetUserLightListQueryHandler(IDatabaseContext db, IIdentityUser currentUser) : BaseQueryHandler<GetUserLightListQuery, PagingResultDto<UserLightDto>>(db, currentUser)
 {
-	public override async Task<ResponseWrapper<PagingResultDto<UserLightDto>>> Handle(GetUserListQuery request, CancellationToken cancellationToken)
+	public override async Task<ResponseWrapper<PagingResultDto<UserLightDto>>> Handle(GetUserLightListQuery request, CancellationToken cancellationToken)
 	{
 		if (request.Options.Filter.IsNullOrWhiteSpace())
 			return new(new PagingResultDto<UserLightDto>());
@@ -25,6 +25,12 @@ internal class GetUserListQueryHandler(IDatabaseContext db, IIdentityUser curren
 
 		if (request.Options.Filter.IsNotNullOrWhiteSpace())
 			filters.Add(_ => _.Username.Contains(request.Options.Filter) || _.FullName.Contains(request.Options.Filter));
+
+		if (request.Options.IsFollowed == true)
+		{
+			filters.Add(_ => _.Followers.Select(_ => _.FollowerId).Contains(_currentUser.Id));
+			filters.Add(_ => !_.ChatParticipations.Any());
+		}
 
 		var result = await _db.Users.SearchAsync(cancellationToken, request.Options, _ => _.Username, true, _ => new UserLightDto
 		{

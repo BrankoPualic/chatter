@@ -1,4 +1,5 @@
 ﻿using Chatter.Domain.Interfaces;
+using Chatter.Domain.Models.Application.Messaging;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -41,6 +42,9 @@ public class User : BaseIndexAuditedDomain<User>, IConfigurableEntity
 
 	[InverseProperty(nameof(UserBlob.User))]
 	public virtual ICollection<UserBlob> Blobs { get; set; } = [];
+
+	[InverseProperty(nameof(ChatMember.User))]
+	public virtual ICollection<ChatMember> ChatParticipations { get; set; } = [];
 
 	//
 	// Indexes

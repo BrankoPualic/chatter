@@ -1,0 +1,31 @@
+<app-mobile-navigation-bar/>
+
+<div class="col-xs-12 action-bar-top justify-content-start">
+  <span class="font-lg padding-x-20 float-start" [class]="Icons.ANGLE_LEFT" [routerLink]="['/' + Constants.ROUTE_INBOX]"></span>
+  <div class="logo">
+    <h2>Start Chatting</h2>
+  </div>
+</div>
+
+<div class="col-xs-12 padding-x-20 margin-bottom-20">
+  <app-search (onSearch)="onSearch($event)"/>
+</div>
+
+<div class="col-xs-12 padding-x-20">
+  @if(users.length > 0){
+    @for(user of users; track $index){
+      <div class="user" (click)="message(user)">
+        <div class="image" [class.is-online]="presenceService.onlineUsersSignal().includes(user.Username)">
+          <img [src]="[loadProfilePhoto(user)]" alt="User profile photo">
+        </div>
+
+        <div>
+          {{ user.Username }}
+        </div>
+      </div>
+    }
+  }
+  @else if(keyword !== '' && users.length < 1){
+    You don't follow anyone with this username or you may have already started chatting with them.
+  }
+</div>

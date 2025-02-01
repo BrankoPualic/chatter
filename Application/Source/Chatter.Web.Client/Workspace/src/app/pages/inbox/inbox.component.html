@@ -10,10 +10,31 @@
   </div>
 </div>
 
-<div class="col-xs-12 padding-x-20 margin-bottom-20">
+<div class="col-xs-12 padding-x-20">
   <app-search (onSearch)="onSearch($event)"/>
 </div>
 
+<div class="col-xs-12 padding-x-20 margin-y-15 d-flex flex-row">
+  <div class="common-chat new" [routerLink]="['/' + Constants.ROUTE_INBOX + '/' + Constants.ROUTE_START_NEW_CHAT]">
+    <div class="image">
+      <span [class]="Icons.PLUS"></span>
+    </div>
+    <div class="truncate-label smaller text-center">
+      New
+    </div>
+  </div>
+
+  @for(chat of top4; track $index){
+    <div class="common-chat" [routerLink]="['/' + Constants.ROUTE_INBOX + '/' + Constants.ROUTE_CHAT, chat.Id]">
+      <div class="image" [class.is-online]="presenceService.onlineUsersSignal().includes(chat.Name)">
+        <img [src]="[loadChatPhoto(chat)]" alt="Chat photo">
+      </div>
+      <div class="truncate-label smaller text-center">
+        {{ chat.Name }}
+      </div>
+    </div>
+  }
+</div>
 
 
 <div class="col-xs-12 padding-x-20">

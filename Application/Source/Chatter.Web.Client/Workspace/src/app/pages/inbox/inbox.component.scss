@@ -10,20 +10,20 @@
   margin-bottom: 0.75rem;
   border-radius: $border-radius;
   overflow: hidden;
+}
 
-  .image {
-    width: 45px;
-    height: 45px;
+.image {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  position: relative;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     border-radius: 50%;
-    margin-right: 0.5rem;
-    position: relative;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
   }
 }
 
@@ -33,4 +33,35 @@
   height: 7px;
   background-color: $soft-black;
   border-radius: 50%;
+}
+
+.common-chat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: calc(100% / 5);
+  
+  .image {
+    width: 57.5px;
+    height: 57.5px;
+    margin-right: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.new {
+    .image {
+      border-radius: 50%;
+      border: 1px solid $neutral-gray;
+    }
+  }
+
+  .truncate-label {
+    max-width: 55px;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 }

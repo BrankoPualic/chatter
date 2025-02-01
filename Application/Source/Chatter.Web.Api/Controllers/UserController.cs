@@ -25,5 +25,5 @@ public class UserController(IMediator mediator) : BaseController(mediator)
 	[HttpPost]
 	[Authorize]
 	[AngularMethod(typeof(PagingResultDto<UserLightDto>))]
-	public async Task<IActionResult> GetUserList(UserSearchOptions options) => Result(await Mediator.Send(new GetUserListQuery(options)));
+	public async Task<IActionResult> GetUserList(UserSearchOptions options) => Result(await Mediator.Send(new GetUserLightListQuery(options)));
 }

@@ -93,7 +93,7 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
     }
 
     const options = new api.MessageSearchOptions();
-    options.ChatId = this.chatId;
+    options.ChatId = this.chatId || JSON.parse(this.chat.Id);
     this.loading = true;
     this.api_InboxController.GetChat(options).toPromise()
       .then(_ => {
