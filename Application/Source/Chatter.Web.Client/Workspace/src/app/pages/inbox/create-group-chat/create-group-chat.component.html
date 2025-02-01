@@ -1,0 +1,42 @@
+<div class="col-xs-12 action-bar-top justify-content-between">
+  <span class="font-lg padding-left-15 float-start" [class]="Icons.ANGLE_LEFT" [routerLink]="['/' + Constants.ROUTE_INBOX]"></span>
+  <div class="logo">
+    <h2>Create Group</h2>
+  </div>
+
+  <div class="padding-right-15">
+    <button class="btn btn-primary" (click)="submit()">Save</button>
+  </div>
+</div>
+
+<form [formGroup]="form" class="form-group">
+  <div class="col-xs-12 margin-bottom-15" appValidation="Name">
+    <label for="Name" class="form-label">Name</label>
+    <input type="text" class="form-control" id="Name" formControlName="Name">
+  </div>
+
+  <div class="col-xs-12 margin-bottom-15">
+    <label class="form-label">Participants</label>
+    <app-search (onSearch)="onSearch($event)" appValidation="Participants"/>
+  </div>
+
+  <div class="col-xs-12">
+    @if(users.length > 0){
+      @for(user of users; track $index){
+        <div class="user" [class.is-selected]="user.IsSelected" (click)="select(user)">
+          <div class="image">
+            <img [src]="[loadProfilePhoto(user)]" alt="User profile photo">
+          </div>
+  
+          <div>
+            {{ user.Username }}
+          </div>
+        </div>
+      }
+    }
+    @else if(keyword !== '' && users.length < 1){
+      Cannot find following user.
+    }
+  </div>
+
+</form>

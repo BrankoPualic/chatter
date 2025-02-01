@@ -80,6 +80,11 @@ export const routes: Routes = [
         path: Constants.ROUTE_START_NEW_CHAT,
         title: 'Start Chatting | ' + Constants.TITLE,
         loadComponent: () => import('./pages/inbox/start-new-chat/start-new-chat.component').then(_ => _.StartNewChatComponent)
+      },
+      {
+        path: Constants.ROUTE_CREATE_GROUP_CHAT,
+        title: 'Create Group | ' + Constants.TITLE,
+        loadComponent: () => import('./pages/inbox/create-group-chat/create-group-chat.component').then(_ => _.CreateGroupChatComponent)
       }
     ]
   }

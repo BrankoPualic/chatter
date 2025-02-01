@@ -25,6 +25,10 @@
     object-fit: cover;
     border-radius: 50%;
   }
+
+  &.is-group {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px;
+  }
 }
 
 .unread-message {

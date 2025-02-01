@@ -1,0 +1,30 @@
+@import '../../../../assets/styles/variables';
+
+.user {
+  width: 100%;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+  margin-bottom: 0.75rem;
+  border-radius: $border-radius;
+
+  .image {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+
+  &.is-selected {
+    box-shadow: rgba(190, 49, 68, 0.8) 0px 0px 0px 2px;
+  }
+}

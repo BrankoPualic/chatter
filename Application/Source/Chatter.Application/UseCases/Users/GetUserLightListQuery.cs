@@ -27,10 +27,10 @@ internal class GetUserLightListQueryHandler(IDatabaseContext db, IIdentityUser c
 			filters.Add(_ => _.Username.Contains(request.Options.Filter) || _.FullName.Contains(request.Options.Filter));
 
 		if (request.Options.IsFollowed == true)
-		{
 			filters.Add(_ => _.Followers.Select(_ => _.FollowerId).Contains(_currentUser.Id));
+
+		if (request.Options.IsNotSpokenTo == true)
 			filters.Add(_ => !_.ChatParticipations.Any());
-		}
 
 		var result = await _db.Users.SearchAsync(cancellationToken, request.Options, _ => _.Username, true, _ => new UserLightDto
 		{

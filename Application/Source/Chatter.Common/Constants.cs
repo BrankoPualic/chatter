@@ -18,4 +18,6 @@ public static class Constants
 	public const string ERROR_INTERNAL_ERROR = "Internal server error!";
 
 	public const int MESSAGE_EDIT_TIME_LIMIT_SECONDS = 600;
+
+	public static readonly DateTime MIN_VALID_DATETIME = new(2025, 1, 1);
 }

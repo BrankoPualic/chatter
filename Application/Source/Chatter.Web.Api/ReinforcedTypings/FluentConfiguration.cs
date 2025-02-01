@@ -91,7 +91,8 @@ public static class FluentConfiguration
 			typeof(eSystemRole),
 			typeof(eGender),
 			typeof(eMessageStatus),
-			typeof(eMessageType)
+			typeof(eMessageType),
+			typeof(eChatRole),
 		];
 
 		builder.ExportAsEnums(enums,

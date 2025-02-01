@@ -39,7 +39,9 @@ export class InboxComponent extends BaseComponent implements OnInit {
     this.route.data.subscribe({
       next: _ => {
         this.chats = _['inbox'].Data;
-        this.top4 = this.chats.slice(0, 4);
+        this.top4 = this.chats
+          .filter(_ => _.IsGroup !== true)
+          .slice(0, 4);
       },
       error: _ => this.error(_.error.Errors)
     });

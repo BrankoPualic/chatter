@@ -66,14 +66,15 @@ internal class GetInboxQueryHandler(IDatabaseContext db, IIdentityUser currentUs
 			var projection = new ChatDto()
 			{
 				Id = chat.Id,
+				IsGroup = chat.IsGroup,
 				Name = chat.IsGroup ? chat.GroupName : chatMembers.Where(_ => _.UserId != _currentUser.Id).Select(_ => _.Username).FirstOrDefault(),
 				IsMuted = chatMembers.Where(_ => _.UserId == _currentUser.Id).Select(_ => _.IsMuted).FirstOrDefault(),
-				ImageUrl = chat.IsGroup ? chat.GroupImage.Url : chatMembers.Where(_ => _.UserId != _currentUser.Id).Select(_ => _.UserImage).FirstOrDefault()?.Url,
-				LastMessage = lastMessageInformation.Where(_ => _.ChatId == chat.Id).Select(_ => _.Information.Content).FirstOrDefault(),
-				LastMessageOn = chat.LastMessageOn,
-				LastMessageStatusId = lastMessageInformation.Where(_ => _.ChatId == chat.Id).Select(_ => _.Information.Status).FirstOrDefault(),
+				ImageUrl = chat.IsGroup ? chat.GroupImage?.Url : chatMembers.Where(_ => _.UserId != _currentUser.Id).Select(_ => _.UserImage).FirstOrDefault()?.Url,
+				LastMessage = lastMessageInformation.Where(_ => _.ChatId == chat.Id).Select(_ => _.Information?.Content).FirstOrDefault(),
+				LastMessageOn = chat.LastMessageOn < Constants.MIN_VALID_DATETIME ? null : chat.LastMessageOn,
+				LastMessageStatusId = lastMessageInformation.Where(_ => _.ChatId == chat.Id).Select(_ => _.Information?.Status).FirstOrDefault(),
 				UserGenderId = chat.IsGroup ? null : chatMembers.Where(_ => _.UserId != _currentUser.Id).Select(_ => _.GenderId).FirstOrDefault(),
-				IsLastMessageMine = lastMessageInformation.Where(_ => _.ChatId == chat.Id).Select(_ => _.Information.UserId).FirstOrDefault() == _currentUser.Id,
+				IsLastMessageMine = lastMessageInformation.Where(_ => _.ChatId == chat.Id).Select(_ => _.Information?.UserId).FirstOrDefault() == _currentUser.Id,
 			};
 
 			data.Add(projection);

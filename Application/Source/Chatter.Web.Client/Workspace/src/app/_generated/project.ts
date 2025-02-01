@@ -93,6 +93,27 @@ export namespace api.Controller {
 			super(httpClient, settingsService);
 		}
 	}
+	@Injectable() export class GroupController extends api.Controller.BaseController
+	{
+		public CreateGroup(data: api.GroupCreateDto) : Observable<any>
+		{
+			const body = <any>data;
+			return this.httpClient.post<any>(
+			this.settingsService.createApiUrl('Group/CreateGroup'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
+		constructor (httpClient: HttpClient, settingsService: SettingsService)
+		{
+			super(httpClient, settingsService);
+		}
+	}
 	@Injectable() export class InboxController extends api.Controller.BaseController
 	{
 		public GetInbox(options: api.InboxSearchOptions) : Observable<api.PagingResultDto<api.ChatDto>>
@@ -293,6 +314,11 @@ export namespace api {
 		FollowerId: string;
 		FollowingId: string;
 	}
+	export class GroupCreateDto
+	{
+		Name: string;
+		Participants: string[];
+	}
 	export class InboxSearchOptions
 	{
 		Skip: number;
@@ -392,6 +418,7 @@ export namespace api {
 	export class UserSearchOptions
 	{
 		IsFollowed: boolean;
+		IsNotSpokenTo: boolean;
 		Skip: number;
 		Take: number;
 		Filter: string;
@@ -460,5 +487,11 @@ export namespace api {
 		Video = 200,
 		Document = 300,
 		Voice = 400
+	}
+	export enum eChatRole {
+		NotSet = 0,
+		Member = 10,
+		Admin = 20,
+		Moderator = 30
 	}
 }

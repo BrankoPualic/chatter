@@ -12,11 +12,11 @@ public class ChatDto
 
 	public string ImageUrl { get; set; }
 
-	public DateTime LastMessageOn { get; set; }
+	public DateTime? LastMessageOn { get; set; }
 
 	public string LastMessage { get; set; }
 
-	public eMessageStatus LastMessageStatusId { get; set; }
+	public eMessageStatus? LastMessageStatusId { get; set; }
 
 	public bool IsLastMessageMine { get; set; }
 

@@ -23,6 +23,10 @@ body {
   background-image: none;
 }
 
+.form-control.is-invalid {
+  border: 1px solid #dc3545 !important;
+}
+
 .form-control:focus {
   border-color: transparent;
   box-shadow: $box-shadow;
