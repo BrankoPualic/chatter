@@ -1,4 +1,6 @@
 ﻿using Chatter.Application;
+using Chatter.Application.Dtos.Files;
+using Chatter.Common.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +11,46 @@ namespace Chatter.Web.Api.Controllers._Base;
 public class BaseController(IMediator mediator) : ControllerBase
 {
 	protected IMediator Mediator { get; } = mediator;
+
+	protected async Task<FileInformationDto> GetFileAsync()
+	{
+		if (Request.Form.Files.IsNullOrEmpty())
+			return null;
+
+		var file = Request.Form.Files.FirstOrDefault();
+
+		using var stream = new MemoryStream();
+		await file.CopyToAsync(stream);
+
+		return new()
+		{
+			FileName = file.FileName.Trim('\"'),
+			Type = file.ContentType,
+			Size = file.Headers.ContentLength,
+			Buffer = stream.ToArray()
+		};
+	}
+
+	protected async Task<List<FileInformationDto>> GetFilesAsync()
+	{
+		var result = new List<FileInformationDto>();
+
+		foreach (var file in Request.Form.Files.NotNull())
+		{
+			using var stream = new MemoryStream();
+			await file.CopyToAsync(stream);
+
+			result.Add(new()
+			{
+				FileName = file.FileName.Trim('\"'),
+				Type = file.ContentType,
+				Size = file.Headers.ContentLength,
+				Buffer = stream.ToArray()
+			});
+		}
+
+		return result;
+	}
 
 	public IActionResult Result(ResponseWrapper response) => response.IsSuccess ? Ok() : BadRequest(response.Errors);
 

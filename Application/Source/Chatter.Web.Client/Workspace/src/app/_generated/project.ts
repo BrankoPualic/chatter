@@ -309,6 +309,13 @@ export namespace api {
 		BgColor: string;
 		CssClass: string;
 	}
+	export class FileInformationDto
+	{
+		FileName: string;
+		Type: string;
+		Size: number;
+		Buffer: number[];
+	}
 	export class FollowDto
 	{
 		FollowerId: string;
