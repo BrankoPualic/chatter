@@ -82,9 +82,8 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/inbox/start-new-chat/start-new-chat.component').then(_ => _.StartNewChatComponent)
       },
       {
-        path: Constants.ROUTE_CREATE_GROUP_CHAT,
-        title: 'Create Group | ' + Constants.TITLE,
-        loadComponent: () => import('./pages/inbox/create-group-chat/create-group-chat.component').then(_ => _.CreateGroupChatComponent)
+        path: Constants.ROUTE_EDIT_GROUP_CHAT + '/' + Constants.PARAM_ID,
+        loadComponent: () => import('./pages/inbox/edit-group-chat/edit-group-chat.component').then(_ => _.EditGroupChatComponent)
       }
     ]
   }

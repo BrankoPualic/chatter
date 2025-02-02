@@ -47,6 +47,7 @@ internal class GetChatQueryHandler(IDatabaseContext db, IIdentityUser currentUse
 			ImageUrl = chat?.IsGroup == true ? chat?.GroupImage?.Url : chat?.Members.Where(_ => _.UserId != _currentUser.Id).FirstOrDefault().User.Blobs.FirstOrDefault()?.Blob?.Url,
 			UserGenderId = chat?.IsGroup == true ? null : chat?.Members.Where(_ => _.UserId != _currentUser.Id).FirstOrDefault().User.GenderId,
 			//Messages = _mapper.To<PagingResultDto<MessageDto>>(messages),
+			GroupChatRoleId = chat?.Members.Where(_ => _.UserId == _currentUser.Id).Select(_ => _.RoleId).FirstOrDefault(),
 			Messages = new PagingResultDto<MessageDto>
 			{
 				Total = messages?.Total ?? 0,

@@ -1,4 +1,5 @@
 ﻿using Chatter.Common.Search;
+using Chatter.Domain.Models;
 using Chatter.Domain.Models.Application;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -19,13 +20,11 @@ public static class IDatabaseContextExtensions
 		db.Remove(entity);
 	}
 
-	public static void Remove<TModel>(this IDatabaseContextBase db, TModel model) where TModel : class =>
-		db.Set<TModel>().Remove(model);
+	public static void Remove<TModel>(this IDatabaseContextBase db, TModel model) where TModel : class => db.Set<TModel>().Remove(model);
 
 	// DbSet Extensions
 
-	public static async Task<TModel> GetSingleAsync<TModel>(this DbSet<TModel> dbSet, params object[] keyValue) where TModel : class =>
-		await dbSet.FindAsync(keyValue);
+	public static async Task<TModel> GetSingleAsync<TModel>(this DbSet<TModel> dbSet, params object[] keyValue) where TModel : class => await dbSet.FindAsync(keyValue);
 
 	public static async Task<TModel> GetSingleAsync<TModel>(this DbSet<TModel> dbSet, Expression<Func<TModel, bool>> predicate, params Expression<Func<TModel, object>>[] includeProperties) where TModel : class
 	{
@@ -36,6 +35,11 @@ public static class IDatabaseContextExtensions
 
 		return await query.FirstOrDefaultAsync(predicate);
 	}
+
+	public static async Task<TModel> GetSingleOrDefaultAsync<TModel>(this DbSet<TModel> dbSet, IBaseDomain data, params Expression<Func<TModel, object>>[] includeProperties) where TModel : BaseDomain, new() =>
+		data.Id == Guid.Empty
+			? new()
+			: await dbSet.GetSingleAsync(_ => _.Id == data.Id, includeProperties);
 
 	public static async Task<PagingResult<TModel>> SearchAsync<TProperty, TModel>(this DbSet<TModel> dbSet, SearchOptions options, Expression<Func<TModel, TProperty>> defaultOrder, bool desc, List<Expression<Func<TModel, bool>>> predicates, params Expression<Func<TModel, object>>[] includeProperties) where TModel : class =>
 		await dbSet.SearchAsync(default, options, defaultOrder, desc, _ => _, predicates, includeProperties);

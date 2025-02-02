@@ -16,7 +16,7 @@ internal class UnfollowCommandHandler(IDatabaseContext db) : BaseCommandHandler<
 			.Where(_ => _.FollowerId == request.Data.FollowerId)
 			.FirstOrDefaultAsync(cancellationToken);
 
-		if (follow.IsNullOrEmpty())
+		if (follow == null)
 			return new(ERROR_INVALID_OPERATION);
 
 		_db.Follows.Remove(follow);

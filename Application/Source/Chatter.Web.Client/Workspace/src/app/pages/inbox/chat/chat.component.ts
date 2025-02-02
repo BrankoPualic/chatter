@@ -122,7 +122,8 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
       IsMuted: false,
       ImageUrl: this.userFromService?.ProfilePhoto!,
       UserGenderId: this.userFromService?.GenderId!,
-      Messages: { Total: 0, Data: [] }
+      Messages: { Total: 0, Data: [] },
+      GroupChatRoleId: null!
     }
   }
 
@@ -210,7 +211,8 @@ export class ChatComponent extends BaseComponent implements OnDestroy, AfterView
   openProfile() {
     if (!this.chat.IsGroup) {
       this.router.navigateByUrl('/' + this.Constants.ROUTE_PROFILE + '/' + this.chat.UserId);
-      return;
+    } else {
+      this.router.navigateByUrl('/' + this.Constants.ROUTE_INBOX + '/' + this.Constants.ROUTE_EDIT_GROUP_CHAT + '/' + this.chat.Id);
     }
   }
 

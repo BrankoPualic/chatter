@@ -13,4 +13,7 @@ public enum Providers
 
 	[EnumProvider<eMessageStatus>]
 	MessageStatuses,
+
+	[EnumProvider<eChatRole>]
+	ChatRoles,
 }

@@ -17,7 +17,8 @@ export class Constants {
   static Providers = {
     Genders: 'Genders',
     SystemRoles: 'SystemRoles',
-    MessageStatuses: 'MessageStatuses'
+    MessageStatuses: 'MessageStatuses',
+    ChatRoles: 'ChatRoles'
   }
 
   // Route Titles
@@ -39,7 +40,7 @@ export class Constants {
   static ROUTE_POSTS = 'posts';
   static ROUTE_INBOX = 'inbox';
   static ROUTE_START_NEW_CHAT = 'start_new';
-  static ROUTE_CREATE_GROUP_CHAT = 'create_group_chat';
+  static ROUTE_EDIT_GROUP_CHAT = 'edit_group_chat';
   static ROUTE_CHAT = 'chat';
 
   // Route Parameters
