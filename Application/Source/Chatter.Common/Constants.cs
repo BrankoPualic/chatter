@@ -20,4 +20,7 @@ public static class Constants
 	public const int MESSAGE_EDIT_TIME_LIMIT_SECONDS = 600;
 
 	public static readonly DateTime MIN_VALID_DATETIME = new(2025, 1, 1);
+
+	public const string CLOUDINARY_STORAGE = "chatter-social-media-app";
+	public const string CLOUDINARY_FILES_STORAGE = $"{CLOUDINARY_STORAGE}/files";
 }

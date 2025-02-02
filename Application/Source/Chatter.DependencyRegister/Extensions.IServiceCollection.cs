@@ -1,8 +1,11 @@
 ﻿using Chatter.Application.Behaviors;
 using Chatter.Application.Identity.Interfaces;
 using Chatter.Application.Identity.Services;
+using Chatter.Application.Interfaces;
+using Chatter.Application.Services;
 using Chatter.Application.UseCases;
 using Chatter.Domain;
+using Chatter.Infrastructure.Storage;
 using Chatter.Persistence;
 using FluentValidation;
 using MediatR;
@@ -87,6 +90,9 @@ public static class Extensions
 
 	private static IServiceCollection InfrastructureServices(IServiceCollection services)
 	{
+		services.AddScoped<ICloudinaryService, CloudinaryService>();
+		services.AddScoped<IBlobService, BlobService>();
+
 		return services;
 	}
 
