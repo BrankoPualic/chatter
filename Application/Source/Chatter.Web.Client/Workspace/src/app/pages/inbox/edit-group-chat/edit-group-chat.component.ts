@@ -31,6 +31,7 @@ export class EditGroupChatComponent extends BaseFormComponent<api.GroupEditDto> 
   chatId: string;
   title: string;
   group = {} as api.GroupDto;
+  files: File[] = [];
 
   constructor(
     errorService: ErrorService,
@@ -147,14 +148,14 @@ export class EditGroupChatComponent extends BaseFormComponent<api.GroupEditDto> 
     user.IsSelected = false;
   }
 
-  files: File[] = [];
   selectFile($event: Event) {
     const input = $event?.target as HTMLInputElement;
     if (!input.files?.length)
       return;
 
     this.files.push(input.files[0]);
-    console.log(input.files)
+
+    this.readSelectedFileUrl(input.files[0]);
   }
 
   goBack(): void {
@@ -163,5 +164,13 @@ export class EditGroupChatComponent extends BaseFormComponent<api.GroupEditDto> 
     } else {
       this.router.navigateByUrl('/' + this.Constants.ROUTE_INBOX + '/' + this.Constants.ROUTE_CHAT + '/' + this.chatId);
     }
+  }
+
+  private readSelectedFileUrl(file: File) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.group.GroupPhotoUrl = reader.result as string;
+    };
+    reader.readAsDataURL(file);
   }
 }

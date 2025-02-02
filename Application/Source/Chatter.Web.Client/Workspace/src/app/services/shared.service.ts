@@ -16,7 +16,10 @@ export class SharedService {
   }
 
   getChatPhoto(isGroup: boolean, photo?: string, genderId?: number): string {
-    return photo || isGroup
+    if (photo)
+      return photo;
+
+    return isGroup
       ? `../../assets/images/${Constants.DEFAULT_PHOTO_GROUP}`
       : this.profileService.getProfilePhoto(photo, genderId);
   }

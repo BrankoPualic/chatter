@@ -10,7 +10,19 @@
 </div>
 
 <form class="form-group">
-  <div class="col-xs-12 margin-bottom-15" appValidation="Name">
+  <div class="col-xs-12 group-image">
+    <div class="image" (click)="uploader.click()">
+      @if(!group.GroupPhotoUrl){
+        <span [class]="Icons.PLUS"></span>
+      }@else {
+        <img [src]="group.GroupPhotoUrl" alt="Group photo">
+      }
+      <input type="file" name="" id="" #uploader (change)="selectFile($event)" style="display: none;">
+    </div>
+  </div>
+
+
+  <div class="col-xs-12 margin-y-15" appValidation="Name">
     <label for="Name" class="form-label">Name</label>
     <input type="text" class="form-control" id="Name" [(ngModel)]="group.GroupName" [ngModelOptions]="{standalone: true}">
   </div>
@@ -40,6 +52,5 @@
     }
   </div>
 
-  <input type="file" name="" id="" (change)="selectFile($event)">
 
 </form>

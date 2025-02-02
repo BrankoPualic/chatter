@@ -20,7 +20,14 @@ public class CloudinaryService : ICloudinaryService
 		);
 	}
 
-	public async Task<DeletionResult> DeleteAsync(string publicId) => await _cloudinary.DestroyAsync(new DeletionParams(publicId));
+	public async Task<DeletionResult> DeleteAsync(string publicId)
+	{
+		var result = await _cloudinary.DestroyAsync(new DeletionParams(publicId));
+		if (result.Error != null)
+			throw new Exception(result.Error.Message);
+
+		return result;
+	}
 
 	public async Task<ImageUploadResult> UploadAsync(FileInformationDto file, string directory)
 	{
@@ -34,6 +41,11 @@ public class CloudinaryService : ICloudinaryService
 			Folder = $"{Common.Constants.CLOUDINARY_FILES_STORAGE}/{directory}",
 		};
 
-		return await _cloudinary.UploadAsync(uploadParams);
+		var result = await _cloudinary.UploadAsync(uploadParams);
+
+		if (result.Error != null)
+			throw new Exception(result.Error.Message);
+
+		return result;
 	}
 }

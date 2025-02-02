@@ -8,6 +8,9 @@ public class BlobService(IDatabaseContext db, ICloudinaryService cloudinary) : I
 {
 	public async Task<Blob> UploadAsync(FileInformationDto file)
 	{
+		if (file == null)
+			return null;
+
 		var blob = new Blob
 		{
 			Id = Guid.NewGuid(),

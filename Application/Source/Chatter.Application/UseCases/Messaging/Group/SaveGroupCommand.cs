@@ -1,5 +1,6 @@
 ﻿using Chatter.Application.Dtos.Files;
 using Chatter.Application.Dtos.Messaging;
+using Chatter.Application.Interfaces;
 using Chatter.Domain.Models.Application.Messaging;
 
 namespace Chatter.Application.UseCases.Messaging.Group;
@@ -11,7 +12,7 @@ public class SaveGroupCommand(GroupEditDto data, FileInformationDto file) : Base
 	public FileInformationDto File { get; } = file;
 }
 
-internal class SaveGroupCommandHandler(IDatabaseContext db, IIdentityUser currentUser) : BaseCommandHandler<SaveGroupCommand>(db, currentUser)
+internal class SaveGroupCommandHandler(IDatabaseContext db, IBlobService blobService) : BaseCommandHandler<SaveGroupCommand>(db)
 {
 	public override async Task<ResponseWrapper> Handle(SaveGroupCommand request, CancellationToken cancellationToken)
 	{
@@ -19,10 +20,20 @@ internal class SaveGroupCommandHandler(IDatabaseContext db, IIdentityUser curren
 
 		request.Data.ToModel(model, _db);
 
+		var blob = await blobService.UploadAsync(request.File);
+
+		var oldBlob = model.GroupImageId;
+
+		model.GroupImageId = blob?.Id;
+
 		if (request.Data.Id == Guid.Empty)
 			_db.Create(model);
 
 		await _db.SaveChangesAsync(true, cancellationToken);
+
+		if (oldBlob.HasValue)
+			await blobService.DeleteAsync(blob.Id);
+
 		return new();
 	}
 }
