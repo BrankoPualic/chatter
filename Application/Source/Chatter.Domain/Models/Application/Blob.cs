@@ -6,11 +6,13 @@ public class Blob : BaseIndexAuditedDomain<Blob>
 {
 	public eBlobType TypeId { get; set; }
 
-	public string Type { get; set; }
-
 	public string Url { get; set; }
 
 	public string PublicId { get; set; }
+
+	public string Name { get; set; }
+
+	public string Type { get; set; }
 
 	public long? Size { get; set; }
 
