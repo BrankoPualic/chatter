@@ -88,3 +88,15 @@ public enum eMessageType
 	Document = 300,
 	Voice = 400
 }
+
+public enum eUserMediaType
+{
+	[Description("")]
+	NotSet = 0,
+
+	[Description("Profile Photo")]
+	ProfilePhoto = 1,
+
+	[Description("Thumbnail")]
+	Thumbnail = 2,
+}

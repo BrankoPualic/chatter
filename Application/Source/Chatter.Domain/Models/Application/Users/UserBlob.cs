@@ -10,9 +10,7 @@ public class UserBlob
 
 	public Guid BlobId { get; set; }
 
-	public bool? IsProfilePhoto { get; set; }
-
-	public bool? IsThumbnail { get; set; }
+	public eUserMediaType TypeId { get; set; }
 
 	[ForeignKey(nameof(UserId))]
 	public User User { get; set; }

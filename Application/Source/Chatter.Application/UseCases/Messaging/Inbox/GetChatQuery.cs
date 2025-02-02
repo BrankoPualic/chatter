@@ -32,7 +32,7 @@ internal class GetChatQueryHandler(IDatabaseContext db, IIdentityUser currentUse
 			.Include(_ => _.GroupImage)
 			.Include(_ => _.Members)
 			.ThenInclude(_ => _.User)
-			.ThenInclude(_ => _.Blobs.Where(_ => _.IsProfilePhoto == true && _.Blob.IsActive == true))
+			.ThenInclude(_ => _.Blobs.Where(_ => _.TypeId == eUserMediaType.ProfilePhoto && _.Blob.IsActive == true))
 			.ThenInclude(_ => _.Blob)
 			.Where(_ => _.Id == request.Options.ChatId)
 			.FirstOrDefaultAsync(cancellationToken);

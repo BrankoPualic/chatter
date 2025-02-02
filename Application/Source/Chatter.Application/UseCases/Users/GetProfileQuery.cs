@@ -20,7 +20,7 @@ internal class GetProfileQueryHandler(IDatabaseContext db, IIdentityUser current
 
 		await _db.UserBlobs
 			.Where(_ => _.UserId == request.UserId)
-			.Where(_ => _.IsProfilePhoto == true || _.IsThumbnail == true)
+			.Where(_ => _.TypeId == eUserMediaType.ProfilePhoto || _.TypeId == eUserMediaType.Thumbnail)
 			.Where(_ => _.Blob.IsActive == true)
 			.Include(_ => _.Blob)
 			.ToListAsync(cancellationToken);
@@ -37,8 +37,8 @@ internal class GetProfileQueryHandler(IDatabaseContext db, IIdentityUser current
 
 		var data = _mapper.To<UserDto>(result);
 
-		data.ProfilePhoto = result.Blobs.Where(_ => _.IsProfilePhoto == true).Select(_ => _.Blob).FirstOrDefault()?.Url;
-		data.Thumbnail = result.Blobs.Where(_ => _.IsThumbnail == true).Select(_ => _.Blob).FirstOrDefault()?.Url;
+		data.ProfilePhoto = result.Blobs.Where(_ => _.TypeId == eUserMediaType.ProfilePhoto).Select(_ => _.Blob).FirstOrDefault()?.Url;
+		data.Thumbnail = result.Blobs.Where(_ => _.TypeId == eUserMediaType.Thumbnail).Select(_ => _.Blob).FirstOrDefault()?.Url;
 
 		data.Following = follows?.Following ?? 0;
 		data.Followers = follows?.Followers ?? 0;

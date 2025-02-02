@@ -37,7 +37,7 @@ internal class GetInboxQueryHandler(IDatabaseContext db, IIdentityUser currentUs
 				_.UserId,
 				_.User.Username,
 				UserImage = _.User.Blobs
-								.Where(_ => _.IsProfilePhoto == true && _.Blob.IsActive == true)
+								.Where(_ => _.TypeId == eUserMediaType.ProfilePhoto && _.Blob.IsActive == true)
 								.Select(_ => _.Blob)
 								.FirstOrDefault(),
 				_.IsMuted,
