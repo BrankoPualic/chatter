@@ -95,11 +95,11 @@ export namespace api.Controller {
 	}
 	@Injectable() export class GroupController extends api.Controller.BaseController
 	{
-		public CreateGroup(data: api.GroupCreateDto) : Observable<any>
+		public Create(model: api.GroupCreateDto) : Observable<any>
 		{
-			const body = <any>data;
+			const body = <any>model;
 			return this.httpClient.post<any>(
-			this.settingsService.createApiUrl('Group/CreateGroup'),
+			this.settingsService.createApiUrl('Group/Create'),
 			body,
 			{
 				responseType: 'json',

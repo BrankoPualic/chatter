@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseComponent } from '../../../base/base.component';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { api } from '../../../_generated/project';
 import { GLOBAL_MODULES } from '../../../_global.modules';
 import { BaseFormComponent } from '../../../base/base-form.component';
-import { api } from '../../../_generated/project';
-import { ErrorService } from '../../../services/error.service';
-import { PageLoaderService } from '../../../services/page-loader.service';
-import { ToastService } from '../../../services/toast.service';
-import { AuthService } from '../../../services/auth.service';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { SearchComponent } from "../../../components/search.component";
-import { ProfileService } from '../../../services/profile.service';
-import { Router } from '@angular/router';
 import { ValidationDirective } from '../../../directives/validation.directive';
+import { AuthService } from '../../../services/auth.service';
+import { ErrorService } from '../../../services/error.service';
+import { FileUploadService } from '../../../services/file-upload.service';
+import { PageLoaderService } from '../../../services/page-loader.service';
+import { ProfileService } from '../../../services/profile.service';
+import { ToastService } from '../../../services/toast.service';
 
 interface IExtendedUserLightDto extends api.UserLightDto {
   IsSelected: boolean;
@@ -36,6 +36,7 @@ export class CreateGroupChatComponent extends BaseFormComponent<api.GroupCreateD
     fb: FormBuilder,
     private router: Router,
     private profileService: ProfileService,
+    private fileUploadService: FileUploadService,
     private api_UserController: api.Controller.UserController,
     private api_GroupController: api.Controller.GroupController,
   ) {
@@ -58,7 +59,7 @@ export class CreateGroupChatComponent extends BaseFormComponent<api.GroupCreateD
     data.Participants = this.selectedUsers.map(_ => _.Id);
 
     this.loading = true;
-    this.api_GroupController.CreateGroup(data).toPromise()
+    this.fileUploadService.uploadMultipart('Group/Create', this.files, data)
       .then(() => {
         this.toastService.notifySuccess(`Group '${data.Name}' has been created.`);
         this.router.navigateByUrl('/' + this.Constants.ROUTE_INBOX);
@@ -108,5 +109,15 @@ export class CreateGroupChatComponent extends BaseFormComponent<api.GroupCreateD
 
     this.selectedUsers.splice(selectedIndex, 1);
     user.IsSelected = false;
+  }
+
+  files: File[] = [];
+  selectFile($event: Event) {
+    const input = $event?.target as HTMLInputElement;
+    if (!input.files?.length)
+      return;
+
+    this.files.push(input.files[0]);
+    console.log(input.files)
   }
 }

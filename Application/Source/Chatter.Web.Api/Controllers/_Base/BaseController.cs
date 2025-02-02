@@ -26,7 +26,7 @@ public class BaseController(IMediator mediator) : ControllerBase
 		{
 			FileName = file.FileName.Trim('\"'),
 			Type = file.ContentType,
-			Size = file.Headers.ContentLength,
+			Size = file.Length,
 			Buffer = stream.ToArray()
 		};
 	}
@@ -44,7 +44,7 @@ public class BaseController(IMediator mediator) : ControllerBase
 			{
 				FileName = file.FileName.Trim('\"'),
 				Type = file.ContentType,
-				Size = file.Headers.ContentLength,
+				Size = file.Length,
 				Buffer = stream.ToArray()
 			});
 		}

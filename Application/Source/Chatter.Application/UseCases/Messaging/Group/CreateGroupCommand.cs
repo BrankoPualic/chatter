@@ -1,11 +1,14 @@
-﻿using Chatter.Application.Dtos.Messaging;
+﻿using Chatter.Application.Dtos.Files;
+using Chatter.Application.Dtos.Messaging;
 using Chatter.Domain.Models.Application.Messaging;
 
 namespace Chatter.Application.UseCases.Messaging.Group;
 
-public class CreateGroupCommand(GroupCreateDto data) : BaseCommand
+public class CreateGroupCommand(GroupCreateDto data, FileInformationDto file) : BaseCommand
 {
 	public GroupCreateDto Data { get; } = data;
+
+	public FileInformationDto File { get; } = file;
 }
 
 internal class CreateGroupCommandHandler(IDatabaseContext db, IIdentityUser currentUser) : BaseCommandHandler<CreateGroupCommand>(db, currentUser)
