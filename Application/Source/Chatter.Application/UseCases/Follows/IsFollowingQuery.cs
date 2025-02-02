@@ -16,6 +16,6 @@ internal class IsFollowingQueryHandler(IDatabaseContext db) : BaseQueryHandler<I
 			.Where(_ => _.FollowerId == request.Data.FollowerId)
 			.FirstOrDefaultAsync(cancellationToken);
 
-		return new(follow.IsNotNullOrEmpty());
+		return new(follow != null);
 	}
 }

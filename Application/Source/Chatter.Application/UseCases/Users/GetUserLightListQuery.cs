@@ -32,6 +32,9 @@ internal class GetUserLightListQueryHandler(IDatabaseContext db, IIdentityUser c
 		if (request.Options.IsNotSpokenTo == true)
 			filters.Add(_ => !_.ChatParticipations.Any());
 
+		if (request.Options.IsNotPartOfGroup == true && request.Options.GroupId.HasValue)
+			filters.Add(_ => _.ChatParticipations.Where(_ => _.ChatId == request.Options.GroupId.Value).FirstOrDefault() == null);
+
 		var result = await _db.Users.SearchAsync(cancellationToken, request.Options, _ => _.Username, true, _ => new UserLightDto
 		{
 			Id = _.Id,

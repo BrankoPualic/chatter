@@ -16,5 +16,7 @@ public class ChatLightDto
 
 	public eGender? UserGenderId { get; set; }
 
+	public eChatRole? GroupChatRoleId { get; set; }
+
 	public PagingResultDto<MessageDto> Messages { get; set; }
 }

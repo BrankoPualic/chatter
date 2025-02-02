@@ -11,4 +11,6 @@ public class UserLightDto
 	public eGender? GenderId { get; set; }
 
 	public bool IsFollowed { get; set; }
+
+	public eChatRole? ChatRoleId { get; set; }
 }

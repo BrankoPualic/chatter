@@ -13,11 +13,11 @@ internal class SignupCommandHandler(IDatabaseContext db, ITokenService tokenServ
 	public override async Task<ResponseWrapper<TokenDto>> Handle(SignupCommand request, CancellationToken cancellationToken)
 	{
 		var existingEmail = await _db.Users.FirstOrDefaultAsync(_ => _.Email == request.Data.Email, cancellationToken);
-		if (existingEmail.IsNotNullOrEmpty())
+		if (existingEmail != null)
 			return new(new Error(nameof(User.Email), ResourcesValidation.Already_Exist.FormatWith(nameof(User.Email))));
 
 		var existingUsername = await _db.Users.FirstOrDefaultAsync(_ => _.Username == request.Data.Username, cancellationToken);
-		if (existingUsername.IsNotNullOrEmpty())
+		if (existingUsername != null)
 			return new(new Error(nameof(User.Username), ResourcesValidation.Already_Exist.FormatWith(nameof(User.Username))));
 
 		User model = new();

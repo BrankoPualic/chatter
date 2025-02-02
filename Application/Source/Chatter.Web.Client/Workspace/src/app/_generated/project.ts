@@ -95,13 +95,27 @@ export namespace api.Controller {
 	}
 	@Injectable() export class GroupController extends api.Controller.BaseController
 	{
-		public Create(model: api.GroupCreateDto) : Observable<any>
+		public Save(model: api.GroupEditDto) : Observable<any>
 		{
 			const body = <any>model;
 			return this.httpClient.post<any>(
-			this.settingsService.createApiUrl('Group/Create'),
+			this.settingsService.createApiUrl('Group/Save'),
 			body,
 			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
+		public GetSingle(chatId: string) : Observable<api.GroupDto>
+		{
+			const body = <any>{'chatId': chatId};
+			return this.httpClient.get<api.GroupDto>(
+			this.settingsService.createApiUrl('Group/GetSingle'),
+			{
+				params: new HttpParams({ fromObject: body }),
 				responseType: 'json',
 				observe: 'response',
 				withCredentials: true
@@ -299,6 +313,7 @@ export namespace api {
 		IsMuted: boolean;
 		ImageUrl: string;
 		UserGenderId: api.eGender;
+		GroupChatRoleId: api.eChatRole;
 		Messages: api.PagingResultDto<api.MessageDto>;
 	}
 	export class EnumProvider
@@ -321,10 +336,19 @@ export namespace api {
 		FollowerId: string;
 		FollowingId: string;
 	}
-	export class GroupCreateDto
+	export class GroupDto
 	{
+		ChatId: string;
+		GroupName: string;
+		GroupPhotoUrl: string;
+		BlobId: string;
+		Members: api.UserLightDto[];
+	}
+	export class GroupEditDto
+	{
+		Id: string;
 		Name: string;
-		Participants: string[];
+		Members: api.UserLightDto[];
 	}
 	export class InboxSearchOptions
 	{
@@ -421,11 +445,14 @@ export namespace api {
 		ProfilePhoto: string;
 		GenderId: api.eGender;
 		IsFollowed: boolean;
+		ChatRoleId: api.eChatRole;
 	}
 	export class UserSearchOptions
 	{
 		IsFollowed: boolean;
 		IsNotSpokenTo: boolean;
+		IsNotPartOfGroup: boolean;
+		GroupId: string;
 		Skip: number;
 		Take: number;
 		Filter: string;
@@ -462,6 +489,15 @@ export namespace api {
 			    { Id: 3, Name: 'Delivered', Description: 'Delivered', BgColor: '', CssClass: 'fa-solid fa-check primary-red' },
 			    { Id: 4, Name: 'Seen', Description: 'Seen', BgColor: '', CssClass: 'double-check' },
 			    { Id: 5, Name: 'Forwarded', Description: 'Forwarded', BgColor: '', CssClass: 'fa-solid fa-share small' }
+			];
+		}
+		getChatRoles() : api.EnumProvider[]
+		{
+			return [
+			    { Id: 0, Name: 'NotSet', Description: '', BgColor: '', CssClass: '' },
+			    { Id: 10, Name: 'Member', Description: 'Member', BgColor: '', CssClass: '' },
+			    { Id: 20, Name: 'Admin', Description: 'Admin', BgColor: '', CssClass: '' },
+			    { Id: 30, Name: 'Moderator', Description: 'Moderator', BgColor: '', CssClass: '' }
 			];
 		}
 	}
