@@ -17,10 +17,10 @@ public class UserController(IMediator mediator) : BaseController(mediator)
 	[AngularMethod(typeof(UserDto))]
 	public async Task<IActionResult> GetCurrentUser() => Result(await Mediator.Send(new GetCurrentUserQuery()));
 
-	[HttpGet("{userId}")]
+	[HttpGet]
 	[Authorize]
 	[AngularMethod(typeof(UserDto))]
-	public async Task<IActionResult> GetProfile(Guid userId) => Result(await Mediator.Send(new GetProfileQuery(userId)));
+	public async Task<IActionResult> GetProfile([FromQuery] Guid userId) => Result(await Mediator.Send(new GetProfileQuery(userId)));
 
 	[HttpPost]
 	[Authorize]

@@ -242,9 +242,11 @@ export namespace api.Controller {
 		}
 		public GetProfile(userId: string) : Observable<api.UserDto>
 		{
+			const body = <any>{'userId': userId};
 			return this.httpClient.get<api.UserDto>(
-			this.settingsService.createApiUrl('User/GetProfile') + '/' + userId,
+			this.settingsService.createApiUrl('User/GetProfile'),
 			{
+				params: new HttpParams({ fromObject: body }),
 				responseType: 'json',
 				observe: 'response',
 				withCredentials: true
