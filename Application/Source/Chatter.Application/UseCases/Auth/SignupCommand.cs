@@ -72,10 +72,10 @@ public class SignupCommandValidator : AbstractValidator<SignupCommand>
 		RuleFor(_ => _.Data.Password)
 			.MinimumLength(8).WithMessage(ResourcesValidation.MinimumLength.FormatWith(nameof(User.Password), 8))
 			.MaximumLength(50).WithMessage(ResourcesValidation.MaximumLength.FormatWith(nameof(User.Password), 50))
-			.Matches(@"(?=.*[a-z])").WithMessage("Passwrod lacks 1 lowercase letter.")
-			.Matches(@"(?=.*[A-Z])").WithMessage("Passwrod lacks 1 uppercase letter.")
-			.Matches(@"(?=.*\d)").WithMessage("Passwrod lacks 1 digit.")
-			.Matches(@"(?=.*[@$!%*?&])").WithMessage("Passwrod lacks 1 special character.")
+			.Matches(@"(?=.*[a-z])").WithMessage("Password lacks 1 lowercase letter.")
+			.Matches(@"(?=.*[A-Z])").WithMessage("Password lacks 1 uppercase letter.")
+			.Matches(@"(?=.*\d)").WithMessage("Password lacks 1 digit.")
+			.Matches(@"(?=.*[@$!%*?&])").WithMessage("Password lacks 1 special character.")
 			.When(_ => _.Data.Password.IsNotNullOrWhiteSpace());
 
 		RuleFor(_ => _.Data.ConfirmPassword)

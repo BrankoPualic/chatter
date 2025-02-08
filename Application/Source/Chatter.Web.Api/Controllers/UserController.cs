@@ -2,6 +2,7 @@
 using Chatter.Application.Dtos.Users;
 using Chatter.Application.Search;
 using Chatter.Application.UseCases.Users;
+using Chatter.Web.Api.Binders;
 using Chatter.Web.Api.Controllers._Base;
 using Chatter.Web.Api.ReinforcedTypings.Generator;
 using MediatR;
@@ -26,4 +27,9 @@ public class UserController(IMediator mediator) : BaseController(mediator)
 	[Authorize]
 	[AngularMethod(typeof(PagingResultDto<UserLightDto>))]
 	public async Task<IActionResult> GetUserList(UserSearchOptions options) => Result(await Mediator.Send(new GetUserLightListQuery(options)));
+
+	[HttpPost]
+	[Authorize]
+	[AngularMethod(typeof(void))]
+	public async Task<IActionResult> UpdateProfile([ModelBinder(BinderType = typeof(JsonModelBinder))] UserDto model) => Result(await Mediator.Send(new UpdateProfileCommand(model, await GetFilesAsync())));
 }

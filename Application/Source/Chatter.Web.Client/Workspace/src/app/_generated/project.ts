@@ -268,6 +268,20 @@ export namespace api.Controller {
 			.pipe(map(response => response.body!));
 			
 		}
+		public UpdateProfile(model: api.UserDto) : Observable<any>
+		{
+			const body = <any>model;
+			return this.httpClient.post<any>(
+			this.settingsService.createApiUrl('User/UpdateProfile'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
 		constructor (httpClient: HttpClient, settingsService: SettingsService)
 		{
 			super(httpClient, settingsService);

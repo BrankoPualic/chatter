@@ -1,0 +1,59 @@
+<div class="col-xs-12 action-bar-top justify-content-between">
+  <span class="font-lg padding-left-15 float-start" [class]="Icons.ANGLE_LEFT" [routerLink]="['/' + Constants.ROUTE_PROFILE, user.Id]"></span>
+  <div class="logo">
+    <h2>Edit Profile</h2>
+  </div>
+
+  <div class="padding-right-15">
+    <button class="btn btn-primary" (click)="submit()">Save</button>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="profile-photos margin-bottom-15">
+    <div class="thumbnail" (click)="thumbnailUploader.click()">
+      @if(!user.Thumbnail && !thumbnailUrl){
+        <span [class]="Icons.PLUS"></span>
+      } @else {
+        <img [src]="thumbnailUrl" alt="Profile thumbnail">
+      }
+      <input type="file" #thumbnailUploader (change)="selectFile($event, 'thumbnail')" style="display: none;">
+    </div>
+
+    <div class="profile-image" (click)="profileUploader.click()">
+      @if(!user.ProfilePhoto && !profilePhotoUrl){
+        <span [class]="Icons.PLUS"></span>
+      } @else {
+        <img [src]="profilePhotoUrl" alt="Profile photo">
+      }
+      <input type="file" #profileUploader (change)="selectFile($event, 'profile')" style="display: none;">
+    </div>
+  </div>
+
+  <div class="col-xs-12 margin-bottom-5">
+    <div class="d-flex align-items-center justify-content-between">
+      <span>Private</span>
+      <span>
+        <p-inputSwitch [(ngModel)]="user.IsPrivate"/>
+      </span>
+    </div>
+  </div>
+
+  <div class="col-xs-12 margin-bottom-15" appValidation="FirstName">
+    <label for="FirstName" class="form-label">First Name <app-required-field-mark/></label>
+    <input type="text" id="FirstName" class="form-control" [(ngModel)]="user.FirstName">
+  </div>
+  <div class="col-xs-12 margin-bottom-15" appValidation="LastName">
+    <label for="LastName" class="form-label">Last Name <app-required-field-mark/></label>
+    <input type="text" id="LastName" class="form-control" [(ngModel)]="user.LastName">
+  </div>
+  <div class="col-xs-12 margin-bottom-15" appValidation="Username">
+    <label for="Username" class="form-label">Username <app-required-field-mark/></label>
+    <input type="text" id="Username" class="form-control" [(ngModel)]="user.Username">
+  </div>
+
+  <div class="col-xs-12 margin-bottom-15" appValidation="GenderId">
+    <label for="GenderId" class="form-label">Gender <app-required-field-mark/></label>
+    <app-lookup-dropdown [provider]="Providers.Genders" [(value)]="currentGender" (onChangeVoid)="onGenderChange()"/>
+  </div>
+</div>

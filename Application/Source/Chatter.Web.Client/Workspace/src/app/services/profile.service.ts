@@ -11,14 +11,18 @@ export class ProfileService {
   profile$ = this._profileSource.asObservable();
   Constants = Constants;
 
+  setProfile(user: api.UserDto): void {
+    user.ProfilePhoto = this.getProfilePhoto(user.ProfilePhoto, user.Gender.Id);
+    this._profileSource.next(user);
+  }
+
   getProfilePhoto(photo?: string, genderId?: number): string {
     return photo || `../../../assets/images/${(genderId || 0) === api.eGender.Male
       ? Constants.DEFAULT_PHOTO_MALE
       : Constants.DEFAULT_PHOTO_FEMALE}`;
   }
 
-  setProfile(user: api.UserDto): void {
-    user.ProfilePhoto = this.getProfilePhoto(user.ProfilePhoto, user.Gender.Id);
-    this._profileSource.next(user);
+  getThumbnail(photo?: string): string {
+    return photo || `../../assets/images/default-profile-thumbnail.jpg`;
   }
 }

@@ -177,6 +177,20 @@
             }
         }
     }
+
+    // Inputswitch
+    .p-inputswitch {
+
+        .p-inputswitch-slider {
+            box-shadow: $box-shadow;
+        }
+        
+        &.p-inputswitch-checked {
+            .p-inputswitch-slider {
+                background-color: $primary-red;
+            }
+        }
+    }
 }
 
 .p-dropdown-items-wrapper {

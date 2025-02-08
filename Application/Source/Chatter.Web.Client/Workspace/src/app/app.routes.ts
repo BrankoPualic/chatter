@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { Constants } from './constants/constants';
 import { authGuard } from './guards/auth.guard';
 import { inboxResolver } from './resolvers/inbox.resolver';
+import { editProfileResolver } from './resolvers/edit-profile.resolver';
 
 export const routes: Routes = [
   {
@@ -27,9 +28,21 @@ export const routes: Routes = [
 
   {
     path: Constants.ROUTE_PROFILE + '/' + Constants.PARAM_ID,
-    title: 'Profile | ' + Constants.TITLE,
     canActivate: [authGuard],
-    loadComponent: () => import('./pages/profile/profile.component').then(_ => _.ProfileComponent)
+    children: [
+      {
+        path: '',
+        title: 'Profile | ' + Constants.TITLE,
+        pathMatch: 'full',
+        loadComponent: () => import('./pages/profile/profile.component').then(_ => _.ProfileComponent)
+      },
+      {
+        path: Constants.ROUTE_PROFILE_EDIT,
+        title: 'Edit Profile | ' + Constants.TITLE,
+        resolve: { profile: editProfileResolver },
+        loadComponent: () => import('./pages/profile/edit-profile/edit-profile.component').then(_ => _.EditProfileComponent)
+      }
+    ]
   },
 
   {

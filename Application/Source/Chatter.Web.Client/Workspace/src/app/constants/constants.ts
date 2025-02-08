@@ -31,6 +31,7 @@ export class Constants {
   static ROUTE_LOGIN = 'login';
   static ROUTE_SIGNUP = 'signup';
   static ROUTE_PROFILE = 'profile';
+  static ROUTE_PROFILE_EDIT = 'edit_profile';
   static ROUTE_EXPLORE = 'explore';
   static ROUTE_EXPLORE_TOP = 'explore/top';
   static ROUTE_EXPLORE_USERS = 'explore/users';

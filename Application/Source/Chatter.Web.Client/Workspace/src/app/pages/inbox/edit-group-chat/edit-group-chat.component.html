@@ -17,10 +17,9 @@
       }@else {
         <img [src]="group.GroupPhotoUrl" alt="Group photo">
       }
-      <input type="file" name="" id="" #uploader (change)="selectFile($event)" style="display: none;">
+      <input type="file" #uploader (change)="selectFile($event)" style="display: none;">
     </div>
   </div>
-
 
   <div class="col-xs-12 margin-y-15" appValidation="Name">
     <label for="Name" class="form-label">Name</label>
@@ -51,6 +50,4 @@
       Cannot find following user.
     }
   </div>
-
-
 </form>

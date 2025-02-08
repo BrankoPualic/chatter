@@ -77,6 +77,7 @@ export class ProfileComponent extends BaseComponentGeneric<api.UserDto> implemen
   }
 
   loadProfilePhoto = () => this.profileService.getProfilePhoto(this.user?.ProfilePhoto, this.user?.GenderId);
+  loadThumbnail = () => this.profileService.getThumbnail(this.user?.Thumbnail);
   isMyProfile = () => !!this.currentUser && this.user?.Id === this.currentUser.id;
 
   follow = () => this.followActions(_ => _.Follow(this.followData));

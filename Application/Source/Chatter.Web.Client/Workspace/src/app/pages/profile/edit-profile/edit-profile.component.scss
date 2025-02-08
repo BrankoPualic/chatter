@@ -1,0 +1,47 @@
+@import '../../../../assets/styles/variables';
+
+$image-resolution: 6.5rem;
+
+.profile-photos {
+  position: relative;
+  height: calc(25dvh + $image-resolution / 2);
+
+  .thumbnail {
+    height: 25dvh;
+    z-index: 1;
+    border-bottom: 1px solid $dark-gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+  .profile-image {
+    z-index: 2;
+    position: relative;
+    bottom: calc($image-resolution / 2);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: $off-white;
+
+    width: $image-resolution;
+    height: $image-resolution;
+    border-radius: 50%;
+    border: 1px solid $dark-gray;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+}

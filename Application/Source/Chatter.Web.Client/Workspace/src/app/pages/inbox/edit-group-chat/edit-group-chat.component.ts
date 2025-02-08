@@ -13,6 +13,7 @@ import { PageLoaderService } from '../../../services/page-loader.service';
 import { ProfileService } from '../../../services/profile.service';
 import { ToastService } from '../../../services/toast.service';
 import { Title } from '@angular/platform-browser';
+import { Functions } from '../../../functions';
 
 interface IExtendedUserLightDto extends api.UserLightDto {
   IsSelected: boolean;
@@ -148,14 +149,14 @@ export class EditGroupChatComponent extends BaseFormComponent<api.GroupEditDto> 
     user.IsSelected = false;
   }
 
-  selectFile($event: Event) {
+  async selectFile($event: Event) {
     const input = $event?.target as HTMLInputElement;
     if (!input.files?.length)
       return;
 
     this.files.push(input.files[0]);
 
-    this.readSelectedFileUrl(input.files[0]);
+    this.group.GroupPhotoUrl = await Functions.readFileUrl(input.files[0]);
   }
 
   goBack(): void {
@@ -164,13 +165,5 @@ export class EditGroupChatComponent extends BaseFormComponent<api.GroupEditDto> 
     } else {
       this.router.navigateByUrl('/' + this.Constants.ROUTE_INBOX + '/' + this.Constants.ROUTE_CHAT + '/' + this.chatId);
     }
-  }
-
-  private readSelectedFileUrl(file: File) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.group.GroupPhotoUrl = reader.result as string;
-    };
-    reader.readAsDataURL(file);
   }
 }

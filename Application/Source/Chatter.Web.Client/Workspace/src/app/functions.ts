@@ -1,5 +1,6 @@
 import { cloneDeep } from "lodash";
 import { INameofOptions } from "./models/function-options.model";
+import { api } from "./_generated/project";
 
 export class Functions {
   static nameof<T extends object>(
@@ -50,6 +51,16 @@ export class Functions {
     }
   }
 
+  // File
+  static readFileUrl(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => { resolve(reader.result as string); };
+      reader.onerror = (error) => { reject(error); };
+      reader.readAsDataURL(file);
+    });
+  }
+
   // JSON
   static toJson(data: any): string {
     try {
@@ -59,6 +70,20 @@ export class Functions {
       return '{}';
     }
   }
+
+  static generateId = (): string => Math.random().toString(36).substring(2, 8 + Math.floor(Math.random() * 5));
+
+  static getEnum = (referenceService: api.Providers, provider: string, exp: (_: api.EnumProvider) => boolean): api.EnumProvider | undefined => {
+    const methodName = `get${provider}` as keyof api.Providers;
+
+    const providerMethod = referenceService[methodName] as (() => api.EnumProvider[]) | undefined;
+
+    return typeof providerMethod === 'function'
+      ? providerMethod().find(exp)
+      : undefined;
+  }
+
+  // private
 
   private static removeCircularReferences() {
     const seen = new WeakSet();

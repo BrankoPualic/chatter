@@ -1,4 +1,6 @@
-﻿namespace Chatter.Application.Dtos.Users;
+﻿using Chatter.Domain.Models.Application.Users;
+
+namespace Chatter.Application.Dtos.Users;
 
 public class UserDto
 {
@@ -29,4 +31,13 @@ public class UserDto
 	public long Following { get; set; }
 
 	public Guid? ChatId { get; set; }
+
+	public void ToModel(User model)
+	{
+		model.Username = Username;
+		model.FirstName = FirstName;
+		model.LastName = LastName;
+		model.GenderId = GenderId;
+		model.IsPrivate = IsPrivate;
+	}
 }
