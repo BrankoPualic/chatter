@@ -1,5 +1,6 @@
 ﻿using Chatter.Domain.Models.Application;
 using Chatter.Domain.Models.Application.Messaging;
+using Chatter.Domain.Models.Application.Posts;
 using Chatter.Domain.Models.Application.SignalR;
 using Chatter.Domain.Models.Application.Users;
 
@@ -32,4 +33,16 @@ public partial class DatabaseContext : IDatabaseContext
 	public virtual DbSet<Group> Groups { get; set; }
 
 	public virtual DbSet<Connection> Connections { get; set; }
+
+	// Posts
+
+	public virtual DbSet<Post> Posts { get; set; }
+
+	public virtual DbSet<PostMedia> PostMedia { get; set; }
+
+	public virtual DbSet<PostLike> PostLikes { get; set; }
+
+	public virtual DbSet<Comment> Comments { get; set; }
+
+	public virtual DbSet<CommentLike> CommentLikes { get; set; }
 }

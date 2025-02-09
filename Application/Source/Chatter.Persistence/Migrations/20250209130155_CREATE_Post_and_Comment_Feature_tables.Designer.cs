@@ -4,6 +4,7 @@ using Chatter.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Chatter.Persistence.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20250209130155_CREATE_Post_and_Comment_Feature_tables")]
+    partial class CREATE_Post_and_Comment_Feature_tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -321,8 +324,6 @@ namespace Chatter.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Post", "dbo");
                 });
 
@@ -599,7 +600,7 @@ namespace Chatter.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("Chatter.Domain.Models.Application.Users.User", "User")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -626,17 +627,6 @@ namespace Chatter.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Comment");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Chatter.Domain.Models.Application.Posts.Post", b =>
-                {
-                    b.HasOne("Chatter.Domain.Models.Application.Users.User", "User")
-                        .WithMany("Posts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -781,15 +771,11 @@ namespace Chatter.Persistence.Migrations
 
                     b.Navigation("ChatParticipations");
 
-                    b.Navigation("Comments");
-
                     b.Navigation("Followers");
 
                     b.Navigation("Following");
 
                     b.Navigation("Logins");
-
-                    b.Navigation("Posts");
 
                     b.Navigation("Roles");
                 });

@@ -100,3 +100,18 @@ public enum eUserMediaType
 	[Description("Thumbnail")]
 	Thumbnail = 2,
 }
+
+public enum ePostType
+{
+	[Description("")]
+	NotSet = 0,
+
+	[Description("Text")]
+	Text = 1,
+
+	[Description("Image")]
+	Image = 2,
+
+	[Description("Video")]
+	Video = 3,
+}
