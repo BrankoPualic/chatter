@@ -44,6 +44,27 @@ export namespace api.Controller {
 			super(httpClient, settingsService);
 		}
 	}
+	@Injectable() export class CommentController extends api.Controller.BaseController
+	{
+		public GetComments(options: api.CommentSearchOptions) : Observable<api.PagingResultDto<api.CommentDto>>
+		{
+			const body = <any>options;
+			return this.httpClient.post<api.PagingResultDto<api.CommentDto>>(
+			this.settingsService.createApiUrl('Comment/GetComments'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
+		constructor (httpClient: HttpClient, settingsService: SettingsService)
+		{
+			super(httpClient, settingsService);
+		}
+	}
 	@Injectable() export class FollowController extends api.Controller.BaseController
 	{
 		public IsFollowing(data: api.FollowDto) : Observable<boolean>
@@ -226,6 +247,27 @@ export namespace api.Controller {
 			super(httpClient, settingsService);
 		}
 	}
+	@Injectable() export class PostController extends api.Controller.BaseController
+	{
+		public GetPosts(options: api.PostSearchOptions) : Observable<api.PagingResultDto<api.PostDto>>
+		{
+			const body = <any>options;
+			return this.httpClient.post<api.PagingResultDto<api.PostDto>>(
+			this.settingsService.createApiUrl('Post/GetPosts'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
+		constructor (httpClient: HttpClient, settingsService: SettingsService)
+		{
+			super(httpClient, settingsService);
+		}
+	}
 	@Injectable() export class UserController extends api.Controller.BaseController
 	{
 		public GetCurrentUser() : Observable<api.UserDto>
@@ -332,6 +374,27 @@ export namespace api {
 		GroupChatRoleId: api.eChatRole;
 		Messages: api.PagingResultDto<api.MessageDto>;
 	}
+	export class CommentDto
+	{
+		Id: string;
+		UserId: string;
+		PostId: string;
+		Content: string;
+		ParentId: string;
+		LikeCount: number;
+		ReplyCount: number;
+		User: api.UserLightDto;
+		Replies: api.CommentDto[];
+	}
+	export class CommentSearchOptions
+	{
+		PostId: string;
+		ParentId: string;
+		Skip: number;
+		Take: number;
+		Filter: string;
+		TotalCount: boolean;
+	}
 	export class EnumProvider
 	{
 		Id: number;
@@ -421,6 +484,28 @@ export namespace api {
 	{
 		Data: TData[];
 		Total: number;
+	}
+	export class PostDto
+	{
+		Id: string;
+		UserId: string;
+		Content: string;
+		TypeId: number;
+		IsCommentsDisabled: boolean;
+		LikeCount: number;
+		CommentCount: number;
+		User: api.UserLightDto;
+		Media: api.BlobDto[];
+		Comments: api.CommentDto[];
+	}
+	export class PostSearchOptions
+	{
+		UserId: string;
+		TypeId: number;
+		Skip: number;
+		Take: number;
+		Filter: string;
+		TotalCount: boolean;
 	}
 	export class SignupDto
 	{
