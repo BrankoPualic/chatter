@@ -1,11 +1,7 @@
 ﻿using Chatter.Application.Dtos.Messaging;
 using Chatter.Application.UseCases.Messaging.Messages;
 using Chatter.Application.UseCases.SignalR;
-using Chatter.Domain;
 using Chatter.Domain.Models.Application.SignalR;
-using Chatter.Web.Api.Extensions;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Chatter.Web.Api.SignalR;

@@ -1,6 +1,4 @@
-﻿using Chatter.Domain.Models;
-
-namespace Chatter.Application.Extensions;
+﻿namespace Chatter.Application.Extensions;
 
 public static class ListExtensions
 {

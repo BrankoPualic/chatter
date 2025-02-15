@@ -1,6 +1,4 @@
 ﻿using Chatter.Application.Dtos.Files;
-using Chatter.Application.Interfaces;
-using Chatter.Domain.Models.Application;
 
 namespace Chatter.Application.Services;
 

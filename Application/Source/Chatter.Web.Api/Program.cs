@@ -1,5 +1,4 @@
 using Chatter.DependencyRegister;
-using Chatter.Domain;
 using Chatter.Persistence;
 using Chatter.Web.Api;
 using Chatter.Web.Api.Middlewares;

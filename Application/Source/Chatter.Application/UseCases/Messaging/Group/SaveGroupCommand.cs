@@ -1,6 +1,5 @@
 ﻿using Chatter.Application.Dtos.Files;
 using Chatter.Application.Dtos.Messaging;
-using Chatter.Application.Interfaces;
 using Chatter.Domain.Models.Application.Messaging;
 
 namespace Chatter.Application.UseCases.Messaging.Group;

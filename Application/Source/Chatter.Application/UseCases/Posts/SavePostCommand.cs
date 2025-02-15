@@ -1,6 +1,5 @@
 ﻿using Chatter.Application.Dtos.Files;
 using Chatter.Application.Dtos.Posts;
-using Chatter.Application.Interfaces;
 
 namespace Chatter.Application.UseCases.Posts;
 

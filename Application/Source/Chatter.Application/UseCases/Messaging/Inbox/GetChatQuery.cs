@@ -1,6 +1,5 @@
 ﻿using Chatter.Application.Dtos.Messaging;
 using Chatter.Application.Dtos.Users;
-using Chatter.Application.Search;
 using Chatter.Domain.Models.Application.Messaging;
 
 namespace Chatter.Application.UseCases.Messaging.Inbox;

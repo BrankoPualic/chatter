@@ -1,11 +1,5 @@
 ﻿using Chatter.Application.Dtos.Messaging;
 using Chatter.Application.UseCases.Messaging.Group;
-using Chatter.Web.Api.Binders;
-using Chatter.Web.Api.Controllers._Base;
-using Chatter.Web.Api.ReinforcedTypings.Generator;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Chatter.Web.Api.Controllers;
 

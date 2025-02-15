@@ -1,7 +1,4 @@
-﻿using Chatter.Common;
-using Chatter.Domain;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+﻿using Newtonsoft.Json.Serialization;
 using System.Reflection;
 
 namespace Chatter.Web.Api;

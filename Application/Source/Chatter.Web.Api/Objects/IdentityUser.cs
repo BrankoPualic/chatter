@@ -1,8 +1,4 @@
-﻿using Chatter.Common.Extensions;
-using Chatter.Domain;
-using Chatter.Web.Api.Extensions;
-
-namespace Chatter.Web.Api.Objects;
+﻿namespace Chatter.Web.Api.Objects;
 
 public class IdentityUser : IIdentityUser
 {

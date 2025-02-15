@@ -1,5 +1,4 @@
 ﻿using Chatter.Application.Dtos.Posts;
-using Chatter.Application.Search;
 using Chatter.Domain.Models.Application.Posts;
 
 namespace Chatter.Application.UseCases.Posts;

@@ -1,6 +1,4 @@
-﻿using Chatter.Domain;
-
-namespace Chatter.Application.UseCases;
+﻿namespace Chatter.Application.UseCases;
 
 public abstract class BaseHandler<TRequest> : BaseHandlerProcess, IRequestHandler<TRequest>
 	where TRequest : IRequest

@@ -1,5 +1,4 @@
 ﻿using Chatter.Application.Dtos.Users;
-using Chatter.Application.Search;
 using Chatter.Domain.Models.Application.Users;
 
 namespace Chatter.Application.UseCases.Users;

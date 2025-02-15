@@ -1,5 +1,5 @@
 ﻿using Chatter.Application.Dtos.Comments;
-using Chatter.Application.Search;
+
 using Chatter.Domain.Models.Application.Posts;
 
 namespace Chatter.Application.UseCases.Comments;

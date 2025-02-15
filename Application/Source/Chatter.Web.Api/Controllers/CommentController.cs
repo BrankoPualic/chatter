@@ -1,12 +1,5 @@
-﻿using Chatter.Application.Dtos;
-using Chatter.Application.Dtos.Comments;
-using Chatter.Application.Search;
+﻿using Chatter.Application.Dtos.Comments;
 using Chatter.Application.UseCases.Comments;
-using Chatter.Web.Api.Controllers._Base;
-using Chatter.Web.Api.ReinforcedTypings.Generator;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Chatter.Web.Api.Controllers;
 

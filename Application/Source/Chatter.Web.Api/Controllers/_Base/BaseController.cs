@@ -1,10 +1,4 @@
-﻿using Chatter.Application;
-using Chatter.Application.Dtos.Files;
-using Chatter.Common.Extensions;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Chatter.Web.Api.Controllers._Base;
+﻿namespace Chatter.Web.Api.Controllers._Base;
 
 [Route("api/[controller]/[action]")]
 [ApiController]

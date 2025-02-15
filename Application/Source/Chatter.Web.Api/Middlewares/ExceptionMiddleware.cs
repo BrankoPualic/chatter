@@ -1,7 +1,4 @@
 ﻿using Chatter.Application.Exceptions;
-using Chatter.Common;
-using Chatter.Common.Extensions;
-using Newtonsoft.Json;
 using System.Net;
 
 namespace Chatter.Web.Api.Middlewares;

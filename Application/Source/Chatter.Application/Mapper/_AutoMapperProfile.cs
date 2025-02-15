@@ -1,6 +1,4 @@
-﻿using Chatter.Domain.Models.Application;
-
-namespace Chatter.Application.Mapper;
+﻿namespace Chatter.Application.Mapper;
 
 public abstract class AutoMapperProfile : Profile
 {

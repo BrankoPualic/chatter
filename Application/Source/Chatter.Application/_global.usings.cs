@@ -2,11 +2,16 @@
 global using Chatter.Application.Dtos;
 global using Chatter.Application.Extensions;
 global using Chatter.Application.Identity.Interfaces;
+global using Chatter.Application.Interfaces;
+global using Chatter.Application.Search;
 global using Chatter.Common;
 global using Chatter.Common.Extensions;
 global using Chatter.Common.Resources;
+global using Chatter.Common.Search;
 global using Chatter.Domain;
 global using Chatter.Domain.Interfaces;
+global using Chatter.Domain.Models;
+global using Chatter.Domain.Models.Application;
 global using FluentValidation;
 global using FluentValidation.Results;
 global using Humanizer;

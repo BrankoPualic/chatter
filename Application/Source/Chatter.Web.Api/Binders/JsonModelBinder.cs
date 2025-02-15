@@ -1,6 +1,4 @@
-﻿using Chatter.Common;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Chatter.Web.Api.Binders;
 

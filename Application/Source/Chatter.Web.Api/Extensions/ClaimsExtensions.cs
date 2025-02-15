@@ -1,5 +1,4 @@
-﻿using Chatter.Common;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 
 namespace Chatter.Web.Api.Extensions;
 
