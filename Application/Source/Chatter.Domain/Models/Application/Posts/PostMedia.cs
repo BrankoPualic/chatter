@@ -10,6 +10,8 @@ public class PostMedia
 
 	public Guid BlobId { get; set; }
 
+	public int Order { get; set; }
+
 	[ForeignKey(nameof(PostId))]
 	public virtual Post Post { get; set; }
 
