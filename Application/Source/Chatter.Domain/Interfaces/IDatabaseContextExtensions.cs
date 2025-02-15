@@ -11,6 +11,8 @@ public static class IDatabaseContextExtensions
 	// Context Extensions
 	public static void Create<TModel>(this IDatabaseContextBase db, TModel model) where TModel : class => db.Set<TModel>().Add(model);
 
+	public static void Create<TModel>(this IDatabaseContextBase db, List<TModel> models) where TModel : class => db.Set<TModel>().AddRange(models);
+
 	public static void DeleteSingle<TModel>(this IDatabaseContextBase db, Expression<Func<TModel, bool>> filter)
 		where TModel : class
 	{

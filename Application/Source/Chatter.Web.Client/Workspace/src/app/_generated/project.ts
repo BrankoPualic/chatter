@@ -60,6 +60,20 @@ export namespace api.Controller {
 			.pipe(map(response => response.body!));
 			
 		}
+		public SaveComment(data: api.CommentEditDto) : Observable<any>
+		{
+			const body = <any>data;
+			return this.httpClient.post<any>(
+			this.settingsService.createApiUrl('Comment/SaveComment'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
 		constructor (httpClient: HttpClient, settingsService: SettingsService)
 		{
 			super(httpClient, settingsService);
@@ -263,6 +277,20 @@ export namespace api.Controller {
 			.pipe(map(response => response.body!));
 			
 		}
+		public SavePost(model: api.PostEditDto) : Observable<any>
+		{
+			const body = <any>model;
+			return this.httpClient.post<any>(
+			this.settingsService.createApiUrl('Post/SavePost'),
+			body,
+			{
+				responseType: 'json',
+				observe: 'response',
+				withCredentials: true
+			})
+			.pipe(map(response => response.body!));
+			
+		}
 		constructor (httpClient: HttpClient, settingsService: SettingsService)
 		{
 			super(httpClient, settingsService);
@@ -348,6 +376,7 @@ export namespace api {
 		Url: string;
 		Size: number;
 		Duration: number;
+		IsActive: boolean;
 	}
 	export class ChatDto
 	{
@@ -385,6 +414,14 @@ export namespace api {
 		ReplyCount: number;
 		User: api.UserLightDto;
 		Replies: api.CommentDto[];
+	}
+	export class CommentEditDto
+	{
+		Id: string;
+		UserId: string;
+		PostId: string;
+		Content: string;
+		ParentId: string;
 	}
 	export class CommentSearchOptions
 	{
@@ -497,6 +534,15 @@ export namespace api {
 		User: api.UserLightDto;
 		Media: api.BlobDto[];
 		Comments: api.CommentDto[];
+	}
+	export class PostEditDto
+	{
+		Id: string;
+		UserId: string;
+		Content: string;
+		IsCommentsDisabled: boolean;
+		TypeId: number;
+		Media: api.BlobDto[];
 	}
 	export class PostSearchOptions
 	{

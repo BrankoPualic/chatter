@@ -14,7 +14,7 @@ public class GroupEditDto : IBaseDomain
 
 	public void ToModel(Chat model, IDatabaseContext db)
 	{
-		model.Id = Id == Guid.Empty ? Guid.NewGuid() : Id;
+		model.Id = Functions.AssignGuid(Id);
 		model.GroupName = Name;
 		model.IsGroup = true;
 

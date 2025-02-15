@@ -54,6 +54,9 @@ internal class GetPostsQueryHandler(IDatabaseContext db, IIdentityUser currentUs
 		{
 			post.LikeCount = likesDictionary.GetValue(post.Id);
 			post.CommentCount = commentsDictionary.GetValue(post.Id);
+			post.Media = post.Media
+				.Where(_ => _.IsActive == true)
+				.ToList();
 		}
 
 		return new(result);

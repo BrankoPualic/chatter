@@ -15,4 +15,6 @@ public class BlobDto
 	public long Size { get; set; }
 
 	public int? Duration { get; set; }
+
+	public bool? IsActive { get; set; }
 }

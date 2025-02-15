@@ -1,6 +1,6 @@
 ﻿using Chatter.Application.Dtos.Users;
 
-namespace Chatter.Application.Dtos.Posts;
+namespace Chatter.Application.Dtos.Comments;
 
 public class CommentDto
 {

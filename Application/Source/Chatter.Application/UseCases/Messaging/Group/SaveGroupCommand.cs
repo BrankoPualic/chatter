@@ -26,7 +26,7 @@ internal class SaveGroupCommandHandler(IDatabaseContext db, IBlobService blobSer
 
 		model.GroupImageId = blob?.Id;
 
-		if (request.Data.Id == Guid.Empty)
+		if (request.Data.Id.IsEmpty())
 			_db.Create(model);
 
 		await _db.SaveChangesAsync(true, cancellationToken);
@@ -38,9 +38,9 @@ internal class SaveGroupCommandHandler(IDatabaseContext db, IBlobService blobSer
 	}
 }
 
-public class CreateGroupCommandValidator : AbstractValidator<SaveGroupCommand>
+public class SaveGroupCommandValidator : AbstractValidator<SaveGroupCommand>
 {
-	public CreateGroupCommandValidator()
+	public SaveGroupCommandValidator()
 	{
 		RuleFor(_ => _.Data.Name)
 			.NotEmpty().WithMessage(ResourcesValidation.Required.FormatWith(nameof(GroupEditDto.Name)));

@@ -1,4 +1,4 @@
-﻿using Chatter.Application.Dtos.Posts;
+﻿using Chatter.Application.Dtos.Comments;
 using Chatter.Domain.Models.Application.Posts;
 
 namespace Chatter.Application.Mapper;

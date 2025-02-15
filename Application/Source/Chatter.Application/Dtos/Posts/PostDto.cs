@@ -1,4 +1,5 @@
-﻿using Chatter.Application.Dtos.Users;
+﻿using Chatter.Application.Dtos.Comments;
+using Chatter.Application.Dtos.Users;
 
 namespace Chatter.Application.Dtos.Posts;
 

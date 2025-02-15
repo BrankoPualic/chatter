@@ -14,7 +14,7 @@ public class BlobService(IDatabaseContext db, ICloudinaryService cloudinary) : I
 		var blob = new Blob
 		{
 			Id = Guid.NewGuid(),
-			TypeId = eBlobType.Image,
+			TypeId = GetBlobType(file),
 			Name = file.FileName,
 			Type = file.Type,
 			Size = file.Size,
@@ -42,4 +42,12 @@ public class BlobService(IDatabaseContext db, ICloudinaryService cloudinary) : I
 
 		await cloudinary.DeleteAsync(blob.PublicId);
 	}
+
+	// private
+
+	private static eBlobType GetBlobType(FileInformationDto file) => file.Type switch
+	{
+		string type when type.StartsWith("video/") => eBlobType.Video,
+		_ => eBlobType.Image
+	};
 }
