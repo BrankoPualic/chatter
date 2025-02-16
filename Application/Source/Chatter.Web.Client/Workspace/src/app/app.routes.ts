@@ -99,5 +99,12 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/inbox/edit-group-chat/edit-group-chat.component').then(_ => _.EditGroupChatComponent)
       }
     ]
+  },
+
+  {
+    path: Constants.ROUTE_CREATE_POST,
+    canActivate: [authGuard],
+    title: 'Create Post | ' + Constants.TITLE,
+    loadComponent: () => import('./pages/create-post/create-post.component').then(_ => _.CreatePostComponent)
   }
 ];

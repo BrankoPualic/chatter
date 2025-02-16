@@ -11,6 +11,7 @@ import { errorInterceptor } from './interceptors/error.interceptor';
 import { jwtInterceptor } from './interceptors/jwt.interceptor';
 import './extensions/string-extension';
 import './extensions/observable-extension';
+import './extensions/file-extension';
 
 export const appConfig: ApplicationConfig = {
   providers: [

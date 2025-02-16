@@ -182,3 +182,13 @@ body {
     left: 0.375rem; // Adjust overlap distance
   }
 }
+
+.section-heading {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.drop-box {
+  border: 1px dashed $border-gray;
+  // background-color: $neutral-gray;
+}
