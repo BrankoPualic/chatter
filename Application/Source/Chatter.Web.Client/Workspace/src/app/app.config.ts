@@ -34,7 +34,9 @@ function controllerProviders(): Provider[] {
     api.Controller.FollowController,
     api.Controller.InboxController,
     api.Controller.MessageController,
-    api.Controller.GroupController
+    api.Controller.GroupController,
+    api.Controller.PostController,
+    api.Controller.CommentController
   ]
 }
 

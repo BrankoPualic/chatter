@@ -8,10 +8,10 @@ public class CommentController(IMediator mediator) : BaseController(mediator)
 	[HttpPost]
 	[Authorize]
 	[AngularMethod(typeof(PagingResultDto<CommentDto>))]
-	public async Task<IActionResult> GetComments(CommentSearchOptions options) => Result(await Mediator.Send(new GetCommentsQuery(options)));
+	public async Task<IActionResult> GetList(CommentSearchOptions options) => Result(await Mediator.Send(new GetCommentsQuery(options)));
 
 	[HttpPost]
 	[Authorize]
 	[AngularMethod(typeof(void))]
-	public async Task<IActionResult> SaveComment(CommentEditDto data) => Result(await Mediator.Send(new SaveCommentCommand(data)));
+	public async Task<IActionResult> Save(CommentEditDto data) => Result(await Mediator.Send(new SaveCommentCommand(data)));
 }

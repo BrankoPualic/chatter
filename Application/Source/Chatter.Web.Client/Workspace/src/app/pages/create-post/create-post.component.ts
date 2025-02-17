@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
-import { BaseComponent } from '../../base/base.component';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { api } from '../../_generated/project';
 import { GLOBAL_MODULES } from '../../_global.modules';
+import { BaseComponent } from '../../base/base.component';
+import { ValidationDirective } from '../../directives/validation.directive';
 import { Functions } from '../../functions';
+import { AuthService } from '../../services/auth.service';
 import { ErrorService } from '../../services/error.service';
 import { PageLoaderService } from '../../services/page-loader.service';
 import { ToastService } from '../../services/toast.service';
-import { AuthService } from '../../services/auth.service';
+import { FileUploadService } from '../../services/file-upload.service';
+import { Router } from '@angular/router';
 
 interface IUploadedFile {
   Id: string;
@@ -17,7 +22,7 @@ interface IUploadedFile {
 
 @Component({
   selector: 'app-create-post',
-  imports: [GLOBAL_MODULES],
+  imports: [GLOBAL_MODULES, ValidationDirective, InputSwitchModule],
   templateUrl: './create-post.component.html',
   styleUrl: './create-post.component.scss'
 })
@@ -26,16 +31,37 @@ export class CreatePostComponent extends BaseComponent {
   files: File[] = [];
   private fileMap = new Map<string, File>();
 
+  post = new api.PostDto();
+
+  isVideoType = false;
+
   constructor(
     errorService: ErrorService,
     loaderService: PageLoaderService,
     toastService: ToastService,
-    authService: AuthService
+    authService: AuthService,
+    private router: Router,
+    private fileUploadService: FileUploadService
   ) {
     super(errorService, loaderService, toastService, authService);
   }
 
-  submit(): void { }
+  submit(): void {
+    const model: api.PostEditDto = {
+      Id: this.Constants.GUID_EMPTY,
+      UserId: this.currentUser.id,
+      Content: this.post.Content,
+      IsCommentsDisabled: this.post.IsCommentsDisabled,
+      TypeId: this.getPostType(),
+      Media: []
+    }
+
+    this.loading = true;
+    this.fileUploadService.uploadMultipart('Post/Save', this.files, model)
+      .then(() => this.router.navigate([this.Constants.ROUTE_HOME]))
+      .catch(_ => this.errorService.add(_.error.Errors))
+      .finally(() => this.loading = false);
+  }
 
   async selectFiles($event: Event): Promise<void> {
     const input = $event?.target as HTMLInputElement;
@@ -65,6 +91,12 @@ export class CreatePostComponent extends BaseComponent {
     this.uploadedFiles.splice(index, 1);
     this.files.splice(index, 1);
     this.fileMap.delete(file.Id);
+  }
+
+  onPostTypeChange(): void {
+    this.files = [];
+    this.fileMap.clear();
+    this.uploadedFiles = [];
   }
 
   // private
@@ -105,5 +137,14 @@ export class CreatePostComponent extends BaseComponent {
     }
 
     return isValid;
+  }
+
+  private getPostType(): api.ePostType {
+    if (this.files.find(_ => _.isVideo()) && this.isVideoType)
+      return api.ePostType.Video;
+    else if (this.files.find(_ => _.isImage()) && !this.isVideoType)
+      return api.ePostType.Image;
+    else
+      return api.ePostType.Text;
   }
 }

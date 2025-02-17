@@ -41,3 +41,13 @@ internal class SavePostCommandHandler(IDatabaseContext db, IBlobService blobServ
 		return new();
 	}
 }
+
+public class SavePostCommandValidator : AbstractValidator<SavePostCommand>
+{
+	public SavePostCommandValidator()
+	{
+		RuleFor(_ => _.Data.Content)
+			.NotEmpty().WithMessage("Content is required if no files are provided.")
+			.When(_ => _.Files.IsNullOrEmpty() && _.Data.Media.IsNullOrEmpty());
+	}
+}

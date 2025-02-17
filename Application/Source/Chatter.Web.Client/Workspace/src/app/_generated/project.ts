@@ -46,11 +46,11 @@ export namespace api.Controller {
 	}
 	@Injectable() export class CommentController extends api.Controller.BaseController
 	{
-		public GetComments(options: api.CommentSearchOptions) : Observable<api.PagingResultDto<api.CommentDto>>
+		public GetList(options: api.CommentSearchOptions) : Observable<api.PagingResultDto<api.CommentDto>>
 		{
 			const body = <any>options;
 			return this.httpClient.post<api.PagingResultDto<api.CommentDto>>(
-			this.settingsService.createApiUrl('Comment/GetComments'),
+			this.settingsService.createApiUrl('Comment/GetList'),
 			body,
 			{
 				responseType: 'json',
@@ -60,11 +60,11 @@ export namespace api.Controller {
 			.pipe(map(response => response.body!));
 			
 		}
-		public SaveComment(data: api.CommentEditDto) : Observable<any>
+		public Save(data: api.CommentEditDto) : Observable<any>
 		{
 			const body = <any>data;
 			return this.httpClient.post<any>(
-			this.settingsService.createApiUrl('Comment/SaveComment'),
+			this.settingsService.createApiUrl('Comment/Save'),
 			body,
 			{
 				responseType: 'json',
@@ -263,11 +263,11 @@ export namespace api.Controller {
 	}
 	@Injectable() export class PostController extends api.Controller.BaseController
 	{
-		public GetPosts(options: api.PostSearchOptions) : Observable<api.PagingResultDto<api.PostDto>>
+		public GetList(options: api.PostSearchOptions) : Observable<api.PagingResultDto<api.PostDto>>
 		{
 			const body = <any>options;
 			return this.httpClient.post<api.PagingResultDto<api.PostDto>>(
-			this.settingsService.createApiUrl('Post/GetPosts'),
+			this.settingsService.createApiUrl('Post/GetList'),
 			body,
 			{
 				responseType: 'json',
@@ -277,11 +277,11 @@ export namespace api.Controller {
 			.pipe(map(response => response.body!));
 			
 		}
-		public SavePost(model: api.PostEditDto) : Observable<any>
+		public Save(model: api.PostEditDto) : Observable<any>
 		{
 			const body = <any>model;
 			return this.httpClient.post<any>(
-			this.settingsService.createApiUrl('Post/SavePost'),
+			this.settingsService.createApiUrl('Post/Save'),
 			body,
 			{
 				responseType: 'json',
@@ -370,7 +370,7 @@ export namespace api {
 	export class BlobDto
 	{
 		Id: string;
-		TypeId: number;
+		TypeId: api.eBlobType;
 		Type: api.LookupValueDto;
 		MimeType: string;
 		Url: string;
@@ -527,7 +527,7 @@ export namespace api {
 		Id: string;
 		UserId: string;
 		Content: string;
-		TypeId: number;
+		TypeId: api.ePostType;
 		IsCommentsDisabled: boolean;
 		LikeCount: number;
 		CommentCount: number;
@@ -541,13 +541,13 @@ export namespace api {
 		UserId: string;
 		Content: string;
 		IsCommentsDisabled: boolean;
-		TypeId: number;
+		TypeId: api.ePostType;
 		Media: api.BlobDto[];
 	}
 	export class PostSearchOptions
 	{
 		UserId: string;
-		TypeId: number;
+		TypeId: api.ePostType;
 		Skip: number;
 		Take: number;
 		Filter: string;
@@ -683,5 +683,16 @@ export namespace api {
 		Member = 10,
 		Admin = 20,
 		Moderator = 30
+	}
+	export enum ePostType {
+		NotSet = 0,
+		Text = 1,
+		Image = 2,
+		Video = 3
+	}
+	export enum eBlobType {
+		NotSet = 0,
+		Image = 100,
+		Video = 200
 	}
 }

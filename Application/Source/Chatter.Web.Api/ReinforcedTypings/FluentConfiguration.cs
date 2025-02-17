@@ -1,8 +1,4 @@
-﻿using Chatter.Common;
-using Chatter.Domain;
-using Chatter.Web.Api.Controllers._Base;
-using Chatter.Web.Api.Objects;
-using Chatter.Web.Api.ReinforcedTypings.Generator;
+﻿using Chatter.Web.Api.Objects;
 using Reinforced.Typings.Ast.TypeNames;
 using Reinforced.Typings.Attributes;
 using Reinforced.Typings.Fluent;
@@ -93,6 +89,8 @@ public static class FluentConfiguration
 			typeof(eMessageStatus),
 			typeof(eMessageType),
 			typeof(eChatRole),
+			typeof(ePostType),
+			typeof(eBlobType)
 		];
 
 		builder.ExportAsEnums(enums,
