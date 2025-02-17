@@ -5,7 +5,11 @@ namespace Chatter.Application.Interfaces;
 
 public interface ICloudinaryService
 {
-	Task<ImageUploadResult> UploadAsync(FileInformationDto file, string directory);
+	Task<DeletionResult> DeletePhotoAsync(string publicId);
 
-	Task<DeletionResult> DeleteAsync(string publicId);
+	Task<DeletionResult> DeleteVideoAsync(string publicId);
+
+	Task<ImageUploadResult> UploadPhotoAsync(FileInformationDto file, string directory);
+
+	Task<VideoUploadResult> UploadVideoAsync(FileInformationDto file, string directory);
 }

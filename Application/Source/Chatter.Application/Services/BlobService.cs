@@ -1,4 +1,5 @@
 ﻿using Chatter.Application.Dtos.Files;
+using CloudinaryDotNet.Actions;
 
 namespace Chatter.Application.Services;
 
@@ -19,7 +20,7 @@ public class BlobService(IDatabaseContext db, ICloudinaryService cloudinary) : I
 			IsActive = true,
 		};
 
-		var result = await cloudinary.UploadAsync(file, blob.Id.ToString());
+		var result = await UploadFileAsync(file, blob);
 
 		blob.Url = result.SecureUrl.AbsoluteUri;
 		blob.PublicId = result.PublicId;
@@ -38,10 +39,24 @@ public class BlobService(IDatabaseContext db, ICloudinaryService cloudinary) : I
 		db.Remove(blob);
 		await db.SaveChangesAsync();
 
-		await cloudinary.DeleteAsync(blob.PublicId);
+		await DeleteFileAsync(blob);
 	}
 
 	// private
+
+	private async Task<DeletionResult> DeleteFileAsync(Blob blob) => blob.TypeId switch
+	{
+		eBlobType.Image => await cloudinary.DeletePhotoAsync(blob.PublicId),
+		eBlobType.Video => await cloudinary.DeleteVideoAsync(blob.PublicId),
+		_ => throw new Exception("Invalid blob type")
+	};
+
+	private async Task<UploadResult> UploadFileAsync(FileInformationDto file, Blob blob) => blob.TypeId switch
+	{
+		eBlobType.Image => await cloudinary.UploadPhotoAsync(file, blob.Id.ToString()),
+		eBlobType.Video => await cloudinary.UploadVideoAsync(file, blob.Id.ToString()),
+		_ => throw new Exception("Invalid blob type")
+	};
 
 	private static eBlobType GetBlobType(FileInformationDto file) => file.Type switch
 	{

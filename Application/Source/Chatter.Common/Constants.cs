@@ -23,4 +23,8 @@ public static class Constants
 
 	public const string CLOUDINARY_STORAGE = "chatter-social-media-app";
 	public const string CLOUDINARY_FILES_STORAGE = $"{CLOUDINARY_STORAGE}/files";
+	public const string CLOUDINARY_VIDEO_STORAGE = $"{CLOUDINARY_STORAGE}/videos";
+
+	public static readonly string[] ALLOWED_IMAGE_FORMATS = ["jpg", "jpeg", "png", "gif", "bmp", "webp"];
+	public static readonly string[] ALLOWED_VIDEO_FORMATS = ["mp4", "avi", "mov", "mkv", "flv"];
 }
