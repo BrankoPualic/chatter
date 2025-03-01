@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Chatter.Application\Chatter.Application.csproj" />
+    <ProjectReference Include="..\Chatter.Domain\Chatter.Domain.csproj" />
   </ItemGroup>
 
 </Project>

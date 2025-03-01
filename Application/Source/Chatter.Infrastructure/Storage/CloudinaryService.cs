@@ -1,5 +1,6 @@
-﻿using Chatter.Application.Dtos.Files;
-using Chatter.Application.Interfaces;
+﻿using Chatter.Common.Extensions;
+using Chatter.Domain.Interfaces.Cloudinary;
+using Chatter.Domain.Models.Cloudinary;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 
@@ -20,35 +21,35 @@ public class CloudinaryService : ICloudinaryService
 		);
 	}
 
-	public async Task<DeletionResult> DeletePhotoAsync(string publicId)
+	public async Task<CloudinaryDeletionResult> DeletePhotoAsync(string publicId)
 	{
 		var deletionParams = new DeletionParams(publicId);
 		var result = await _cloudinary.DestroyAsync(deletionParams);
 		if (result.Error != null)
 			throw new Exception(result.Error.Message);
 
-		return result;
+		return new() { Result = result.Result };
 	}
 
-	public async Task<DeletionResult> DeleteVideoAsync(string publicId)
+	public async Task<CloudinaryDeletionResult> DeleteVideoAsync(string publicId)
 	{
 		var deletionParams = new DeletionParams(publicId) { ResourceType = ResourceType.Video };
 		var result = await _cloudinary.DestroyAsync(deletionParams);
 		if (result.Error != null)
 			throw new Exception(result.Error.Message);
 
-		return result;
+		return new() { Result = result.Result };
 	}
 
-	public async Task<ImageUploadResult> UploadPhotoAsync(FileInformationDto file, string directory)
+	public async Task<CloudinaryUploadResult> UploadPhotoAsync(byte[] buffer, string fileName, string directory)
 	{
-		if (file == null || file.Buffer == null || file.Size < 1)
-			throw new Exception("No Image provided for upload");
+		if (buffer == null || buffer.Length < 1 || fileName.IsNullOrWhiteSpace())
+			throw new ArgumentException("No Image provided for upload");
 
-		using var stream = new MemoryStream(file.Buffer);
+		using var stream = new MemoryStream(buffer);
 		var uploadParams = new ImageUploadParams
 		{
-			File = new FileDescription(file.FileName, stream),
+			File = new FileDescription(fileName, stream),
 			Folder = $"{Common.Constants.CLOUDINARY_FILES_STORAGE}/{directory}",
 			AllowedFormats = Common.Constants.ALLOWED_IMAGE_FORMATS,
 		};
@@ -58,18 +59,18 @@ public class CloudinaryService : ICloudinaryService
 		if (result.Error != null)
 			throw new Exception(result.Error.Message);
 
-		return result;
+		return new() { Url = result.SecureUrl.AbsoluteUri, PublicId = result.PublicId };
 	}
 
-	public async Task<VideoUploadResult> UploadVideoAsync(FileInformationDto file, string directory)
+	public async Task<CloudinaryUploadResult> UploadVideoAsync(byte[] buffer, string fileName, string directory)
 	{
-		if (file == null || file.Buffer == null || file.Size < 1)
-			throw new Exception("No Video provided for upload");
+		if (buffer == null || buffer.Length < 1 || fileName.IsNullOrWhiteSpace())
+			throw new ArgumentException("No Video provided for upload");
 
-		using var stream = new MemoryStream(file.Buffer);
+		using var stream = new MemoryStream(buffer);
 		var uploadParams = new VideoUploadParams
 		{
-			File = new FileDescription(file.FileName, stream),
+			File = new FileDescription(fileName, stream),
 			Folder = $"{Common.Constants.CLOUDINARY_VIDEO_STORAGE}/{directory}",
 			AllowedFormats = Common.Constants.ALLOWED_VIDEO_FORMATS,
 		};
@@ -79,6 +80,6 @@ public class CloudinaryService : ICloudinaryService
 		if (result.Error != null)
 			throw new Exception(result.Error.Message);
 
-		return result;
+		return new() { Url = result.SecureUrl.AbsoluteUri, PublicId = result.PublicId };
 	}
 }

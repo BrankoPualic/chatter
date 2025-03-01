@@ -5,6 +5,7 @@ using Chatter.Application.Interfaces;
 using Chatter.Application.Services;
 using Chatter.Application.UseCases;
 using Chatter.Domain;
+using Chatter.Domain.Interfaces.Cloudinary;
 using Chatter.Infrastructure.Storage;
 using Chatter.Persistence;
 using FluentValidation;
